@@ -5,6 +5,7 @@
 (function () {
   const TOKEN_KEY = 'vuon_toan_token_client';
   async function request(url, options = {}) {
+    if (window.MATH_DEMO === true) return window.MathDemoAPI.request(url, options);
     let res;
     try {
       const token = localStorage.getItem(TOKEN_KEY);

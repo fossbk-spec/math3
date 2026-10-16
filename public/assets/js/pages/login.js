@@ -2,6 +2,29 @@
  * Tài khoản do GIÁO VIÊN cấp (xem trang Góc Giáo Viên). Tài khoản mẫu để test:
  * Học sinh: hocsinh01 / 123456  •  Giáo viên: giaovien01 / 123456 */
 let selectedRole = 'student';
+if (window.MATH_DEMO === true) {
+  const form = document.getElementById('authForm');
+  const panel = document.createElement('div');
+  panel.className = 'space-y-3 my-5';
+  panel.innerHTML = '<button type="button" data-demo-role="student" class="w-full min-h-14 p-3 rounded-2xl bg-primary text-on-primary text-lg font-bold">Vào với vai Học sinh (Bạn Cú)</button><button type="button" data-demo-role="teacher" class="w-full min-h-14 p-3 rounded-2xl bg-secondary text-on-secondary text-lg font-bold">Vào với vai Giáo viên</button><button type="button" id="demo-reset" class="w-full min-h-12 p-3 rounded-2xl bg-surface-container text-on-surface text-lg">Xoá dữ liệu demo</button>';
+  form.before(panel);
+  form.hidden = true;
+  const roleTabs = document.getElementById('btnRoleStudent')?.parentElement?.parentElement;
+  if (roleTabs) roleTabs.hidden = true;
+  panel.addEventListener('click', async event => {
+    const role = event.target.dataset.demoRole;
+    if (event.target.id === 'demo-reset') {
+      window.MathDemoAPI.reset();
+      showToast('Đã xoá dữ liệu demo trên máy này.');
+      return;
+    }
+    if (!role) return;
+    try {
+      const { user } = await window.MathAPI.post('/api/auth/login', { role });
+      location.href = user.role === 'teacher' ? 'schedule.html' : 'index.html';
+    } catch (error) { showToast(error.message); }
+  });
+}
 // Chuyển đổi qua lại giữa Học sinh và Giáo viên
   const btnRoleStudent = document.getElementById('btnRoleStudent');
   const btnRoleTeacher = document.getElementById('btnRoleTeacher');

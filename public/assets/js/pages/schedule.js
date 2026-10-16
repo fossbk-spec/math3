@@ -364,7 +364,18 @@
   document.querySelectorAll('button').forEach((b) => {
     if (/Xuất Báo Cáo|Xuất.*Excel/i.test(b.textContent)) {
       b.removeAttribute('onclick');
-      b.addEventListener('click', () => { const a = document.createElement('a'); a.href = '/api/teacher/export.csv'; a.download = 'bao-cao-lop.csv'; a.click(); });
+      b.addEventListener('click', async () => {
+        if (window.MATH_DEMO === true) {
+          const { students } = await window.MathAPI.get('/api/teacher/students');
+          const cell = value => `"${String(value ?? '').replace(/"/g, '""')}"`;
+          const csv = ['Tên đăng nhập,Bí danh,Lớp,Mã học sinh,Tổng sao,Điểm TB,Số lượt làm bài', ...students.map(s => [s.username, s.full_name, s.class_name, s.student_code, s.total_stars, s.avg_score, s.attempts_count].map(cell).join(','))].join('\n');
+          const url = URL.createObjectURL(new Blob(['\ufeff', csv], { type: 'text/csv;charset=utf-8' }));
+          const a = document.createElement('a'); a.href = url; a.download = 'bao-cao-lop-demo.csv'; a.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+        } else {
+          const a = document.createElement('a'); a.href = 'api/teacher/export.csv'; a.download = 'bao-cao-lop.csv'; a.click();
+        }
+      });
     }
   });
 
