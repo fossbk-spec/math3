@@ -13,6 +13,13 @@
   const timerElement = document.getElementById('exam-timer');
   const submitBtn = document.getElementById('submit-exam-btn');
   const optionCards = [...document.querySelectorAll('.option-card')];
+  optionCards.forEach(card => {
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); }
+    });
+  });
 
   const setText = (selector, text) => { const el = document.querySelector(selector); if (el) el.textContent = text; };
 
@@ -43,6 +50,7 @@
   }
 
   function paintOption(card, active) {
+    card.setAttribute('aria-pressed', String(active));
     const letterEl = card.querySelector('div:first-child');
     const icon = card.querySelector('.radio-icon');
     card.classList.toggle('bg-secondary-container/40', active);

@@ -3,3 +3,11 @@
 /* --- Bổ sung nhỏ khi nối backend (không đổi phong cách gốc) --- */
 html { scroll-behavior: smooth; }
 button:disabled { cursor: not-allowed; opacity: .75; }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #005f27 !important; outline-offset: 3px; }
+main button { min-height: 48px; min-width: 48px; }
+.skip-link { position: fixed; z-index: 1000; top: .5rem; left: .5rem; padding: .75rem 1rem; background: white; color: #005f27; border-radius: .75rem; transform: translateY(-160%); }
+.skip-link:focus-visible { transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

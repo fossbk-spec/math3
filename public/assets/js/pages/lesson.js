@@ -122,7 +122,7 @@
         box.append(list);
       }
       if (r.attemptsLeft === 0) document.getElementById('btn-submit-lesson').disabled = true;
-      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      box.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' });
     } catch (err) { alert(`Chưa nộp được bài: ${err.message}`); }
   });
 
