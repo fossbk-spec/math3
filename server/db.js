@@ -13,6 +13,7 @@ const bcrypt = require('bcryptjs');
 // để không mất dữ liệu mỗi lần server khởi động lại.
 const DB_PATH = globalThis.process.env['DB_' + 'PATH'] || path.join(__dirname, '..', 'data', 'vuon-toan.db');
 const SEED_PATH = path.join(__dirname, '..', 'data', 'seed.json');
+const CONTENT_PATH = path.join(__dirname, '..', 'data', 'content', 'grade3.json');
 
 const db = new Database(DB_PATH);
 db.pragma('journal_mode = WAL');
@@ -93,55 +94,64 @@ CREATE TABLE IF NOT EXISTS game_scores (
 );
 `);
 
-/** Đợt 2: nạp metadata bộ câu hỏi cho cả DB cũ (đã tạo ở Đợt 1) lẫn DB mới. */
-function seedQuestionSets() {
-  const { c } = db.prepare('SELECT COUNT(*) AS c FROM question_sets').get();
-  if (c > 0) return;
-  const seed = JSON.parse(fs.readFileSync(SEED_PATH, 'utf8'));
-  const ins = db.prepare(`INSERT OR IGNORE INTO question_sets (id,title,kind,lesson_id,star_reward,duration_minutes) VALUES (?,?,?,?,?,?)`);
-  for (const [id, set] of Object.entries(seed.questionSets)) {
-    ins.run(id, set.title || id, set.kind || 'exercise', set.lessonId || null,
-      set.kind === 'exam' ? 100 : 40, set.durationMinutes || 0);
-  }
+/** MVP: thêm cột còn thiếu cho DB cũ (ALTER TABLE không có IF NOT EXISTS trong SQLite). */
+function addColumns(table, cols) {
+  const have = new Set(db.prepare(`PRAGMA table_info(${table})`).all().map(c => c.name));
+  for (const [name, def] of Object.entries(cols)) if (!have.has(name)) db.exec(`ALTER TABLE ${table} ADD COLUMN ${name} ${def}`);
 }
+addColumns('questions', {
+  level: "TEXT DEFAULT 'co-ban'", origin: "TEXT DEFAULT 'teacher'", source: "TEXT DEFAULT ''",
+  hints_json: 'TEXT', solution_json: 'TEXT',
+  review_status: "TEXT NOT NULL DEFAULT 'DRAFT'", reviewed_by: 'INTEGER', reviewed_at: 'TEXT',
+});
+addColumns('question_sets', { level: "TEXT DEFAULT 'co-ban'" });
+addColumns('lessons', { page: 'INTEGER' });
+db.exec(`CREATE TABLE IF NOT EXISTS login_attempts (key TEXT PRIMARY KEY, count INTEGER NOT NULL, reset_at INTEGER NOT NULL)`);
 
-function seedIfEmpty() {
-  const { c } = db.prepare('SELECT COUNT(*) AS c FROM users').get();
-  if (c > 0) return;
-  const seed = JSON.parse(fs.readFileSync(SEED_PATH, 'utf8'));
-  const insertUser = db.prepare(`INSERT INTO users (username,password_hash,full_name,role,class_name,student_code,total_stars)
-    VALUES (@username,@passwordHash,@fullName,@role,@className,@studentCode,@totalStars)`);
-  const insertLesson = db.prepare(`INSERT INTO lessons (id,number,title,description,topic,sort_order,unlock_after)
-    VALUES (@id,@number,@title,@description,@topic,@sortOrder,@unlockAfter)`);
-  const insertQuestion = db.prepare(`INSERT INTO questions (id,set_id,lesson_id,type,prompt,options_json,correct_answer,points,category,sort_order)
-    VALUES (@id,@setId,@lessonId,@type,@prompt,@optionsJson,@correctAnswer,@points,@category,@sortOrder)`);
+const readJson = p => JSON.parse(fs.readFileSync(p, 'utf8'));
 
-  const tx = db.transaction(() => {
-    for (const u of seed.users) {
-      insertUser.run({ ...u, passwordHash: bcrypt.hashSync(u.password, 10) });
-    }
-    seed.lessons.forEach((l, i) => insertLesson.run({ ...l, sortOrder: i + 1, unlockAfter: l.unlockAfter || null }));
-    for (const [setId, set] of Object.entries(seed.questionSets)) {
-      set.questions.forEach((q, i) => insertQuestion.run({
-        id: q.id, setId, lessonId: set.lessonId, type: q.type, prompt: q.prompt,
-        optionsJson: q.options ? JSON.stringify(q.options) : null,
-        correctAnswer: q.correctAnswer, points: q.points || 1,
-        category: q.category || '', sortOrder: i + 1,
+/** Nạp bài học + bộ câu hỏi; INSERT OR IGNORE nên chạy lại không ghi đè dữ liệu giáo viên đã sửa/duyệt. */
+function seedContent() {
+  const content = readJson(CONTENT_PATH);
+  const legacy = readJson(SEED_PATH).questionSets || {};
+  const insLesson = db.prepare(`INSERT OR IGNORE INTO lessons (id,number,title,description,topic,sort_order,unlock_after,page)
+    VALUES (@id,@number,@title,@description,@topic,@sortOrder,@unlockAfter,@page)`);
+  const insSet = db.prepare(`INSERT OR IGNORE INTO question_sets (id,title,kind,lesson_id,star_reward,duration_minutes,level)
+    VALUES (?,?,?,?,?,?,?)`);
+  const insQ = db.prepare(`INSERT OR IGNORE INTO questions (id,set_id,lesson_id,type,prompt,options_json,correct_answer,points,category,sort_order,
+      level,origin,source,hints_json,solution_json,review_status)
+    VALUES (@id,@setId,@lessonId,@type,@prompt,@optionsJson,@correctAnswer,@points,@category,@sortOrder,@level,@origin,@source,@hintsJson,@solutionJson,'DRAFT')`);
+  const TYPE_LABEL = { 'multiple-choice': 'Trắc nghiệm', input: 'Điền số', compare: 'Điền dấu so sánh', paint: 'Tô màu theo kết quả' };
+  db.transaction(() => {
+    content.lessons.forEach(l => insLesson.run({ ...l, page: l.page || null }));
+    const all = { ...legacy, ...content.questionSets };
+    for (const [setId, set] of Object.entries(all)) {
+      insSet.run(setId, set.title || setId, set.kind || 'exercise', set.lessonId || null,
+        set.kind === 'exam' ? 100 : 40, set.durationMinutes || 0, set.level || 'co-ban');
+      set.questions.forEach((q, i) => insQ.run({
+        id: q.id, setId, lessonId: set.lessonId || null, type: q.type, prompt: q.prompt,
+        optionsJson: q.options ? JSON.stringify(q.options) : null, correctAnswer: q.correctAnswer,
+        points: q.points || 1, category: q.category || TYPE_LABEL[q.type] || q.type, sortOrder: i + 1,
+        level: q.level || set.level || 'co-ban', origin: q.origin || 'teacher', source: q.source || '',
+        hintsJson: q.hints ? JSON.stringify(q.hints) : null, solutionJson: q.solution ? JSON.stringify(q.solution) : null,
       }));
     }
-    // Tiến độ mẫu khớp giao diện cũ của Bảo Nam (Bài 9: 100đ, Bài 10: 80đ)
-    const nam = db.prepare("SELECT id FROM users WHERE username='hocsinh01'").get();
-    if (nam) {
-      const up = db.prepare(`INSERT INTO progress (user_id,lesson_id,best_score,completed) VALUES (?,?,?,?)
-        ON CONFLICT(user_id,lesson_id) DO UPDATE SET best_score=excluded.best_score, completed=excluded.completed`);
-      up.run(nam.id, 'bai-9', 100, 1);
-      up.run(nam.id, 'bai-10', 80, 0);
-    }
-  });
-  tx();
-  console.log('[DB] Đã nạp dữ liệu mẫu từ data/seed.json');
+  })();
 }
-seedIfEmpty();
-seedQuestionSets();
+
+function seedUsersIfEmpty() {
+  const { c } = db.prepare('SELECT COUNT(*) AS c FROM users').get();
+  if (c > 0) return;
+  const seed = readJson(SEED_PATH);
+  const insertUser = db.prepare(`INSERT INTO users (username,password_hash,full_name,role,class_name,student_code,total_stars)
+    VALUES (@username,@passwordHash,@fullName,@role,@className,@studentCode,@totalStars)`);
+  db.transaction(() => {
+    for (const u of seed.users) insertUser.run({ ...u, passwordHash: bcrypt.hashSync(u.password, 10) });
+  })();
+  console.log('[DB] Đã nạp tài khoản mẫu từ data/seed.json');
+}
+
+seedUsersIfEmpty();
+seedContent();
 
 module.exports = db;

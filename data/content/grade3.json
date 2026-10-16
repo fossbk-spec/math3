@@ -1,0 +1,3333 @@
+{
+  "source": "fossbk-spec/hoang-mai-math",
+  "lessons": [
+    {
+      "id": "bai-9",
+      "number": 9,
+      "title": "Bảng nhân 6, bảng chia 6",
+      "page": 28,
+      "topic": "Chủ đề 2: Bảng nhân, bảng chia",
+      "description": "SGK Toán 3 tập một, trang 28",
+      "unlockAfter": null,
+      "sortOrder": 1
+    },
+    {
+      "id": "bai-10",
+      "number": 10,
+      "title": "Bảng nhân 7, bảng chia 7",
+      "page": 31,
+      "topic": "Chủ đề 2: Bảng nhân, bảng chia",
+      "description": "SGK Toán 3 tập một, trang 31",
+      "unlockAfter": null,
+      "sortOrder": 2
+    },
+    {
+      "id": "bai-11",
+      "number": 11,
+      "title": "Bảng nhân 8, bảng chia 8",
+      "page": 33,
+      "topic": "Chủ đề 2: Bảng nhân, bảng chia",
+      "description": "SGK Toán 3 tập một, trang 33",
+      "unlockAfter": null,
+      "sortOrder": 3
+    },
+    {
+      "id": "bai-12",
+      "number": 12,
+      "title": "Bảng nhân 9, bảng chia 9",
+      "page": 36,
+      "topic": "Chủ đề 2: Bảng nhân, bảng chia",
+      "description": "SGK Toán 3 tập một, trang 36",
+      "unlockAfter": null,
+      "sortOrder": 4
+    },
+    {
+      "id": "bai-13",
+      "number": 13,
+      "title": "Tìm thành phần trong phép nhân, phép chia",
+      "page": 39,
+      "topic": "Chủ đề 2: Bảng nhân, bảng chia",
+      "description": "SGK Toán 3 tập một, trang 39",
+      "unlockAfter": null,
+      "sortOrder": 5
+    },
+    {
+      "id": "bai-14",
+      "number": 14,
+      "title": "Một phần mấy",
+      "page": 42,
+      "topic": "Chủ đề 2: Bảng nhân, bảng chia",
+      "description": "SGK Toán 3 tập một, trang 42",
+      "unlockAfter": null,
+      "sortOrder": 6
+    },
+    {
+      "id": "bai-15",
+      "number": 15,
+      "title": "Luyện tập chung",
+      "page": 46,
+      "topic": "Chủ đề 2: Bảng nhân, bảng chia",
+      "description": "SGK Toán 3 tập một, trang 46",
+      "unlockAfter": null,
+      "sortOrder": 7
+    }
+  ],
+  "questionSets": {
+    "bai-9-co-ban": {
+      "title": "Bài 9 · Cơ bản",
+      "kind": "exercise",
+      "lessonId": "bai-9",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-001",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Tích của 6 và 8 là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "2",
+            "14",
+            "24",
+            "48"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-002",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Số thích hợp viết vào chỗ chấm để 6 × … = 36 là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-003",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Có 6 túi gạo, mỗi túi đựng 9kg gạo. Hỏi có tất cả bao nhiêu ki-lô-gam gạo?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "54kg",
+            "50kg",
+            "48kg",
+            "42kg"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-004",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Cho phép tính: 6 + 6 - 6 + 6 + 6 = 6 × … Số thích hợp để viết vào chỗ chấm là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-006",
+          "prompt": "Có 7 lọ hoa, mỗi lọ cắm 6 bông. Có tất cả 36 bông hoa.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Mục 6",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-006-b",
+          "prompt": "Có 7 lọ hoa, mỗi lọ cắm 6 bông. Có tất cả 42 bông hoa.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · a2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-006-c",
+          "prompt": "Có 7 lọ hoa, mỗi lọ cắm 6 bông. Có tất cả 48 bông hoa.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · a3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-009",
+          "prompt": "Tính 6 × 1",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-010",
+          "prompt": "Tính 6 × 10",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "60"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-011",
+          "prompt": "Tính 6 × 2",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "12"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-012",
+          "prompt": "Tính 6 × 6",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "36"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-013",
+          "prompt": "Tính 6 × 7",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 5",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "42"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-014",
+          "prompt": "Tính 6 × 9",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 6",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "54"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-015",
+          "prompt": "Tính 6 × 4",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 7",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "24"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-016",
+          "prompt": "Tính 6 × 5",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · Phép tính 8",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "30"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-018",
+          "prompt": "Tính 6 × 5 - 3 =",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Phép tính 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "27"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-019",
+          "prompt": "Tính 6 × 8 - 18 =",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Phép tính 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "30"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-020",
+          "prompt": "Tính 6 × 7 + 8 =",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Phép tính 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "50"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-021",
+          "prompt": "Tính 6 × 4 + 2 =",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Phép tính 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "26"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-026",
+          "prompt": "Câu 1: Kết quả của phép tính 18 : 6 bằng:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-027",
+          "prompt": "Điền dấu <, >, =: 6 : 3 … 12 : 6",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "="
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-028",
+          "prompt": "Số thích hợp điền vào chỗ chấm để … : 6 = 5 là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "20",
+            "30",
+            "40",
+            "50"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-029",
+          "prompt": "Một đường gấp khúc dài 60cm gồm 6 đoạn thẳng bằng nhau. Độ dài của một đoạn thẳng trong đường gấp khúc đó là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 3 · Câu 5",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "6dm",
+            "10dm",
+            "6cm",
+            "10cm"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-034",
+          "prompt": "Có 30 kg gạo nếp chia đều cho 6 gia đình. Hỏi mỗi gia đình được chia mấy ki-lô-gam gạo nếp?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 6 · Mục 34",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "5"
+        },
+        {
+          "id": "ws-bai-09-curated-2",
+          "prompt": "18 : 6 = 3",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 2 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-bai-09-curated-3",
+          "prompt": "48 : 6 = 7",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 2 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-bai-09-curated-4",
+          "prompt": "24 : 6 = 5",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 2 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-bai-09-curated-5",
+          "prompt": "60 : 6 = 10",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 2 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        }
+      ]
+    },
+    "bai-9-nang-cao": {
+      "title": "Bài 9 · Nâng cao",
+      "kind": "exercise",
+      "lessonId": "bai-9",
+      "level": "nang-cao",
+      "questions": [
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-033",
+          "prompt": "Trong phòng ăn có 36 chiếc ghế được xếp đều xung quanh vào 6 chiếc bàn ăn. Hỏi mỗi chiếc bàn ăn có bao nhiêu chiếc ghế?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 5 · Mục 33",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-034-b",
+          "prompt": "Tìm số nhỏ nhất có hai chữ số mà tích của hai chữ số bằng 42 và có một chữ số bằng 6.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 7* · Mục 34",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "67"
+        },
+        {
+          "id": "ws-9-bang-nhan-6-chia-6-034-c",
+          "prompt": "Một số chia cho 3 thì được thương là 4. Hỏi nếu lấy số đó chia cho 6 thì được thương là bao nhiêu?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 8* · Mục 34",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "ws-bai-09-curated-1",
+          "prompt": "Lan có một số viên bi, Lan cho ba bạn Bình, Hòa, Mai mỗi bạn 6 viên bi thì Lan còn thừa 3 viên bi. Hỏi ban đầu Lan có bao nhiêu viên bi.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 7* · Bài 7*",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "21"
+        },
+        {
+          "id": "ws-toan-tuan-3-002",
+          "prompt": "Cho phép tính: 6 + 6 - 6 + 6 + 6 = 6 × … Số thích hợp để viết vào chỗ chấm là:",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-tuan-03-curated-1",
+          "prompt": "Cho phép tính: 6 + 6 - 6 + 6 + 6 = 6 x … Số thích hợp để viết vào chỗ chấm là:",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "correctAnswer": "A"
+        }
+      ]
+    },
+    "bai-10-co-ban": {
+      "title": "Bài 10 · Cơ bản",
+      "kind": "exercise",
+      "lessonId": "bai-10",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-002",
+          "prompt": "Câu 1: Kết quả của phép tính 7 × 8 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "42",
+            "56",
+            "63",
+            "35"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-003",
+          "prompt": "Số thích hợp để điền vào chỗ chấm: 7 × … = 28 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "4",
+            "1",
+            "3",
+            "2"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-004",
+          "prompt": "Lan có 5 hộp bánh, mỗi hộp bánh gồm 7 gói bánh. Số gói bánh mà Lan có là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "28 gói bánh",
+            "63 gói bánh",
+            "42 gói bánh",
+            "35 gói bánh"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-005",
+          "prompt": "Câu 4: Kết quả của phép tính 7 × 3 + 19 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "20",
+            "30",
+            "40",
+            "50"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-010",
+          "prompt": "Tính 7 × 9 + 38",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 3 · Phép tính 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "101"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-011",
+          "prompt": "Tính 7 × 8 - 20",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 3 · Phép tính 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "36"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-012",
+          "prompt": "Tính 7 × 7 + 24",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 3 · Phép tính 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "73"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-013",
+          "prompt": "Tính 7 × 3 + 6",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 3 · Phép tính 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "27"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-015",
+          "prompt": "Mỗi xe ô tô chở được 7 người. Hỏi 4 xe ô tô như thế chở được bao nhiêu người?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 5 · Mục 15",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "28"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-018",
+          "prompt": "Câu 1: Kết quả phép tính 28 : 7 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 9 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "4",
+            "5",
+            "6",
+            "7"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-019",
+          "prompt": "Câu 2: Kết quả của phép tính 63 : 7 + 11 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 9 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "30",
+            "20",
+            "40",
+            "50"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-020",
+          "prompt": "Lan có 56 cái kẹo được chia vào 7 hộp nhỏ. Mỗi hộp có số kẹo là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 9 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "5 cái kẹo",
+            "6 cái kẹo",
+            "7 cái kẹo",
+            "8 cái kẹo"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-021",
+          "prompt": "Câu 4: Kết quả phép tính 21 : 7 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 9 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-025",
+          "prompt": "Có 56 viên kẹo chia đều vào các hộp kẹo, mỗi hộp có 7 chiếc kẹo. Hỏi có thể chia được bao nhiêu hộp kẹo như vậy?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 5 · Mục 25",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-026",
+          "prompt": "Cô giáo có 35 quyển vở thưởng đều cho 7 bạn có thành tích học tập xuất sắc. Hỏi mỗi bạn được cô thưởng cho bao nhiêu quyển vở?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 6 · Mục 26",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "5"
+        }
+      ]
+    },
+    "bai-10-nang-cao": {
+      "title": "Bài 10 · Nâng cao",
+      "kind": "exercise",
+      "lessonId": "bai-10",
+      "level": "nang-cao",
+      "questions": [
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-014",
+          "prompt": "Lớp 3A được chia thành 6 hàng, mỗi hàng có 7 học sinh. Hỏi lớp 3A có bao nhiêu học sinh?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 4 · Mục 14",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "42"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-016-d",
+          "prompt": "Tìm một số biết số đó nhân với 5 thì bằng tổng của 27 và 23.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 7*",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "10"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-016-e",
+          "prompt": "Tìm tích của 7 và số lớn nhất có một chữ số.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 8*",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "63"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-026-b",
+          "prompt": "Tìm một số biết nếu gấp số đó lên 7 lần thì được 56.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 7* · Mục 26",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-10-bang-nhan-7-chia-7-026-c",
+          "prompt": "Tìm số lớn nhất có hai chữ số mà tích của hai chữ số là 14.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 8* · Mục 26",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "72"
+        }
+      ]
+    },
+    "bai-11-co-ban": {
+      "title": "Bài 11 · Cơ bản",
+      "kind": "exercise",
+      "lessonId": "bai-11",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-002",
+          "prompt": "Câu 1: Kết quả phép tính 8 × 7 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "48",
+            "64",
+            "48",
+            "56"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-003",
+          "prompt": "Số thích hợp để điền vào chỗ chấm 8 × … = 72 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-006",
+          "prompt": "Tính 8 × 8 + 28",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Phép tính 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "92"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-007",
+          "prompt": "Tính 8 × 4 - 15",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Phép tính 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "17"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-008",
+          "prompt": "Tính 8 × 7 - 29",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Phép tính 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "27"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-009",
+          "prompt": "Tính 8 × 4 + 18",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Phép tính 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "50"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-010",
+          "prompt": "Tính 8 × 4 + 15",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Phép tính 5",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "47"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-011",
+          "prompt": "Tính 8 × 5 - 25",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Phép tính 6",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "15"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-014",
+          "prompt": "Lan mua 7 hộp bút, mỗi hộp bút gồm 8 chiếc bút. Hỏi Lan có bao nhiêu chiếc bút?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 5 · Mục 14",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "56"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-015",
+          "prompt": "Mỗi can đựng được 8 l nước. Hỏi 6 can như thế đựng được bao nhiêu lít nước?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 6 · Mục 15",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "48"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-016",
+          "prompt": "Câu 1: Kết quả của phép tính 56 : 8 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 6 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-017",
+          "prompt": "Câu 2: Kết quả của phép tính 72 : 8 + 1 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 6 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "9",
+            "10",
+            "11",
+            "12"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-018",
+          "prompt": "Số thích hợp điền vào chỗ chấm để 24 : … = 8 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 6 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "5",
+            "4",
+            "3",
+            "2"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-019",
+          "prompt": "Có 64 chiếc bút được chia vào 8 hộp. Vậy một hộp bút chứa số bút là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 6 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "8 chiếc",
+            "7 chiếc",
+            "6 chiếc",
+            "5 chiếc"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-025",
+          "prompt": "Người ta dùng 80m vải để may chăn. Biết một tấm chăn cần dùng 8m vải. Hỏi người ta có thể may được bao nhiêu tấm chăn từ 80 mét vải trên?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 5 · Mục 25",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "10"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-026",
+          "prompt": "Một sợi dây điện dài 56m được cắt thành 8 đoạn bằng nhau. Hỏi mỗi đoạn dây điện dài bao nhiêu mét?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 6 · Mục 26",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        }
+      ]
+    },
+    "bai-11-nang-cao": {
+      "title": "Bài 11 · Nâng cao",
+      "kind": "exercise",
+      "lessonId": "bai-11",
+      "level": "nang-cao",
+      "questions": [
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-015-c",
+          "prompt": "Điền số thích hợp vào chỗ chấm: 23 < 8 × … < 25",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 8* · Mục 15",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "ws-11-bang-nhan-8-chia-8-026-c",
+          "prompt": "Tìm số lớn nhất có hai chữ số có thương của hai chữ số là 4.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 8* · Mục 26",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "82"
+        }
+      ]
+    },
+    "bai-12-co-ban": {
+      "title": "Bài 12 · Cơ bản",
+      "kind": "exercise",
+      "lessonId": "bai-12",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-002",
+          "prompt": "Câu 1: Kết quả của phép tính 9 × 6 bằng:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "27",
+            "72",
+            "63",
+            "54"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-003",
+          "prompt": "Tại một cửa hàng, ngày thứ nhất cửa hàng bán được 9 lít dầu. Ngày thứ hai cửa hàng bán được số dầu gấp 5 lần ngày thứ nhất. Số lít dầu ngày thứ hai bán được là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "9 l",
+            "27 l",
+            "36 l",
+            "45 l"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-004",
+          "prompt": "Câu 3: Kết quả của phép tính 9 × 3 + 23 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "50",
+            "60",
+            "70",
+            "80"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-010",
+          "prompt": "Một cửa hàng ngày đầu tiên bán được 9 hộp kẹo. Ngày thứ hai bán được số hộp kẹo gấp 2 lần số hộp đã bán được ở ngày thứ nhất. Hỏi sau hai ngày cửa hàng đã bán được bao nhiêu hộp kẹo?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 6 · Mục 10",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "27"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-011",
+          "prompt": "Lớp 3A có 4 tổ, mỗi tổ thu được 9kg giấy vụn. Hỏi lớp 3A thu được bao nhiêu ki-lô-gam giấy vụn?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 7 · Mục 11",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "36"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-013",
+          "prompt": "Câu 1: Kết quả của phép tính 81 : 9 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "10",
+            "7",
+            "9",
+            "8"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-014",
+          "prompt": "Số thích hợp điền vào chỗ chấm để … × 9 + 10 = 82 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "8",
+            "7",
+            "6",
+            "5"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-015",
+          "prompt": "Câu 3: Kết quả của phép tính 72 : 9 + 16 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "24",
+            "42",
+            "37",
+            "40"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-016",
+          "prompt": "Chia 45 lít nước vào 9 chai. Mỗi chai đựng số lít nước là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "7 l",
+            "6 l",
+            "4 l",
+            "5 l"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-017",
+          "prompt": "Cô giáo chia đều 96 quyển vở cho 9 bạn. Sau khi chia, cô giáo còn thừa bao nhiêu quyển vở?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 5",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "3 quyển vở",
+            "6 quyển vở",
+            "2 quyển vở",
+            "0 quyển vở"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-019",
+          "prompt": "Viết số thích hợp vào chỗ chấm: Lấy tích của 3 và 3 giảm 9 lần được kết quả là …",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 3 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "1"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-020",
+          "prompt": "Viết số thích hợp vào chỗ chấm: Lấy 2 gấp lên 9 lần rồi chia cho 3 được kết quả là …",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 3 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-021",
+          "prompt": "Viết số thích hợp vào chỗ chấm: Lấy tổng của 15 và 12 chia cho 9 được kết quả là …",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 3 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-026",
+          "prompt": "Có 81 chú bộ đội cần qua sông, mỗi thuyền chỉ chở được 9 chú. Hỏi phải dùng ít nhất bao nhiêu thuyền để chở các chú bộ đội sang sông cùng một lúc?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 5 · Mục 26",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "9"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-027",
+          "prompt": "Có 63 con thỏ, nhốt đều vào 9 chuồng. Hỏi mỗi chuồng có bao nhiêu chú thỏ?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 6 · Mục 27",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        }
+      ]
+    },
+    "bai-12-nang-cao": {
+      "title": "Bài 12 · Nâng cao",
+      "kind": "exercise",
+      "lessonId": "bai-12",
+      "level": "nang-cao",
+      "questions": [
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-011-b",
+          "prompt": "Tìm một số biết lấy số lớn nhất có một chữ số nhân với số đó rồi cộng với 3 thì được kết quả là 12.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 8* · Mục 11",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "1"
+        },
+        {
+          "id": "ws-12-bang-nhan-9-chia-9-011-c",
+          "prompt": "Gấp 9 lên 7 lần rồi trừ đi số lớn nhất có một chữ số thì được kết quả là bao nhiêu?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 9* · Mục 11",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "54"
+        },
+        {
+          "id": "ws-toan-tuan-6-015",
+          "prompt": "Có 54 chiếc bút chì xếp vào các hộp, mỗi hộp 9 chiếc. Hỏi xếp được bao nhiêu hộp bút chì như vậy?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 3 · Mục 15",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        }
+      ]
+    },
+    "bai-13-co-ban": {
+      "title": "Bài 13 · Cơ bản",
+      "kind": "exercise",
+      "lessonId": "bai-13",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-001",
+          "prompt": "Điền vào chỗ chấm: Tích là 12. Thừa số thứ nhất là 3 thì thừa số thứ hai là …",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "4"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-002",
+          "prompt": "Điền vào chỗ chấm: Lấy một số nhân với 4 thì được tổng của 8 và 4. Số đó là …",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-003",
+          "prompt": "Điền vào chỗ chấm: Có 16 bạn học sinh được xếp vào các bàn, mỗi bàn có 2 học sinh. Xếp được tất cả … bàn như thế.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-007",
+          "prompt": "… × 3 = 12. Số thích hợp điền vào ô trống là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 2 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "4",
+            "3",
+            "5",
+            "9"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-010",
+          "prompt": "Có 16 quả cam trong túi, mẹ xếp vào mỗi đĩa 2 quả cam thì cần bao nhiêu đĩa?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 3 · Mục 10",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-014",
+          "prompt": "Số thích hợp điền vào chỗ trống để 48 : … = 6 là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "42",
+            "54",
+            "8",
+            "9"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-015",
+          "prompt": "Một phép chia có thương bằng số liền trước của 6, số chia bằng số liền sau của 3. Số bị chia của phép chia này là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "18",
+            "20",
+            "24",
+            "30"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-020",
+          "prompt": "Lớp 2B có 35 học sinh xếp đều thành 5 hàng. Hỏi mỗi hàng có bao nhiêu học sinh?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 4 · Mục 20",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-021",
+          "prompt": "Một xe tải phải chở 42 tấn hàng từ địa điểm A đến địa điểm B, mỗi chuyến chở được số tấn hàng bằng nhau. Sau khi chở 6 chuyến thì vừa hết số hàng. Hỏi mỗi chuyến xe tải chở được bao nhiêu tấn hàng?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 5 · Mục 21",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "ws-bai-13-curated-1",
+          "prompt": "Tích là 12. Thừa số thứ nhất là 3 thì thừa số thứ 2 là ….",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "4"
+        },
+        {
+          "id": "ws-bai-13-curated-2",
+          "prompt": "Lấy một số nhân với 4 thì được tổng của 8 và 4. Số đó là…..",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "ws-bai-13-curated-3",
+          "prompt": "Có 16 bạn học sinh được xếp vào các bàn, mỗi bàn có 2 học sinh. Xếp được tất cả ……. bàn như thế.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-bai-13-curated-4",
+          "prompt": "Có 16 quả cam trong túi, mẹ xếp vào mỗi đĩa 2 quả cam thì cần bao nhiêu đĩa?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 3 · Bài 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-bai-13-curated-5",
+          "prompt": "Có 16 cái cốc xếp vào các hộp; mỗi hộp có 2 cốc. Hỏi có mấy hộp cốc?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 4 · Bài 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        }
+      ]
+    },
+    "bai-13-nang-cao": {
+      "title": "Bài 13 · Nâng cao",
+      "kind": "exercise",
+      "lessonId": "bai-13",
+      "level": "nang-cao",
+      "questions": [
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-022",
+          "prompt": "Cô giáo thưởng 32 quyển vở cho các bạn đạt học sinh giỏi trong lớp, mỗi bạn nhận được 4 quyển vở. Hỏi trong lớp có bao nhiêu bạn đạt học sinh giỏi?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 6 · Mục 22",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-022-b",
+          "prompt": "Tìm số chia trong phép chia hết, biết số bị chia là số tròn chục lớn nhất có hai chữ số và thương là số lớn nhất có một chữ số.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 7* · Mục 22",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "10"
+        },
+        {
+          "id": "ws-13-tim-thanh-phan-trong-phep-nhan-chia-022-c",
+          "prompt": "Tìm số chia trong phép chia có số bị chia là 8 và thương là số lớn nhất có thể.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 8* · Mục 22",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "1"
+        },
+        {
+          "id": "ws-toan-tuan-6-003",
+          "prompt": "Số? 48 : ? = 4 × 2",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 1 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-toan-tuan-6-004",
+          "prompt": "Khi chia một số cho 9 được thương là số chẵn liền trước của số nhỏ nhất có hai chữ số. Vậy số bị chia trong phép chia đó là:",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 1 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "90",
+            "81",
+            "72",
+            "63"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-tuan-06-curated-1",
+          "prompt": "Số ?: 48 : ? = 4 x 2",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 1 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "ws-tuan-06-curated-2",
+          "prompt": "Khi chia một số cho 9 được thương là số chẵn liền trước của số nhỏ nhất có hai chữ số. Vậy số bị chia trong phép chia đó là:",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 1 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "72"
+        }
+      ]
+    },
+    "bai-15-co-ban": {
+      "title": "Bài 15 · Cơ bản",
+      "kind": "exercise",
+      "lessonId": "bai-15",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "ws-15-luyen-tap-chung-002",
+          "prompt": "… × 4 = 4. Vậy số cần điền vào chỗ chấm là số:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "1",
+            "4",
+            "0",
+            "40"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-003",
+          "prompt": "Trong một đàn bò, người ta đếm được 40 cái chân bò. Vậy số con bò là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "20 con",
+            "10 con",
+            "40 con",
+            "42 con"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-005",
+          "prompt": "Nếu lấy 63 chia cho số lớn nhất có một chữ số được kết quả là bao nhiêu?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "7",
+            "1",
+            "8",
+            "9"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-007",
+          "prompt": "Một người xếp mỗi hộp có 9 cái kẹo. 36 cái kẹo thì xếp được 3 hộp.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 3 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-008",
+          "prompt": "Một người xếp mỗi hộp có 9 cái kẹo. 27 cái kẹo thì xếp được 3 hộp.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 3 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-017",
+          "prompt": "Lấy số hoa của Hồng nhân với 4 thì được kết quả là 24 bông hoa. Hỏi ban đầu Hồng có bao nhiêu bông hoa?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "12 bông hoa",
+            "3 bông hoa",
+            "27 bông hoa",
+            "6 bông hoa"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-018",
+          "prompt": "Điền dấu <, >, =: 63 : 7 … 32 : 4",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": ">"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-021",
+          "prompt": "Tính 5 × 6",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "30"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-022",
+          "prompt": "Tính 2 × 8",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "16"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-023",
+          "prompt": "Tính 32 : 4",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-024",
+          "prompt": "Tính 63 : 9",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-025",
+          "prompt": "Tính 21 : 7",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 5",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-026",
+          "prompt": "Tính 24 : 8",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 6",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-027",
+          "prompt": "Tính 3 × 10",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 7",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "30"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-028",
+          "prompt": "Tính 9 × 4",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 8",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "36"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-029",
+          "prompt": "Tính 8 × 3",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 9",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "24"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-030",
+          "prompt": "Tính 3 × 4",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Phép tính 10",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "12"
+        },
+        {
+          "id": "ws-15-luyen-tap-chung-034",
+          "prompt": "Có một số kẹo chia đều cho 3 em, mỗi em được 5 chiếc kẹo. Hỏi có tất cả bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 5 · Mục 34",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "15"
+        },
+        {
+          "id": "ws-bai-15-curated-2",
+          "prompt": "Một người xếp mỗi hộp có 9 cái kẹo. 36 cái kẹo thì xếp được 3 hộp.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 3 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-bai-15-curated-3",
+          "prompt": "Một người xếp mỗi hộp có 9 cái kẹo. 27 cái kẹo thì xếp được 3 hộp.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 3 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-bai-15-curated-4",
+          "prompt": "Một người xếp mỗi hộp có 9 cái kẹo. 45 cái kẹo thì xếp được 5 hộp.",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 3 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-bai-15-curated-5",
+          "prompt": "Điền dấu <, >, =: 2 × 7 … 7 × 2",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 2 · So sánh 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "="
+        },
+        {
+          "id": "ws-bai-15-curated-6",
+          "prompt": "Điền dấu <, >, =: 56 : 7 … 56 : 8",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 2 · So sánh 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": ">"
+        },
+        {
+          "id": "ws-bai-15-curated-7",
+          "prompt": "Điền dấu <, >, =: 30 : 6 … 30 : 3",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 2 · So sánh 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "<"
+        }
+      ]
+    },
+    "bai-15-nang-cao": {
+      "title": "Bài 15 · Nâng cao",
+      "kind": "exercise",
+      "lessonId": "bai-15",
+      "level": "nang-cao",
+      "questions": [
+        {
+          "id": "ws-15-luyen-tap-chung-034-b",
+          "prompt": "Nếu lấy một số nhân với số liền trước của số lớn nhất có một chữ số thì được kết quả là 40. Tìm số đó.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 6* · Mục 34",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "5"
+        },
+        {
+          "id": "ws-bai-15-curated-1",
+          "prompt": "Tìm tích của số lớn nhất có một chữ số và số liền sau của 4.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 7* · Bài 7*",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "45"
+        },
+        {
+          "id": "ws-toan-tuan-3-003",
+          "prompt": "Cho đoạn thẳng AB = 4mm. Gấp đoạn thẳng AB lên 5 lần được đoạn thẳng CD. Độ dài đoạn thẳng CD bằng:",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "9 mm",
+            "20 cm",
+            "2 cm",
+            "2 dm"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-toan-tuan-3-005",
+          "prompt": "Dựa vào quy luật, tìm số thứ 8 trong dãy số: 2, 5, 10, 17, 26, 37, …",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 1 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "40",
+            "50",
+            "65",
+            "82"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-toan-tuan-3-006",
+          "prompt": "Bố hơn An 30 tuổi. Sau 6 năm nữa bố hơn An 36 tuổi.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 2 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-toan-tuan-3-007",
+          "prompt": "Ngày mai là Chủ nhật. Vậy 12 ngày trước là thứ Ba.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 2 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "ws-toan-tuan-3-008",
+          "prompt": "Giá trị của biểu thức (a × 7 + a × 8 - a × 15) : (1 + 2 + 3 + … + 10) là 0.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 2 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-toan-tuan-3-009",
+          "prompt": "Số chân của 5 con gà nhiều hơn số chân của 2 con chó.",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 2 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "Đúng",
+            "Sai"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-toan-tuan-3-012-b",
+          "prompt": "Tính giá trị biểu thức: 45 : (102 – 97)",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 2 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "9"
+        },
+        {
+          "id": "ws-tuan-03-curated-2",
+          "prompt": "Dựa vào quy luật dưới đây, tìm số thứ 8 trong dãy số: 2, 5, 10, 17, 26, 37, …",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 3.md · Bài 1 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "40",
+            "50",
+            "65",
+            "82"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-toan-tuan-5-004",
+          "prompt": "Điền dấu <, >, =: 6 × 7 + 269 … 8 × 9 + 257",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 5.md · Bài 3 · Mục 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "<"
+        },
+        {
+          "id": "ws-toan-tuan-5-004-b",
+          "prompt": "Điền dấu <, >, =: 478 mm + 521 mm … 1 m",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 5.md · Bài 3 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "<"
+        },
+        {
+          "id": "ws-toan-tuan-5-008",
+          "prompt": "Trường Tiểu học Chiến Thắng có 45 học sinh tham gia câu lạc bộ cờ vua, số học sinh tham gia câu lạc bộ bóng rổ nhiều gấp 7 lần học sinh tham gia câu lạc bộ cờ vua. Hỏi cả hai câu lạc bộ có bao nhiêu học sinh tham gia?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 5.md · Bài 3 · Mục 8",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "360"
+        },
+        {
+          "id": "ws-tuan-05-curated-1",
+          "prompt": "Ngày mai, Hoa đi dã ngoại cùng các bạn trong lớp. Mẹ có chuẩn bị cho Hoa và 6 bạn khác, mỗi người 2 hộp sữa. Vậy số hộp sữa mẹ chuẩn bị là:",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 5.md · Bài 1 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "14",
+            "12",
+            "10",
+            "8"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "ws-tuan-05-curated-2",
+          "prompt": "Cô Hoa có 1 kg đường, cô dùng làm bánh hết 600g đường. Số đường còn lại cô chia đều vào 5 túi nhỏ. Hỏi mỗi túi nhỏ có bao nhiêu gam đường?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 5.md · Bài 1 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "150",
+            "100",
+            "80",
+            "50"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "ws-toan-tuan-6-014",
+          "prompt": "Tính: 402 - 7 × 8",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 2 · Mục 14",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "346"
+        },
+        {
+          "id": "ws-toan-tuan-6-014-b",
+          "prompt": "Tính: 785 + 63 : 9",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 2 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "792"
+        },
+        {
+          "id": "ws-tuan-06-curated-5",
+          "prompt": "Có 54 chiếc bút chì xếp vào các hộp, mỗi hộp 9 chiếc. Hỏi xếp được bao nhiêu hộp bút chì như vậy?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 3 · Bài 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        }
+      ]
+    },
+    "bai-14-nang-cao": {
+      "title": "Bài 14 · Nâng cao",
+      "kind": "exercise",
+      "lessonId": "bai-14",
+      "level": "nang-cao",
+      "questions": [
+        {
+          "id": "ws-toan-tuan-6-005",
+          "prompt": "Điền số thích hợp vào chỗ chấm: 1/7 của 42 kg là … kg",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 2 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "ws-toan-tuan-6-006",
+          "prompt": "Điền số thích hợp vào chỗ chấm: 1/9 của 63 m là … m",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 2 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "ws-toan-tuan-6-007",
+          "prompt": "Điền số thích hợp vào chỗ chấm: 1/8 của 56 l là … l",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 2 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "ws-toan-tuan-6-009",
+          "prompt": "Điền dấu <, >, =: 1/3 của 15 cm … 5 cm",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 3 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "="
+        },
+        {
+          "id": "ws-toan-tuan-6-009-b",
+          "prompt": "Điền dấu <, >, =: 1/4 của 28 kg … 1000 g",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 3 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": ">"
+        },
+        {
+          "id": "ws-toan-tuan-6-009-c",
+          "prompt": "Điền dấu <, >, =: 1/9 của 72 l … 16 l",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 3 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "<"
+        },
+        {
+          "id": "ws-toan-tuan-6-009-d",
+          "prompt": "Điền dấu <, >, =: 1/3 của 30 phút … 1/6 giờ",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 3 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "compare",
+          "correctAnswer": "="
+        },
+        {
+          "id": "ws-toan-tuan-6-016",
+          "prompt": "Ngăn trên có 56 quyển sách. Số sách ở ngăn dưới bằng 1/8 số sách ở ngăn trên. Hỏi ngăn dưới có bao nhiêu quyển sách?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 4 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "ws-toan-tuan-6-017",
+          "prompt": "Ngăn trên có 56 quyển sách. Số sách ở ngăn dưới bằng 1/8 số sách ở ngăn trên. Hỏi cả hai ngăn có bao nhiêu quyển sách?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 4 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "63"
+        },
+        {
+          "id": "ws-toan-tuan-6-018",
+          "prompt": "An lấy 1/4 số bi của hộp bi đỏ thì được 6 viên, lấy 1/5 số bi của hộp bi xanh thì được 4 viên. Hỏi cả hai hộp bi đỏ và xanh có tất cả bao nhiêu viên bi?",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 5 · Mục 18",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "44"
+        },
+        {
+          "id": "ws-tuan-06-curated-3",
+          "prompt": "1/7 của 42 kg là: …",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 2 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "ws-tuan-06-curated-4",
+          "prompt": "1/8 của 56 l là: …",
+          "level": "nang-cao",
+          "source": "Phiếu GV: Toán - Tuần 6.md · Bài 2 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "input",
+          "correctAnswer": "7"
+        }
+      ]
+    },
+    "bai-15-luyen-them": {
+      "title": "Bài 15 · Luyện thêm (câu tự sinh)",
+      "kind": "exercise",
+      "lessonId": "bai-15",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "bank-tables-6-9-compare-1-1",
+          "prompt": "Điền >, < hoặc =: 8 × 2 … 8 × 4.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#compare (seed 1)",
+          "origin": "template",
+          "solution": [
+            "8 × 2 = 16; 8 × 4 = 32, nên điền <."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "compare",
+          "correctAnswer": "<"
+        },
+        {
+          "id": "bank-tables-6-9-facts-2-1",
+          "prompt": "Tính 24 : 8.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#facts (seed 2)",
+          "origin": "template",
+          "solution": [
+            "24 : 8 = 3."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-tables-6-9-same-result-3-1",
+          "prompt": "Chọn phép tính có kết quả bằng 8 × 2.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#same-result (seed 3)",
+          "origin": "template",
+          "solution": [
+            "8 × 2 = 16, 16 : 1 = 16."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "multiple-choice",
+          "options": [
+            "16 : 1",
+            "17 : 1",
+            "15 : 1",
+            "18 : 1"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "bank-tables-6-9-sequence-4-1",
+          "prompt": "Điền số còn thiếu: 81; 72; …; 54.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#sequence (seed 4)",
+          "origin": "template",
+          "solution": [
+            "Dãy bớt 9 mỗi lần, nên số cần điền là 63."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "63"
+        },
+        {
+          "id": "bank-tables-6-9-compare-1-2",
+          "prompt": "Điền >, < hoặc =: 8 × 2 … 8 × 4.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#compare (seed 1)",
+          "origin": "template",
+          "solution": [
+            "8 × 2 = 16; 8 × 4 = 32, nên điền <."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "compare",
+          "correctAnswer": "<"
+        },
+        {
+          "id": "bank-tables-6-9-facts-2-2",
+          "prompt": "Tính 24 : 8.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#facts (seed 2)",
+          "origin": "template",
+          "solution": [
+            "24 : 8 = 3."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-tables-6-9-same-result-3-2",
+          "prompt": "Chọn phép tính có kết quả bằng 8 × 2.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#same-result (seed 3)",
+          "origin": "template",
+          "solution": [
+            "8 × 2 = 16, 16 : 1 = 16."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "multiple-choice",
+          "options": [
+            "16 : 1",
+            "17 : 1",
+            "15 : 1",
+            "18 : 1"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "bank-tables-6-9-sequence-4-2",
+          "prompt": "Điền số còn thiếu: 81; 72; …; 54.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.tables-6-9#sequence (seed 4)",
+          "origin": "template",
+          "solution": [
+            "Dãy bớt 9 mỗi lần, nên số cần điền là 63."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "63"
+        },
+        {
+          "id": "bank-tables-6-9-compare-1-3",
+          "prompt": "Điền >, < hoặc =: 8 × 6 … 8 × 8.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.tables-6-9#compare (seed 1)",
+          "origin": "template",
+          "solution": [
+            "8 × 6 = 48; 8 × 8 = 64, nên điền <."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "compare",
+          "correctAnswer": "<"
+        },
+        {
+          "id": "bank-tables-6-9-facts-2-3",
+          "prompt": "Tính 56 : 8.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.tables-6-9#facts (seed 2)",
+          "origin": "template",
+          "solution": [
+            "56 : 8 = 7."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "bank-tables-6-9-same-result-3-3",
+          "prompt": "Chọn phép tính có kết quả bằng 8 × 6.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.tables-6-9#same-result (seed 3)",
+          "origin": "template",
+          "solution": [
+            "8 × 6 = 48, 48 : 1 = 48."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "multiple-choice",
+          "options": [
+            "48 : 1",
+            "49 : 1",
+            "47 : 1",
+            "50 : 1"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "bank-tables-6-9-sequence-4-3",
+          "prompt": "Điền số còn thiếu: 81; 72; …; 54.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.tables-6-9#sequence (seed 4)",
+          "origin": "template",
+          "solution": [
+            "Dãy bớt 9 mỗi lần, nên số cần điền là 63."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "63"
+        }
+      ]
+    },
+    "bai-13-luyen-them": {
+      "title": "Bài 13 · Luyện thêm (câu tự sinh)",
+      "kind": "exercise",
+      "lessonId": "bai-13",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "bank-find-component-find-component-1-1",
+          "prompt": "Tìm số còn thiếu: 8 × ? = 16.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 1)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 2."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "bank-find-component-find-component-2-1",
+          "prompt": "Tìm số còn thiếu: ? : 8 = 3.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 2)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 24."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "24"
+        },
+        {
+          "id": "bank-find-component-find-component-3-1",
+          "prompt": "Tìm số còn thiếu: 16 : ? = 2.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 3)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 8."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "bank-find-component-find-component-4-1",
+          "prompt": "Tìm số còn thiếu: ? × 9 = 27.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 4)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 3."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-find-component-find-component-1-2",
+          "prompt": "Tìm số còn thiếu: 8 × ? = 16.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 1)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 2."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "bank-find-component-find-component-2-2",
+          "prompt": "Tìm số còn thiếu: ? : 8 = 3.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 2)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 24."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "24"
+        },
+        {
+          "id": "bank-find-component-find-component-3-2",
+          "prompt": "Tìm số còn thiếu: 16 : ? = 2.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 3)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 8."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "bank-find-component-find-component-4-2",
+          "prompt": "Tìm số còn thiếu: ? × 9 = 27.",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 4)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 3."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-find-component-find-component-1-3",
+          "prompt": "Tìm số còn thiếu: 8 × ? = 48.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 1)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 6."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "bank-find-component-find-component-2-3",
+          "prompt": "Tìm số còn thiếu: ? : 8 = 7.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 2)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 56."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "56"
+        },
+        {
+          "id": "bank-find-component-find-component-3-3",
+          "prompt": "Tìm số còn thiếu: 48 : ? = 6.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 3)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 8."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "8"
+        },
+        {
+          "id": "bank-find-component-find-component-4-3",
+          "prompt": "Tìm số còn thiếu: ? × 9 = 63.",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.find-component#find-component (seed 4)",
+          "origin": "template",
+          "solution": [
+            "Dùng phép tính ngược, tìm được 7."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "7"
+        }
+      ]
+    },
+    "bai-14-luyen-them": {
+      "title": "Bài 14 · Luyện thêm (câu tự sinh)",
+      "kind": "exercise",
+      "lessonId": "bai-14",
+      "level": "co-ban",
+      "questions": [
+        {
+          "id": "bank-fraction-unit-fraction-unit-1-1",
+          "prompt": "Một phần 5 của 10 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 1)",
+          "origin": "template",
+          "solution": [
+            "10 : 5 = 2 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-2-1",
+          "prompt": "Một phần 4 của 12 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 2)",
+          "origin": "template",
+          "solution": [
+            "12 : 4 = 3 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-3-1",
+          "prompt": "Một phần 2 của 4 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 3)",
+          "origin": "template",
+          "solution": [
+            "4 : 2 = 2 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-4-1",
+          "prompt": "Một phần 2 của 6 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 4)",
+          "origin": "template",
+          "solution": [
+            "6 : 2 = 3 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-1-2",
+          "prompt": "Một phần 5 của 10 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 1)",
+          "origin": "template",
+          "solution": [
+            "10 : 5 = 2 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-2-2",
+          "prompt": "Một phần 4 của 12 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 2)",
+          "origin": "template",
+          "solution": [
+            "12 : 4 = 3 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-3-2",
+          "prompt": "Một phần 2 của 4 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 3)",
+          "origin": "template",
+          "solution": [
+            "4 : 2 = 2 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "2"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-4-2",
+          "prompt": "Một phần 2 của 6 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "co-ban",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 4)",
+          "origin": "template",
+          "solution": [
+            "6 : 2 = 3 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "3"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-1-3",
+          "prompt": "Một phần 9 của 54 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 1)",
+          "origin": "template",
+          "solution": [
+            "54 : 9 = 6 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-2-3",
+          "prompt": "Một phần 8 của 56 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 2)",
+          "origin": "template",
+          "solution": [
+            "56 : 8 = 7 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "7"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-3-3",
+          "prompt": "Một phần 6 của 36 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 3)",
+          "origin": "template",
+          "solution": [
+            "36 : 6 = 6 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "6"
+        },
+        {
+          "id": "bank-fraction-unit-fraction-unit-4-3",
+          "prompt": "Một phần 6 của 42 chiếc kẹo là bao nhiêu chiếc kẹo?",
+          "level": "nang-cao",
+          "source": "Tự sinh: g3.number.fraction-unit#fraction-unit (seed 4)",
+          "origin": "template",
+          "solution": [
+            "42 : 6 = 7 (chiếc kẹo)."
+          ],
+          "hints": [
+            "Đọc kỹ điều đề yêu cầu.",
+            "Nhớ bảng nhân, chia và dùng phép tính ngược.",
+            "Kiểm tra từng bước trước khi điền đáp án."
+          ],
+          "type": "input",
+          "correctAnswer": "7"
+        }
+      ]
+    },
+    "bai-15-kiem-tra": {
+      "title": "Kiểm tra Chủ đề 2 (bài 9–15)",
+      "kind": "exam",
+      "lessonId": "bai-15",
+      "level": "co-ban",
+      "durationMinutes": 35,
+      "questions": [
+        {
+          "id": "exam-ws-9-bang-nhan-6-chia-6-001",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Tích của 6 và 8 là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · a",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "2",
+            "14",
+            "24",
+            "48"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "exam-ws-10-bang-nhan-7-chia-7-002",
+          "prompt": "Câu 1: Kết quả của phép tính 7 × 8 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "42",
+            "56",
+            "63",
+            "35"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "exam-ws-11-bang-nhan-8-chia-8-002",
+          "prompt": "Câu 1: Kết quả phép tính 8 × 7 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "48",
+            "64",
+            "48",
+            "56"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "exam-ws-12-bang-nhan-9-chia-9-002",
+          "prompt": "Câu 1: Kết quả của phép tính 9 × 6 bằng:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "27",
+            "72",
+            "63",
+            "54"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "exam-ws-13-tim-thanh-phan-trong-phep-nhan-chia-007",
+          "prompt": "… × 3 = 12. Số thích hợp điền vào ô trống là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 2 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "4",
+            "3",
+            "5",
+            "9"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-15-luyen-tap-chung-002",
+          "prompt": "… × 4 = 4. Vậy số cần điền vào chỗ chấm là số:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "1",
+            "4",
+            "0",
+            "40"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-9-bang-nhan-6-chia-6-002",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Số thích hợp viết vào chỗ chấm để 6 × … = 36 là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · b",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "6",
+            "7",
+            "8",
+            "9"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-10-bang-nhan-7-chia-7-003",
+          "prompt": "Số thích hợp để điền vào chỗ chấm: 7 × … = 28 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "4",
+            "1",
+            "3",
+            "2"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-11-bang-nhan-8-chia-8-003",
+          "prompt": "Số thích hợp để điền vào chỗ chấm 8 × … = 72 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "7",
+            "8",
+            "9",
+            "10"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "exam-ws-12-bang-nhan-9-chia-9-003",
+          "prompt": "Tại một cửa hàng, ngày thứ nhất cửa hàng bán được 9 lít dầu. Ngày thứ hai cửa hàng bán được số dầu gấp 5 lần ngày thứ nhất. Số lít dầu ngày thứ hai bán được là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "9 l",
+            "27 l",
+            "36 l",
+            "45 l"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "exam-ws-13-tim-thanh-phan-trong-phep-nhan-chia-014",
+          "prompt": "Số thích hợp điền vào chỗ trống để 48 : … = 6 là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "42",
+            "54",
+            "8",
+            "9"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "exam-ws-15-luyen-tap-chung-003",
+          "prompt": "Trong một đàn bò, người ta đếm được 40 cái chân bò. Vậy số con bò là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 2",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "20 con",
+            "10 con",
+            "40 con",
+            "42 con"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "exam-ws-9-bang-nhan-6-chia-6-003",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Có 6 túi gạo, mỗi túi đựng 9kg gạo. Hỏi có tất cả bao nhiêu ki-lô-gam gạo?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · c",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "54kg",
+            "50kg",
+            "48kg",
+            "42kg"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-10-bang-nhan-7-chia-7-004",
+          "prompt": "Lan có 5 hộp bánh, mỗi hộp bánh gồm 7 gói bánh. Số gói bánh mà Lan có là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "28 gói bánh",
+            "63 gói bánh",
+            "42 gói bánh",
+            "35 gói bánh"
+          ],
+          "correctAnswer": "D"
+        },
+        {
+          "id": "exam-ws-11-bang-nhan-8-chia-8-016",
+          "prompt": "Câu 1: Kết quả của phép tính 56 : 8 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 11.BẢNG NHÂN 8, CHIA 8.md · Bài 6 · Câu 1",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "5",
+            "6",
+            "7",
+            "8"
+          ],
+          "correctAnswer": "C"
+        },
+        {
+          "id": "exam-ws-12-bang-nhan-9-chia-9-004",
+          "prompt": "Câu 3: Kết quả của phép tính 9 × 3 + 23 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 12.BẢNG NHÂN 9, CHIA 9.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "50",
+            "60",
+            "70",
+            "80"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-13-tim-thanh-phan-trong-phep-nhan-chia-015",
+          "prompt": "Một phép chia có thương bằng số liền trước của 6, số chia bằng số liền sau của 3. Số bị chia của phép chia này là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 13.TÌM THÀNH PHẦN TRONG PHÉP NHÂN, CHIA.md · Bài 1 · Câu 3",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "18",
+            "20",
+            "24",
+            "30"
+          ],
+          "correctAnswer": "B"
+        },
+        {
+          "id": "exam-ws-15-luyen-tap-chung-005",
+          "prompt": "Nếu lấy 63 chia cho số lớn nhất có một chữ số được kết quả là bao nhiêu?",
+          "level": "co-ban",
+          "source": "Phiếu GV: 15. LUYỆN TẬP CHUNG.md · Bài 1 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "7",
+            "1",
+            "8",
+            "9"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-9-bang-nhan-6-chia-6-004",
+          "prompt": "Khoanh vào chữ cái đặt trước câu trả lời đúng: Cho phép tính: 6 + 6 - 6 + 6 + 6 = 6 × … Số thích hợp để viết vào chỗ chấm là",
+          "level": "co-ban",
+          "source": "Phiếu GV: 9.BẢNG NHÂN 6, CHIA 6.md · Bài 1 · d",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "3",
+            "4",
+            "5",
+            "6"
+          ],
+          "correctAnswer": "A"
+        },
+        {
+          "id": "exam-ws-10-bang-nhan-7-chia-7-005",
+          "prompt": "Câu 4: Kết quả của phép tính 7 × 3 + 19 là:",
+          "level": "co-ban",
+          "source": "Phiếu GV: 10.BẢNG NHÂN 7, CHIA 7.md · Bài 1 · Câu 4",
+          "origin": "worksheet",
+          "solution": null,
+          "hints": null,
+          "type": "multiple-choice",
+          "options": [
+            "20",
+            "30",
+            "40",
+            "50"
+          ],
+          "correctAnswer": "C"
+        }
+      ]
+    }
+  }
+}

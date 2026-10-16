@@ -6,7 +6,9 @@
 const crypto = require('crypto');
 
 const env = globalThis.process.env;
-const SECRET = env['SESSION_' + 'SECRET'] || 'vuon-toan-dev-secret-hay-doi-khi-deploy';
+// Không có secret mặc định trong code: production bắt buộc đặt SESSION_SECRET; máy dev dùng secret ngẫu nhiên mỗi lần chạy
+const SECRET = env.SESSION_SECRET || (env.NODE_ENV === 'production' ? null : crypto.randomBytes(32).toString('hex'));
+if (!SECRET) throw new Error('Thiếu SESSION_SECRET: bắt buộc khi NODE_ENV=production.');
 const COOKIE_NAME = 'vuon_toan_token';
 const MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 ngày
 
@@ -19,8 +21,10 @@ function sign(payload) {
 function verify(token) {
   if (!token || !token.includes('.')) return null;
   const [body, sig] = token.split('.');
-  const expected = crypto.createHmac('sha256', SECRET).update(body).digest('base64url');
-  if (!crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected))) return null;
+  const expected = Buffer.from(crypto.createHmac('sha256', SECRET).update(body).digest('base64url'));
+  const given = Buffer.from(sig || '');
+  // Độ dài khác nhau thì timingSafeEqual ném lỗi -> token sai định dạng từng làm sập mọi request
+  if (given.length !== expected.length || !crypto.timingSafeEqual(given, expected)) return null;
   try {
     const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
     if (payload.exp < Date.now()) return null;
@@ -32,7 +36,7 @@ function parseCookies(req) {
   const out = {};
   (req.headers.cookie || '').split(';').forEach(part => {
     const i = part.indexOf('=');
-    if (i > -1) out[part.slice(0, i).trim()] = decodeURIComponent(part.slice(i + 1).trim());
+    if (i > -1) { try { out[part.slice(0, i).trim()] = decodeURIComponent(part.slice(i + 1).trim()); } catch { /* cookie hỏng: bỏ qua */ } }
   });
   return out;
 }
