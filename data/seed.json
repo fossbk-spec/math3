@@ -3,7 +3,7 @@
     {
       "username": "giaovien01",
       "password": "123456",
-      "fullName": "Cô Thu Hà",
+      "fullName": "Cô giáo Demo",
       "role": "teacher",
       "className": "3A",
       "studentCode": "GV-01",
@@ -12,129 +12,71 @@
     {
       "username": "hocsinh01",
       "password": "123456",
-      "fullName": "Bảo Nam",
+      "fullName": "Bạn Cú",
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-08",
-      "totalStars": 1250
+      "totalStars": 0
     },
     {
       "username": "hocsinh02",
       "password": "123456",
-      "fullName": "Trần Bảo Trâm",
+      "fullName": "Bạn Thỏ",
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-02",
-      "totalStars": 2850
+      "totalStars": 0
     },
     {
       "username": "hocsinh03",
       "password": "123456",
-      "fullName": "Lê Gia Huy",
+      "fullName": "Bạn Sóc",
       "role": "student",
       "className": "3C",
       "studentCode": "HM-3C-05",
-      "totalStars": 2490
+      "totalStars": 0
     },
     {
       "username": "hocsinh04",
       "password": "123456",
-      "fullName": "Nguyễn Đức Minh",
+      "fullName": "Bạn Gấu",
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-11",
-      "totalStars": 320
+      "totalStars": 0
     },
     {
       "username": "hocsinh05",
       "password": "123456",
-      "fullName": "Lê Quang Vinh",
+      "fullName": "Bạn Nai",
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-17",
-      "totalStars": 410
+      "totalStars": 0
     },
     {
       "username": "hocsinh06",
       "password": "123456",
-      "fullName": "Vũ Hoàng Ánh",
+      "fullName": "Bạn Mèo",
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-21",
-      "totalStars": 980
+      "totalStars": 0
     },
     {
       "username": "hocsinh07",
       "password": "123456",
-      "fullName": "Đặng Thủy Tiên",
+      "fullName": "Bạn Hổ",
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-25",
-      "totalStars": 1100
-    }
-  ],
-  "lessons": [
-    {
-      "id": "bai-9",
-      "number": 9,
-      "title": "Bảng nhân 6",
-      "description": "Hình thành bảng nhân 6, giải toán có lời văn gấp lên nhiều lần.",
-      "topic": "Chủ đề 2: Bảng nhân & bảng chia",
-      "unlockAfter": null
-    },
-    {
-      "id": "bai-10",
-      "number": 10,
-      "title": "Bảng chia 6",
-      "description": "Mối quan hệ nhân - chia, tìm thành phần chưa biết của phép nhân.",
-      "topic": "Chủ đề 2: Bảng nhân & bảng chia",
-      "unlockAfter": "bai-9"
-    },
-    {
-      "id": "bai-11",
-      "number": 11,
-      "title": "Bảng nhân 7",
-      "description": "Đếm thêm 7, học thuộc bảng nhân 7 và vận dụng tính chu vi tam giác đều.",
-      "topic": "Chủ đề 2: Bảng nhân & bảng chia",
-      "unlockAfter": "bai-10"
-    },
-    {
-      "id": "bai-12",
-      "number": 12,
-      "title": "Bảng chia 7",
-      "description": "Hình thành bảng chia 7 dựa vào bảng nhân 7, chia đều nhóm đồ vật.",
-      "topic": "Chủ đề 2: Bảng nhân & bảng chia",
-      "unlockAfter": "bai-11"
-    },
-    {
-      "id": "bai-13",
-      "number": 13,
-      "title": "Bảng nhân 8, Bảng chia 8",
-      "description": "Quy luật nhân chia với 8, giải các bài toán thực hành thực tế.",
-      "topic": "Chủ đề 2: Bảng nhân & bảng chia",
-      "unlockAfter": "bai-12"
-    },
-    {
-      "id": "bai-14",
-      "number": 14,
-      "title": "Bảng nhân 9, Bảng chia 9",
-      "description": "Quy luật ngón tay thần kỳ của số 9 và ứng dụng giảm một số đi một số lần.",
-      "topic": "Chủ đề 2: Bảng nhân & bảng chia",
-      "unlockAfter": "bai-13"
-    },
-    {
-      "id": "bai-15",
-      "number": 15,
-      "title": "Kiểm tra tổng hợp tháng 10",
-      "description": "Bài kiểm tra tổng hợp kiến thức từ Bài 9 đến Bài 14.",
-      "topic": "Kiểm tra định kỳ",
-      "unlockAfter": "bai-14"
+      "totalStars": 0
     }
   ],
   "questionSets": {
     "phieu-bai-9-10": {
-      "lessonId": "bai-10",
-      "title": "Phiếu bài tập: Bảng nhân 6 & Bảng chia 6",
+      "lessonId": "bai-9",
+      "title": "Phiếu luyện tập bảng nhân, chia 6 (mẫu tô màu)",
       "kind": "exercise",
       "questions": [
         {
@@ -206,294 +148,6 @@
           "prompt": "54 : 3",
           "correctAnswer": "yellow",
           "points": 2
-        }
-      ]
-    },
-    "bai-15-kiem-tra": {
-      "lessonId": "bai-15",
-      "title": "Bài 15: Kiểm tra định kỳ tháng 10",
-      "kind": "exam",
-      "durationMinutes": 35,
-      "questions": [
-        {
-          "id": "exam-1",
-          "type": "multiple-choice",
-          "prompt": "6 × 7 bằng bao nhiêu?",
-          "options": [
-            "36",
-            "42",
-            "48",
-            "40"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-2",
-          "type": "multiple-choice",
-          "prompt": "54 : 6 bằng bao nhiêu?",
-          "options": [
-            "7",
-            "8",
-            "9",
-            "6"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-3",
-          "type": "multiple-choice",
-          "prompt": "7 × 8 bằng bao nhiêu?",
-          "options": [
-            "54",
-            "56",
-            "64",
-            "49"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-4",
-          "type": "multiple-choice",
-          "prompt": "63 : 7 bằng bao nhiêu?",
-          "options": [
-            "8",
-            "7",
-            "9",
-            "6"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-5",
-          "type": "multiple-choice",
-          "prompt": "8 × 6 bằng bao nhiêu?",
-          "options": [
-            "40",
-            "42",
-            "48",
-            "56"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-6",
-          "type": "multiple-choice",
-          "prompt": "72 : 8 bằng bao nhiêu?",
-          "options": [
-            "9",
-            "8",
-            "7",
-            "6"
-          ],
-          "correctAnswer": "A",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-7",
-          "type": "multiple-choice",
-          "prompt": "9 × 4 bằng bao nhiêu?",
-          "options": [
-            "32",
-            "27",
-            "36",
-            "45"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-8",
-          "type": "multiple-choice",
-          "prompt": "81 : 9 bằng bao nhiêu?",
-          "options": [
-            "8",
-            "9",
-            "7",
-            "6"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-9",
-          "type": "multiple-choice",
-          "prompt": "Mỗi hộp có 6 chiếc bút, 8 hộp có bao nhiêu chiếc bút?",
-          "options": [
-            "42 bút",
-            "14 bút",
-            "48 bút",
-            "36 bút"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Toán có lời văn"
-        },
-        {
-          "id": "exam-10",
-          "type": "multiple-choice",
-          "prompt": "Chia đều 36 chiếc kẹo cho 6 bạn. Mỗi bạn được bao nhiêu chiếc kẹo?",
-          "options": [
-            "5 chiếc",
-            "6 chiếc",
-            "7 chiếc",
-            "9 chiếc"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Toán có lời văn"
-        },
-        {
-          "id": "exam-11",
-          "type": "multiple-choice",
-          "prompt": "6 × 9 bằng bao nhiêu?",
-          "options": [
-            "52",
-            "56",
-            "54",
-            "63"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-12",
-          "type": "multiple-choice",
-          "prompt": "48 : 6 bằng bao nhiêu?",
-          "options": [
-            "6",
-            "7",
-            "8",
-            "9"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-13",
-          "type": "multiple-choice",
-          "prompt": "7 × 7 bằng bao nhiêu?",
-          "options": [
-            "49",
-            "42",
-            "56",
-            "47"
-          ],
-          "correctAnswer": "A",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-14",
-          "type": "multiple-choice",
-          "prompt": "Một tuần có 7 ngày. 6 tuần có bao nhiêu ngày?",
-          "options": [
-            "36 ngày",
-            "42 ngày",
-            "49 ngày",
-            "30 ngày"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Toán có lời văn"
-        },
-        {
-          "id": "exam-15",
-          "type": "multiple-choice",
-          "prompt": "Cô giáo chia đều 48 quyển vở cho 6 tổ học sinh giỏi. Hỏi mỗi tổ nhận được bao nhiêu quyển vở và nếu có thêm 12 quyển nữa chia đều cho các tổ thì mỗi tổ được mấy quyển?",
-          "options": [
-            "Mỗi tổ 7 quyển vở, thêm 12 quyển thì được 9 quyển",
-            "Mỗi tổ 8 quyển vở, thêm 12 quyển thì được 10 quyển",
-            "Mỗi tổ 8 quyển vở, thêm 12 quyển thì được 9 quyển",
-            "Mỗi tổ 6 quyển vở, thêm 12 quyển thì được 8 quyển"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Giải toán có lời văn"
-        },
-        {
-          "id": "exam-16",
-          "type": "multiple-choice",
-          "prompt": "8 × 8 bằng bao nhiêu?",
-          "options": [
-            "64",
-            "56",
-            "72",
-            "48"
-          ],
-          "correctAnswer": "A",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-17",
-          "type": "multiple-choice",
-          "prompt": "64 : 8 bằng bao nhiêu?",
-          "options": [
-            "7",
-            "8",
-            "9",
-            "6"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-18",
-          "type": "multiple-choice",
-          "prompt": "9 × 9 bằng bao nhiêu?",
-          "options": [
-            "72",
-            "81",
-            "99",
-            "18"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Tính nhẩm"
-        },
-        {
-          "id": "exam-19",
-          "type": "multiple-choice",
-          "prompt": "Có 45 bông hoa cắm đều vào 9 lọ. Mỗi lọ có bao nhiêu bông hoa?",
-          "options": [
-            "4 bông",
-            "6 bông",
-            "5 bông",
-            "9 bông"
-          ],
-          "correctAnswer": "C",
-          "points": 5,
-          "category": "Toán có lời văn"
-        },
-        {
-          "id": "exam-20",
-          "type": "multiple-choice",
-          "prompt": "Tìm số thích hợp: ? × 6 = 42",
-          "options": [
-            "6",
-            "7",
-            "8",
-            "9"
-          ],
-          "correctAnswer": "B",
-          "points": 5,
-          "category": "Tìm thành phần chưa biết"
         }
       ]
     }

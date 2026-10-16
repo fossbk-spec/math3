@@ -42,6 +42,25 @@
         <h3 class="font-headline-md text-headline-md mt-1">${q.prompt}</h3>${body}</article>`;
     }).join('');
 
+    container.querySelectorAll('article').forEach((article, index) => {
+      const hints = questions[index].hints;
+      if (!Array.isArray(hints) || !hints.length) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'mt-4 min-h-12 px-5 rounded-2xl bg-secondary-container text-on-secondary-container font-headline-sm text-lg';
+      button.textContent = 'Gợi ý';
+      const list = document.createElement('ol');
+      list.className = 'mt-3 space-y-2 font-body-md text-lg list-decimal pl-7';
+      let shown = 0;
+      button.addEventListener('click', () => {
+        const item = document.createElement('li');
+        item.textContent = hints[shown++];
+        list.append(item);
+        if (shown === hints.length) button.disabled = true;
+      });
+      article.append(button, list);
+    });
+
     container.querySelectorAll('.opt-btn').forEach(btn => btn.addEventListener('click', () => {
       answers[btn.dataset.q] = btn.dataset.val;
       container.querySelectorAll(`.opt-btn[data-q="${btn.dataset.q}"]`).forEach(b =>
@@ -79,9 +98,30 @@
       const r = await window.MathAPI.post('/api/submissions', { setId, answers, durationSec: Math.round((Date.now() - startedAt) / 1000) });
       const box = document.getElementById('lesson-result');
       box.classList.remove('hidden');
-      box.innerHTML = `<div class="text-4xl mb-1">${r.scorePercent >= 80 ? '🎉' : r.scorePercent >= 50 ? '💪' : '🌱'}</div>
-        <h3 class="font-headline-md text-headline-md">Em đạt ${r.scorePercent}% — đúng ${r.correctCount}/${r.totalCount} câu!</h3>
-        <p class="font-body-md mt-1">${r.starsEarned ? `Nhận thêm ⭐ +${r.starsEarned} Sao vàng.` : 'Điểm chưa vượt lần tốt nhất nên chưa cộng thêm sao.'} Kết quả đã được lưu vào hồ sơ.</p>`;
+      box.replaceChildren();
+      const heading = document.createElement('h3');
+      heading.className = 'font-headline-md text-headline-md';
+      heading.textContent = `${r.scorePercent >= 80 ? '🎉' : r.scorePercent >= 50 ? '💪' : '🌱'} Em đạt ${r.scorePercent}% — ${r.comment}`;
+      box.append(heading);
+      const summary = document.createElement('p');
+      summary.className = 'font-body-md mt-2';
+      summary.textContent = r.maxAttempts === 1 ? 'Bài kiểm tra đã được ghi nhận.' : `Đúng ${r.correctCount}/${r.totalCount} câu. Lượt ${r.attemptNo}/${r.maxAttempts}; còn ${r.attemptsLeft} lượt. ${r.starsEarned ? `Nhận thêm ${r.starsEarned} sao.` : ''}`;
+      box.append(summary);
+      if (r.maxAttempts !== 1) {
+        const list = document.createElement('div');
+        list.className = 'mt-3 space-y-2 font-body-md';
+        r.detail.forEach((item, i) => {
+          const line = document.createElement('p');
+          line.textContent = `Câu ${i + 1}: ${item.correct ? '✓ Đúng' : '✗ Chưa đúng'}`;
+          if (item.correctAnswer !== undefined) {
+            line.textContent += ` — Đáp án: ${item.correctAnswer}`;
+            if (item.solution) line.textContent += ` — Bài chữa: ${Array.isArray(item.solution) ? item.solution.join(' ') : typeof item.solution === 'object' ? JSON.stringify(item.solution) : item.solution}`;
+          }
+          list.append(line);
+        });
+        box.append(list);
+      }
+      if (r.attemptsLeft === 0) document.getElementById('btn-submit-lesson').disabled = true;
       box.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (err) { alert(`Chưa nộp được bài: ${err.message}`); }
   });

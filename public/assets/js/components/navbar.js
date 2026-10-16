@@ -30,3 +30,13 @@ window.MathApp.components.Navbar = {
     (header.querySelector('.flex.items-center.gap-space-sm:last-of-type') || header.firstElementChild || header).appendChild(btn);
   },
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('header nav');
+  if (!nav) return;
+  const link = document.createElement('a');
+  link.href = 'ai-safe.html';
+  link.className = 'font-label-md text-label-md px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container';
+  link.textContent = 'AI Safe & Smart';
+  nav.append(link);
+});
