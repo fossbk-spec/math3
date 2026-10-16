@@ -7,9 +7,13 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('./db');
+const { gradeSubmission, isCorrect } = require('../public/assets/js/core/grading');
 const { setAuthCookie, clearAuthCookie, requireAuth, requireTeacher } = require('./auth');
 
 const router = express.Router();
+const ALLOW_DRAFT = process.env.ALLOW_DRAFT !== 'false';
+const MAX_ATTEMPTS = Math.max(1, parseInt(process.env.MAX_ATTEMPTS, 10) || 3);
+const visibleClause = ALLOW_DRAFT ? "review_status != 'REJECTED'" : "review_status = 'APPROVED'";
 const publicUser = u => u && ({ id: u.id, username: u.username, fullName: u.full_name, role: u.role, className: u.class_name, studentCode: u.student_code, totalStars: u.total_stars });
 
 /* ---------------- Xác thực ---------------- */
@@ -49,7 +53,7 @@ router.get('/me/progress', requireAuth, (req, res) => res.json({ lessons: lesson
 
 /* ---------------- Câu hỏi (không kèm đáp án) ---------------- */
 router.get('/question-sets/:setId/questions', requireAuth, (req, res) => {
-  const rows = db.prepare('SELECT id,type,prompt,options_json,points,category FROM questions WHERE set_id=? ORDER BY sort_order').all(req.params.setId);
+  const rows = db.prepare(`SELECT id,type,prompt,options_json,points,category,level FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(req.params.setId);
   if (!rows.length) return res.status(404).json({ error: 'Không tìm thấy bộ câu hỏi.' });
   res.json({ setId: req.params.setId, questions: rows.map(r => ({ ...r, options: r.options_json ? JSON.parse(r.options_json) : undefined, options_json: undefined })) });
 });
@@ -64,16 +68,14 @@ router.post('/submissions', requireAuth, (req, res) => {
   const { setId, answers = {}, durationSec = 0 } = req.body || {};
   const meta = setMeta(setId);
   if (!meta) return res.status(400).json({ error: 'Bộ bài không hợp lệ.' });
-  const questions = db.prepare('SELECT * FROM questions WHERE set_id=? ORDER BY sort_order').all(setId);
-  let earned = 0, max = 0, correct = 0;
-  const detail = questions.map(q => {
-    max += q.points;
-    const given = answers[q.id] == null ? '' : String(answers[q.id]).trim().toLowerCase();
-    const ok = given === String(q.correct_answer).trim().toLowerCase();
-    if (ok) { earned += q.points; correct++; }
-    return { questionId: q.id, correct: ok, correctAnswer: q.correct_answer };
-  });
-  const percent = max ? Math.round((earned / max) * 100) : 0;
+  const maxAttempts = meta.kind === 'exam' ? 1 : MAX_ATTEMPTS;
+  const used = db.prepare('SELECT COUNT(*) AS c FROM attempts WHERE user_id=? AND ref_id=?').get(req.user.id, setId).c;
+  if (used >= maxAttempts) return res.status(409).json({ error: `Em đã làm đủ ${maxAttempts} lượt cho bộ bài này.` });
+  const attemptNo = used + 1;
+  const questions = db.prepare(`SELECT * FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(setId);
+  if (!questions.length) return res.status(404).json({ error: 'Bộ bài chưa có câu hỏi để làm.' });
+  const graded = gradeSubmission(questions, answers, { kind: meta.kind, lastAttempt: attemptNo === maxAttempts });
+  const { scorePercent: percent, correctCount: correct } = graded;
 
   // Sao thưởng chỉ tính trên phần % tiến bộ so với điểm cao nhất cũ (chống "cày" sao bằng cách nộp lại)
   const old = db.prepare('SELECT * FROM progress WHERE user_id=? AND lesson_id=?').get(req.user.id, meta.lessonId);
@@ -91,7 +93,7 @@ router.post('/submissions', requireAuth, (req, res) => {
   });
   tx();
   const me = db.prepare('SELECT total_stars FROM users WHERE id=?').get(req.user.id);
-  res.json({ scorePercent: percent, correctCount: correct, totalCount: questions.length, starsEarned, totalStars: me.total_stars, detail });
+  res.json({ ...graded, starsEarned, totalStars: me.total_stars, attemptNo, maxAttempts, attemptsLeft: maxAttempts - attemptNo });
 });
 
 /* ---------------- Bảng xếp hạng (tính từ dữ liệu thật) ---------------- */
@@ -233,17 +235,31 @@ router.post('/teacher/question-sets/:id/questions', requireTeacher, (req, res) =
   const id = `q-${Date.now().toString(36)}`;
   const set = db.prepare('SELECT lesson_id FROM question_sets WHERE id=?').get(req.params.id);
   if (!set) return res.status(404).json({ error: 'Không tìm thấy bộ đề.' });
-  db.prepare('INSERT INTO questions (id,set_id,lesson_id,type,prompt,options_json,correct_answer,points,category,sort_order) VALUES (?,?,?,?,?,?,?,?,?,?)')
-    .run(id, req.params.id, set.lesson_id, type, prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), Number(points) || 1, String(category).trim(), maxSort + 1);
+  db.prepare(`INSERT INTO questions (id,set_id,lesson_id,type,prompt,options_json,correct_answer,points,category,sort_order,origin,review_status,reviewed_by,reviewed_at)
+    VALUES (?,?,?,?,?,?,?,?,?,?,'teacher','APPROVED',?,datetime('now','localtime'))`)
+    .run(id, req.params.id, set.lesson_id, type, prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), Number(points) || 1, String(category).trim(), maxSort + 1, req.user.id);
   res.status(201).json({ question: { id } });
 });
 router.put('/teacher/questions/:id', requireTeacher, (req, res) => {
   const { prompt = '', options, correctAnswer = '', points = 5, category = '' } = req.body || {};
   if (!prompt.trim() || !String(correctAnswer).trim()) return res.status(400).json({ error: 'Cần nội dung câu hỏi và đáp án đúng.' });
-  const info = db.prepare('UPDATE questions SET prompt=?,options_json=?,correct_answer=?,points=?,category=? WHERE id=?')
-    .run(prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), Number(points) || 1, String(category).trim(), req.params.id);
+  const info = db.prepare("UPDATE questions SET prompt=?,options_json=?,correct_answer=?,points=?,category=?,review_status='APPROVED',reviewed_by=?,reviewed_at=datetime('now','localtime') WHERE id=?")
+    .run(prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), Number(points) || 1, String(category).trim(), req.user.id, req.params.id);
   if (!info.changes) return res.status(404).json({ error: 'Không tìm thấy câu hỏi.' });
   res.json({ ok: true });
+});
+router.post('/teacher/questions/:id/review', requireTeacher, (req, res) => {
+  const status = String((req.body || {}).status || '').toUpperCase();
+  if (!['APPROVED', 'REJECTED'].includes(status)) return res.status(400).json({ error: 'Trạng thái không hợp lệ.' });
+  const info = db.prepare("UPDATE questions SET review_status=?,reviewed_by=?,reviewed_at=datetime('now','localtime') WHERE id=?")
+    .run(status, req.user.id, req.params.id);
+  if (!info.changes) return res.status(404).json({ error: 'Không tìm thấy câu hỏi.' });
+  res.json({ ok: true, status });
+});
+router.post('/teacher/question-sets/:id/approve-all', requireTeacher, (req, res) => {
+  const info = db.prepare("UPDATE questions SET review_status='APPROVED',reviewed_by=?,reviewed_at=datetime('now','localtime') WHERE set_id=? AND review_status='DRAFT'")
+    .run(req.user.id, req.params.id);
+  res.json({ ok: true, approved: info.changes });
 });
 router.delete('/teacher/questions/:id', requireTeacher, (req, res) => {
   db.prepare('DELETE FROM questions WHERE id=?').run(req.params.id);
@@ -302,7 +318,7 @@ router.get('/teacher/analytics', requireTeacher, (req, res) => {
       const key = q.category || ({ 'multiple-choice': 'Trắc nghiệm', input: 'Điền số', compare: 'Điền dấu so sánh', paint: 'Tô màu theo kết quả' }[q.type] || q.type);
       wrongBy[key] = wrongBy[key] || { label: key, wrong: 0, total: 0 };
       wrongBy[key].total++;
-      if (String(given).trim().toLowerCase() !== String(q.correct_answer).trim().toLowerCase()) wrongBy[key].wrong++;
+      if (!isCorrect(q, given)) wrongBy[key].wrong++;
     });
   });
   const topMistakes = Object.values(wrongBy).filter(x => x.total >= 2)

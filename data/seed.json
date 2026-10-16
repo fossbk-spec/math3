@@ -16,7 +16,7 @@
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-08",
-      "totalStars": 1250
+      "totalStars": 0
     },
     {
       "username": "hocsinh02",
@@ -25,7 +25,7 @@
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-02",
-      "totalStars": 2850
+      "totalStars": 0
     },
     {
       "username": "hocsinh03",
@@ -34,7 +34,7 @@
       "role": "student",
       "className": "3C",
       "studentCode": "HM-3C-05",
-      "totalStars": 2490
+      "totalStars": 0
     },
     {
       "username": "hocsinh04",
@@ -43,7 +43,7 @@
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-11",
-      "totalStars": 320
+      "totalStars": 0
     },
     {
       "username": "hocsinh05",
@@ -52,7 +52,7 @@
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-17",
-      "totalStars": 410
+      "totalStars": 0
     },
     {
       "username": "hocsinh06",
@@ -61,7 +61,7 @@
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-21",
-      "totalStars": 980
+      "totalStars": 0
     },
     {
       "username": "hocsinh07",
@@ -70,7 +70,7 @@
       "role": "student",
       "className": "3A",
       "studentCode": "HM-3A-25",
-      "totalStars": 1100
+      "totalStars": 0
     }
   ],
   "questionSets": {

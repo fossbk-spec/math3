@@ -176,7 +176,7 @@
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const inputCls = 'h-11 px-3 rounded-xl bg-surface-container-low focus:outline-none focus:ring-2 focus:ring-primary w-full';
   const btnCls = 'px-4 h-11 rounded-xl bg-primary text-on-primary font-headline-sm shadow-[0_3px_0_0_#005320] active:translate-y-0.5 transition-all whitespace-nowrap';
-  const smallBtn = 'px-2.5 py-1.5 rounded-lg bg-surface-container hover:bg-primary-fixed font-label-sm text-label-sm font-bold transition-all';
+  const smallBtn = 'px-3 min-h-12 rounded-lg bg-surface-container hover:bg-primary-fixed font-label-sm text-label-sm font-bold transition-all';
 
   const wrap = document.createElement('div');
   wrap.className = 'mx-gutter-mobile lg:mx-margin max-w-7xl xl:mx-auto mb-6 space-y-6';
@@ -223,6 +223,7 @@
       <button type="button" id="question-cancel" class="hidden ${smallBtn}">Hủy sửa</button>
     </form>
     <p id="question-msg" class="mt-2 font-label-md text-label-md"></p>
+    <button type="button" id="approve-all" class="${btnCls} mt-3">Duyệt cả bộ</button>
     <div id="question-list" class="mt-3 space-y-2"></div>
   </div>`;
   tbody.closest('table')?.parentElement?.prepend(wrap);
@@ -263,7 +264,9 @@
       <div class="flex flex-wrap items-center gap-2 px-3 py-2 rounded-xl bg-surface-container-low">
         <span class="font-headline-sm text-label-sm text-primary">Câu ${i + 1}</span>
         <span class="flex-1 min-w-[200px] font-body-sm">${esc(q.prompt)}${q.options ? ` <em class="text-on-surface-variant">[${q.options.map(esc).join(' / ')}]</em>` : ''}</span>
-        <span class="font-label-sm">Đáp án: <strong>${esc(q.correct_answer)}</strong> • ${q.points}đ</span>
+        <span class="font-label-sm">${esc(q.origin === 'teacher' ? 'Phiếu GV' : 'Tự sinh')} • ${esc(q.review_status || 'DRAFT')} • Đáp án: <strong>${esc(q.correct_answer)}</strong> • ${q.points}đ</span>
+        <button class="${smallBtn}" data-review-question="${esc(q.id)}" data-status="APPROVED">Duyệt</button>
+        <button class="${smallBtn}" data-review-question="${esc(q.id)}" data-status="REJECTED">Loại</button>
         <button class="${smallBtn}" data-edit-question='${esc(JSON.stringify({ id: q.id, type: q.type, prompt: q.prompt, options: q.options || [], correctAnswer: q.correct_answer, points: q.points }))}'>Sửa</button>
         <button class="${smallBtn}" data-del-question="${q.id}">Xóa</button>
       </div>`).join('');
@@ -294,6 +297,14 @@
   });
 
   $('question-set-select').addEventListener('change', loadQuestions);
+  $('approve-all').addEventListener('click', async () => {
+    try {
+      const setId = $('question-set-select').value;
+      const result = await window.MathAPI.post(`/api/teacher/question-sets/${encodeURIComponent(setId)}/approve-all`, {});
+      $('question-msg').textContent = `Đã duyệt ${result.approved} câu.`;
+      await loadQuestions();
+    } catch (err) { $('question-msg').textContent = err.message; }
+  });
   $('question-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const fd = Object.fromEntries(new FormData(e.target).entries());
@@ -319,7 +330,12 @@
     const delS = e.target.closest('[data-del-set]');
     const editQ = e.target.closest('[data-edit-question]');
     const delQ = e.target.closest('[data-del-question]');
+    const reviewQ = e.target.closest('[data-review-question]');
     try {
+      if (reviewQ) {
+        await window.MathAPI.post(`/api/teacher/questions/${encodeURIComponent(reviewQ.dataset.reviewQuestion)}/review`, { status: reviewQ.dataset.status });
+        await loadQuestions();
+      }
       if (editL) {
         const l = lessonsCache.find(x => x.id === editL.dataset.editLesson);
         if (!l) return;

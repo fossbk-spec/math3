@@ -6,6 +6,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
+    "test": "node --test test/*.test.js",
     "dev": "node server/index.js",
     "reset-db": "node -e \"require('fs').rmSync('data/vuon-toan.db',{force:true}); console.log('Da xoa DB, chay npm start de tao lai')\"",
     "build:css": "node tools/build-css.js"

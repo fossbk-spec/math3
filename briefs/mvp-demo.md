@@ -71,5 +71,14 @@ Xoá `original-backup/` (task riêng); AI (xem Đề xuất); Cloudflare Workers
 | 7 | Luyện tập thích ứng (`src/lib/adaptive`) | Khó | Cần chuyển TS → JS và có dữ liệu kỹ năng |
 | 8 | Gia sư bạn Cú (Gemini) | Khó | Cần server; không chạy trên bản tĩnh |
 
+## T1b — Bổ sung tối thiểu từ hoang-mai-math cho demo (chủ nhiệm yêu cầu 16/10; làm sau T1, trước T2)
+
+Chỉ 3 việc, không lấy gì khác:
+1. **Gợi ý từng bước:** câu tự sinh trong `data/content/grade3.json` đã có `hints` (đang lưu ở cột `hints_json`). Trả `hints` kèm câu hỏi trong `GET /api/question-sets/:id/questions`; `lesson.html` có nút "Gợi ý" mở lần lượt từng gợi ý. Không trả `solution`/đáp án ở đây.
+2. **Số trang SGK:** thẻ bài ở trang chủ hiện "SGK tập một, tr. N" (cột `lessons.page` đã có).
+3. **AI Safe & Smart – "Bảo vệ thông tin của em"** (thành phần AI cho bài dự thi): `tools/import-hoang-mai.js` chép thêm `content/grade3/ai-safe.json` (6 tình huống) vào `data/content/grade3.json` dưới khoá `aiSafe`; trang mới `ai-safe.html` + `pages/ai-safe.js`: mỗi tình huống 3 nút lớn (theo khoá trong `feedback`), bấm hiện phản hồi tương ứng, đánh dấu lựa chọn tốt nhất (`best`); thêm liên kết từ menu. Hiện nhãn "Nội dung chờ giáo viên duyệt" vì `reviewStatus` là DRAFT và mục đối chiếu QĐ 2422 còn trống. Không lưu câu trả lời của học sinh.
+
+Không lấy: `skills.json`, `parent-advice.json`, luyện tập thích ứng, gia sư Gemini, góp ý, báo cáo phụ huynh.
+
 ## Kiểm tra (Claude chạy ngoài sandbox)
 `npm ci` → `npm test` → `npm run build:demo` → mở `dist/` kiểm tra nhanh → commit với author "Codex" → PR vào `main` của `fossbk-spec/math3`. Merge khi chủ nhiệm nói "merge #N"; sau đó bật GitHub Pages (Source: GitHub Actions).

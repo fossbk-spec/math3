@@ -46,8 +46,22 @@ document.addEventListener('mathapp:user-ready', async () => {
   try {
     const { lessons } = await window.MathAPI.get('/api/lessons');
     lessons.forEach((lesson) => {
-      const card = document.querySelector(`[data-lesson-card="${lesson.id}"]`);
-      if (!card) return;
+      let card = document.querySelector(`[data-lesson-card="${lesson.id}"]`);
+      if (!card) {
+        const grid = document.querySelector('[data-lesson-card]')?.parentElement;
+        if (!grid) return;
+        card = document.createElement('div');
+        card.className = 'rounded-3xl bg-surface-container-lowest p-6 shadow-sm flex flex-col justify-between';
+        card.dataset.lessonCard = lesson.id;
+        const heading = document.createElement('h3');
+        heading.className = 'font-headline-md text-headline-md';
+        heading.dataset.lessonTitle = '';
+        const description = document.createElement('p');
+        description.className = 'font-body-md text-lg mt-2';
+        description.dataset.lessonDesc = '';
+        card.append(heading, description);
+        grid.append(card);
+      }
       const title = card.querySelector('[data-lesson-title]');
       const desc = card.querySelector('[data-lesson-desc]');
       if (title) title.textContent = `Bài ${lesson.number}: ${lesson.title}`;
@@ -58,25 +72,20 @@ document.addEventListener('mathapp:user-ready', async () => {
           el.innerHTML = el.innerHTML.replace(/Điểm( hiện tại)?:\s*[^<]*/, `Điểm${el.textContent.includes('hiện') ? ' hiện tại' : ''}: ${lesson.bestScore}/100`);
         }
       });
-      const btn = [...card.querySelectorAll('button, a')].find((b) => /Bắt đầu học|Tiếp tục|Ôn lại|Chưa thể vào/.test(b.textContent));
-      if (!btn) return;
-      const set = (lesson.questionSets || [])[0];
-      const go = () => {
-        if (lesson.number === 15) location.href = 'exam.html';
-        else if (set && set.id === 'phieu-bai-9-10') location.href = 'exercise.html';
-        else if (set) location.href = `lesson.html?lesson=${lesson.id}&set=${set.id}`;
-        else location.href = 'exercise.html';
-      };
-      if (lesson.locked) {
-        btn.setAttribute('disabled', '');
-        btn.classList.add('cursor-not-allowed');
-      } else {
-        btn.removeAttribute('disabled');
-        btn.classList.remove('cursor-not-allowed', 'opacity-80');
-        const label = btn.querySelector('span:last-child') || btn;
-        if (/Chưa thể vào/.test(label.textContent)) label.textContent = 'Bắt đầu học';
-        btn.addEventListener('click', go);
+      card.querySelectorAll('button, a').forEach(btn => {
+        if (/Bắt đầu học|Tiếp tục|Ôn lại|Chưa thể vào|Xem bài làm/.test(btn.textContent)) btn.classList.add('hidden');
+      });
+      const list = document.createElement('div');
+      list.className = 'mt-4 grid gap-2';
+      for (const set of lesson.questionSets || []) {
+        const link = document.createElement('a');
+        link.className = 'min-h-12 px-4 py-3 rounded-2xl bg-primary text-on-primary font-headline-sm text-lg flex items-center justify-center text-center';
+        link.textContent = set.title || ({ exam: 'Kiểm tra', 'co-ban': 'Cơ bản', 'nang-cao': 'Nâng cao', 'luyen-them': 'Luyện thêm' }[set.kind] || 'Luyện tập');
+        link.href = set.id === 'phieu-bai-9-10' ? 'exercise.html' : `lesson.html?lesson=${encodeURIComponent(lesson.id)}&set=${encodeURIComponent(set.id)}`;
+        if (lesson.locked) { link.removeAttribute('href'); link.setAttribute('aria-disabled', 'true'); link.classList.add('opacity-50'); }
+        list.append(link);
       }
+      card.append(list);
     });
     // Tiến độ chủ đề trên banner
     const done = lessons.filter((l) => l.completed).length;
