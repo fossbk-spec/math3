@@ -24,14 +24,16 @@ Nhánh: `feat/mvp-b0-b1` (đã có commit WIP của Claude). Đọc `AGENTS.md` 
 
 ## T1 — Server: chốt bảo mật, nội dung, chấm điểm
 
-1. Áp bản vá `briefs/ref/api-patches.js` (`node briefs/ref/patch.cjs server/api.js briefs/ref/api-patches.js`), sửa nếu chỗ nào không khớp. Sau đó xoá `briefs/ref/`.
+> **Chủ nhiệm chốt 16/10: bỏ bản vá và mọi việc chỉ phục vụ bảo mật** (chống dò mật khẩu, giới hạn điểm/sao game, CSV injection, escape XSS, ép kiểu input) — không cần cho bản demo. Không áp dụng `briefs/ref/api-patches.js`; chỉ đọc nó để lấy cách viết các phần chức năng dưới đây, rồi xoá `briefs/ref/`.
+
+1. `server/api.js` — chỉ phần chức năng: `ALLOW_DRAFT` (mặc định `true`; `false` thì học sinh chỉ thấy câu `APPROVED`), `MAX_ATTEMPTS` (mặc định 3, bài kiểm tra 1 lượt, quá lượt → 409), chấm bằng `grading.js` (mục 2), trả thêm `comment`, `attemptNo`, `maxAttempts`, `attemptsLeft`; `detail` chỉ có `correctAnswer` + `solution` ở lượt luyện tập cuối, bài kiểm tra không trả đáp án; endpoint `POST /api/teacher/questions/:id/review {status}` và `POST /api/teacher/question-sets/:id/approve-all`; câu giáo viên tự soạn/sửa → `APPROVED` (người duyệt = giáo viên đó).
 2. Tách logic chấm ra **`public/assets/js/core/grading.js`** (UMD: `module.exports` + `window.MathGrading`): `norm`, `isCorrect(q, given)`, `commentFor(percent, thresholds)`, `gradeSubmission(questions, answers, {kind, lastAttempt})`. Server `require` file này; T2 dùng lại.
 3. Trang chủ (`index.js`): mỗi bài hiện các bộ của bài (Cơ bản / Nâng cao / Luyện thêm / Kiểm tra) thay vì chỉ bộ đầu tiên; nút ≥ 48px.
 4. `lesson.js` sau khi nộp: điểm, **nhận xét** ("Hoàn thành rất tốt" / "Hoàn thành" / "Cố gắng hơn"), ✓/✗ từng câu, số lượt còn lại; ở lượt cuối hiện **bài chữa** (đáp án + lời giải nếu có). Bài kiểm tra: chỉ điểm + nhận xét.
 5. Góc giáo viên (`schedule.js`): danh sách câu hiện trạng thái duyệt + nguồn (phiếu GV / tự sinh); nút Duyệt / Loại từng câu, "Duyệt cả bộ".
-6. Escape mọi chuỗi vào `innerHTML` ở `lesson.js`, `leaderboard.js`, `schedule.js` (dùng chung một hàm `esc` trong `core/`).
+6. (Bỏ — bảo mật.)
 7. Đổi tên người trong `public/*.html` sang bí danh (cùng bảng trong `data/seed.json`); xoá số liệu trang trí giả ("1.250", "Hạng 2", "18 trận"…) hoặc thay bằng số thật từ API.
-8. Test `node:test` (`test/*.test.js`, `npm test`): `grading.js` (dấu chấm hàng nghìn, chữ hoa, ô trống, compare), token sai định dạng → 401 không phải 500, nộp quá `MAX_ATTEMPTS` → 409, bài kiểm tra không trả `correctAnswer`, lượt cuối có bài chữa, điểm game vượt mức → 400, duyệt câu và `ALLOW_DRAFT=false` ẩn câu DRAFT, import tạo đúng 7 bài. Test chạy server với `DB_PATH` tạm, `SESSION_SECRET` giả.
+8. Thêm script `"test": "node --test test/"` vào `package.json`. Test `node:test` (`test/*.test.js`): `grading.js` (dấu chấm hàng nghìn, chữ hoa, ô trống, compare), nộp quá `MAX_ATTEMPTS` → 409, bài kiểm tra không trả `correctAnswer`, lượt cuối có bài chữa, duyệt câu và `ALLOW_DRAFT=false` ẩn câu DRAFT, DB mới có đúng 7 bài 9–15. Test chạy server với `DB_PATH` tạm, `SESSION_SECRET` giả.
 
 **Xong khi:** `npm test` pass; `npm start` trên DB mới, đăng nhập `hocsinh01/123456`, làm bộ "Bài 9 · Cơ bản" 3 lượt thấy nhận xét và bài chữa; `giaovien01` duyệt được câu.
 

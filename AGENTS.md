@@ -15,7 +15,7 @@ Node ≥ 22, Express 4, better-sqlite3 12, HTML tĩnh + Tailwind (CSS build sẵ
 - **Đúng toán học:** đáp án lấy từ `data/content/grade3.json` (đã do code của hoang-mai-math tính và kiểm). Không tự gõ đáp án mới, không lấy đáp án từ LLM. Câu nhập vào ở `DRAFT`; chỉ giáo viên chuyển `APPROVED`/`REJECTED`.
 - **Chấm một chỗ:** logic chấm/chuẩn hoá đáp án dùng chung cho server và bản demo tĩnh (không viết hai lần).
 - **Quyền riêng tư trẻ em:** chỉ bí danh + mã lớp (Bạn Cú, Bạn Thỏ…); không họ tên thật, ảnh, ngày sinh. Không gửi dữ liệu học sinh ra dịch vụ ngoài.
-- **Bảo mật:** escape mọi chuỗi đưa vào `innerHTML`; không tin điểm/thời gian do trình duyệt gửi; không secret mặc định trong code; không commit `.env`, `data/*.db`.
+- **Bảo mật** (đợt demo: chủ nhiệm cho bỏ qua ngày 16/10, chỉ làm khi brief yêu cầu): escape mọi chuỗi đưa vào `innerHTML`; không tin điểm/thời gian do trình duyệt gửi; không secret mặc định trong code; không commit `.env`, `data/*.db`.
 - Giao diện tiếng Việt; chữ học sinh ≥ 18px; vùng chạm ≥ 48px; chạy tốt 768×1024 và 1024×768; font phải có dấu tiếng Việt.
 - Không thêm dependency mới nếu brief không cho phép; cần thì ghi vào báo cáo.
 - Không đổi `original-backup/` (sẽ xoá ở task riêng), không sửa `data/content/grade3.json` bằng tay — sửa script import rồi chạy lại.
