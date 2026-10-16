@@ -3329,5 +3329,77 @@
         }
       ]
     }
+  },
+  "aiSafe": {
+    "id": "ai-safe-grade3-privacy-v1",
+    "grade": 3,
+    "title": "Bảo vệ thông tin của em",
+    "reviewStatus": "DRAFT",
+    "mapping": {
+      "unesco": "",
+      "qd2422": ""
+    },
+    "situations": [
+      {
+        "id": "school",
+        "prompt": "Bạn AI hỏi tên trường và lớp của em để gửi quà. Em làm gì?",
+        "best": "ask",
+        "feedback": {
+          "say": "Tên trường và lớp có thể giúp người khác tìm ra em. Em hãy hỏi người lớn trước.",
+          "no": "Em đã biết giữ kín thông tin. Nếu cần trả lời, hãy hỏi người lớn trước.",
+          "ask": "Đúng rồi. Hãy hỏi người lớn trước khi chia sẻ thông tin về trường lớp."
+        }
+      },
+      {
+        "id": "address",
+        "prompt": "Một ứng dụng hỏi địa chỉ nhà để chỉ cách giải toán. Em làm gì?",
+        "best": "no",
+        "feedback": {
+          "say": "Địa chỉ nhà là thông tin riêng. Không cần đưa địa chỉ để học toán.",
+          "no": "Đúng rồi. Em không cần chia sẻ địa chỉ nhà.",
+          "ask": "Hỏi người lớn là cẩn thận. Em vẫn không cần đưa địa chỉ để học toán."
+        }
+      },
+      {
+        "id": "nickname",
+        "prompt": "Bạn AI muốn em đặt một biệt danh không gắn với tên thật để chơi trò đố toán. Em làm gì?",
+        "best": "say",
+        "feedback": {
+          "say": "Được, nếu biệt danh không tiết lộ tên thật hay thông tin riêng.",
+          "no": "Không chia sẻ cũng được. Một biệt danh không lộ thông tin riêng có thể dùng.",
+          "ask": "Hỏi người lớn cũng tốt. Một biệt danh không lộ thông tin riêng có thể dùng."
+        }
+      },
+      {
+        "id": "photo",
+        "prompt": "Bạn AI xin ảnh khuôn mặt của em để kiểm tra bài làm. Em làm gì?",
+        "best": "no",
+        "feedback": {
+          "say": "Ảnh khuôn mặt là thông tin riêng; không cần gửi để kiểm tra phép tính.",
+          "no": "Đúng rồi. Em có thể viết phép tính mà không gửi ảnh mặt.",
+          "ask": "Hỏi người lớn là tốt; em không cần gửi ảnh mặt để học toán."
+        }
+      },
+      {
+        "id": "password",
+        "prompt": "Một trang hỏi mật khẩu của em để mở lời giải. Em làm gì?",
+        "best": "no",
+        "feedback": {
+          "say": "Không chia sẻ mật khẩu với AI hay trang lạ.",
+          "no": "Đúng rồi. Mật khẩu phải được giữ kín.",
+          "ask": "Hỏi người lớn là đúng khi em phân vân. Đừng đưa mật khẩu."
+        }
+      },
+      {
+        "id": "math",
+        "prompt": "Bạn AI hỏi: 4 + 5 bằng bao nhiêu? Không hỏi thông tin riêng. Em làm gì?",
+        "best": "say",
+        "feedback": {
+          "say": "Được. Em có thể trao đổi phép tính mà không nói thông tin riêng.",
+          "no": "Không trả lời cũng được; phép tính này không đòi hỏi thông tin riêng.",
+          "ask": "Nếu chưa chắc, em có thể hỏi người lớn. Phép tính này không cần thông tin riêng."
+        }
+      }
+    ]
   }
 }

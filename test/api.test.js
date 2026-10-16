@@ -36,6 +36,7 @@ test('API T1 với DB mới', async () => {
     assert.ok(student && teacher);
     const lessons = (await request('/lessons', student)).data.lessons;
     assert.deepEqual(lessons.map(l => l.number), [9, 10, 11, 12, 13, 14, 15]);
+    assert.equal(lessons[0].page, require('../data/content/grade3.json').lessons[0].page);
     assert.ok(lessons[0].questionSets.length > 1);
     const setId = lessons[0].questionSets.find(s => s.id !== 'phieu-bai-9-10').id;
     assert.equal((await request(`/question-sets/${setId}/questions`, student)).status, 404);
@@ -46,6 +47,18 @@ test('API T1 với DB mới', async () => {
     assert.equal((await request(`/teacher/question-sets/${setId}/approve-all`, teacher, 'POST', {})).status, 200);
     const qs = (await request(`/question-sets/${setId}/questions`, student)).data.questions;
     assert.ok(qs.length > 0);
+    assert.ok(qs.every(q => Array.isArray(q.hints)));
+    assert.ok(qs.every(q => q.correctAnswer === undefined && q.solution === undefined && q.hints_json === undefined));
+    const hintSet = 'bai-13-luyen-them';
+    await request(`/teacher/question-sets/${hintSet}/approve-all`, teacher, 'POST', {});
+    const hinted = (await request(`/question-sets/${hintSet}/questions`, student)).data.questions;
+    const imported = require('../data/content/grade3.json').questionSets[hintSet].questions;
+    assert.deepEqual(hinted[0].hints, imported[0].hints);
+    assert.ok(hinted[0].hints.length > 0);
+    assert.equal(hinted[0].correctAnswer, undefined);
+    assert.equal(hinted[0].solution, undefined);
+    const aiSafe = (await request('/ai-safe', student)).data.aiSafe;
+    assert.equal(aiSafe.situations.length, 6);
     const first = (await request('/submissions', student, 'POST', { setId, answers: {} })).data;
     assert.equal(first.attemptNo, 1);
     assert.equal(first.detail[0].correctAnswer, undefined);

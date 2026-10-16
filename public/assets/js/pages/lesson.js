@@ -42,6 +42,25 @@
         <h3 class="font-headline-md text-headline-md mt-1">${q.prompt}</h3>${body}</article>`;
     }).join('');
 
+    container.querySelectorAll('article').forEach((article, index) => {
+      const hints = questions[index].hints;
+      if (!Array.isArray(hints) || !hints.length) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'mt-4 min-h-12 px-5 rounded-2xl bg-secondary-container text-on-secondary-container font-headline-sm text-lg';
+      button.textContent = 'Gợi ý';
+      const list = document.createElement('ol');
+      list.className = 'mt-3 space-y-2 font-body-md text-lg list-decimal pl-7';
+      let shown = 0;
+      button.addEventListener('click', () => {
+        const item = document.createElement('li');
+        item.textContent = hints[shown++];
+        list.append(item);
+        if (shown === hints.length) button.disabled = true;
+      });
+      article.append(button, list);
+    });
+
     container.querySelectorAll('.opt-btn').forEach(btn => btn.addEventListener('click', () => {
       answers[btn.dataset.q] = btn.dataset.val;
       container.querySelectorAll(`.opt-btn[data-q="${btn.dataset.q}"]`).forEach(b =>

@@ -16,6 +16,7 @@ const read = p => JSON.parse(fs.readFileSync(path.join(SRC, p), 'utf8'));
 const LETTERS = ['A', 'B', 'C', 'D'];
 
 const curriculum = read('content/grade3/curriculum.json');
+const aiSafe = read('content/grade3/ai-safe.json');
 const active = new Set(curriculum.activeLessons);
 const lessons = [];
 for (const t of curriculum.topics) {
@@ -107,7 +108,7 @@ for (const s of Object.values(sets)) for (const q of s.questions) {
 }
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, JSON.stringify({ source: 'fossbk-spec/hoang-mai-math', lessons, questionSets: sets }, null, 2) + '\n');
+fs.writeFileSync(OUT, JSON.stringify({ source: 'fossbk-spec/hoang-mai-math', lessons, questionSets: sets, aiSafe }, null, 2) + '\n');
 console.log(`Đã ghi ${path.relative(process.cwd(), OUT)}: ${lessons.length} bài, ${Object.keys(sets).length} bộ, ${ids.size} câu.`);
 for (const [id, s] of Object.entries(sets)) console.log(`  ${id.padEnd(22)} ${String(s.questions.length).padStart(3)} câu`);
 console.log('Bỏ qua:', skipped);

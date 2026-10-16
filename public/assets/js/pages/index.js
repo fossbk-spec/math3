@@ -45,6 +45,15 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('mathapp:user-ready', async () => {
   try {
     const { lessons } = await window.MathAPI.get('/api/lessons');
+    const firstCard = document.querySelector('[data-lesson-card]');
+    if (firstCard && !document.getElementById('ai-safe-link')) {
+      const link = document.createElement('a');
+      link.id = 'ai-safe-link';
+      link.href = 'ai-safe.html';
+      link.className = 'block mb-5 min-h-12 p-4 rounded-2xl bg-secondary-container text-on-secondary-container font-headline-sm text-lg';
+      link.textContent = 'AI Safe & Smart: Bảo vệ thông tin của em';
+      firstCard.parentElement.before(link);
+    }
     lessons.forEach((lesson) => {
       let card = document.querySelector(`[data-lesson-card="${lesson.id}"]`);
       if (!card) {
@@ -66,6 +75,14 @@ document.addEventListener('mathapp:user-ready', async () => {
       const desc = card.querySelector('[data-lesson-desc]');
       if (title) title.textContent = `Bài ${lesson.number}: ${lesson.title}`;
       if (desc) desc.textContent = lesson.description;
+      let page = card.querySelector('[data-lesson-page]');
+      if (!page) {
+        page = document.createElement('p');
+        page.dataset.lessonPage = '';
+        page.className = 'font-body-md text-lg text-on-surface-variant mt-2';
+        (desc || title).after(page);
+      }
+      page.textContent = lesson.page ? `SGK tập một, tr. ${lesson.page}` : '';
       // Cập nhật dòng điểm trong thẻ (nếu có)
       card.querySelectorAll('span, p').forEach((el) => {
         if (/^(Điểm|Điểm hiện tại):/.test(el.textContent.trim())) {

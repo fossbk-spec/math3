@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bảo vệ thông tin của em — Vườn Toán Lớp 3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  <link href="assets/css/tailwind.build.css" rel="stylesheet">
+  <link href="assets/css/app.css" rel="stylesheet">
+</head>
+<body class="bg-background font-body-md text-on-surface min-h-screen" data-page="ai-safe">
+  <header class="bg-surface-container-lowest p-5 shadow-sm">
+    <nav class="max-w-5xl mx-auto flex flex-wrap items-center gap-4">
+      <a href="index.html" class="min-h-12 inline-flex items-center text-primary text-lg font-bold">← Về Mục Lục SGK</a>
+      <span class="font-headline-md text-xl text-primary">AI Safe &amp; Smart</span>
+    </nav>
+  </header>
+  <main class="max-w-5xl mx-auto px-5 py-8">
+    <h1 id="ai-safe-title" class="font-headline-lg text-3xl text-primary">Bảo vệ thông tin của em</h1>
+    <p class="mt-3 text-lg">Chọn cách em sẽ làm trong từng tình huống. Sau mỗi lựa chọn, em sẽ thấy lời góp ý.</p>
+    <p class="mt-3 p-3 rounded-xl bg-tertiary-fixed text-lg font-bold">Nội dung chờ giáo viên duyệt</p>
+    <div id="ai-safe-situations" class="mt-6 grid gap-5" aria-live="polite">Đang tải tình huống...</div>
+  </main>
+  <script src="assets/js/core/api.js"></script>
+  <script src="assets/js/components/sidebar.js"></script>
+  <script src="assets/js/components/navbar.js"></script>
+  <script src="assets/js/components/footer.js"></script>
+  <script src="assets/js/core/app.js"></script>
+  <script src="assets/js/pages/ai-safe.js"></script>
+</body>
+</html>

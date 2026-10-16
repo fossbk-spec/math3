@@ -7,6 +7,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('./db');
+const { aiSafe } = require('../data/content/grade3.json');
 const { gradeSubmission, isCorrect } = require('../public/assets/js/core/grading');
 const { setAuthCookie, clearAuthCookie, requireAuth, requireTeacher } = require('./auth');
 
@@ -43,7 +44,7 @@ function lessonsWithProgress(userId) {
     const locked = l.unlock_after ? !(prog[l.unlock_after] && prog[l.unlock_after].completed) : false;
     const sets = db.prepare('SELECT id,title,kind FROM question_sets WHERE lesson_id=? ORDER BY kind').all(l.id);
     return {
-      id: l.id, number: l.number, title: l.title, description: l.description, topic: l.topic,
+      id: l.id, number: l.number, title: l.title, description: l.description, topic: l.topic, page: l.page,
       bestScore: p ? p.best_score : 0, completed: p ? !!p.completed : false, locked, questionSets: sets,
     };
   });
@@ -53,10 +54,12 @@ router.get('/me/progress', requireAuth, (req, res) => res.json({ lessons: lesson
 
 /* ---------------- Câu hỏi (không kèm đáp án) ---------------- */
 router.get('/question-sets/:setId/questions', requireAuth, (req, res) => {
-  const rows = db.prepare(`SELECT id,type,prompt,options_json,points,category,level FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(req.params.setId);
+  const rows = db.prepare(`SELECT id,type,prompt,options_json,points,category,level,hints_json FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(req.params.setId);
   if (!rows.length) return res.status(404).json({ error: 'Không tìm thấy bộ câu hỏi.' });
-  res.json({ setId: req.params.setId, questions: rows.map(r => ({ ...r, options: r.options_json ? JSON.parse(r.options_json) : undefined, options_json: undefined })) });
+  res.json({ setId: req.params.setId, questions: rows.map(r => ({ ...r, options: r.options_json ? JSON.parse(r.options_json) : undefined, hints: r.hints_json ? JSON.parse(r.hints_json) : [], options_json: undefined, hints_json: undefined })) });
 });
+
+router.get('/ai-safe', requireAuth, (req, res) => res.json({ aiSafe }));
 
 /* ---------------- Nộp bài & chấm điểm trên server ---------------- */
 // Metadata bộ bài lấy từ bảng question_sets (giáo viên tạo bộ mới là nộp/chấm được ngay)
