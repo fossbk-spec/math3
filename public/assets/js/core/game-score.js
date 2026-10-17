@@ -6,6 +6,7 @@
 window.MathGameScore = {
   async finish(gameId, score, startedAt) {
     const durationSec = startedAt ? Math.round((Date.now() - startedAt) / 1000) : 0;
+    if (window.MATH_DEMO === true) window.MathAnalytics?.track('game_end', { gameId, score, durationSec });
     try {
       const r = await window.MathAPI.post('/api/game-scores', { gameId, score, durationSec });
       this.showResult(r);

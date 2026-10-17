@@ -29,6 +29,7 @@
     if (requireRole && user.role !== requireRole) { location.href = 'index.html'; return; }
 
     window.MathApp.user = user;
+    if (window.MATH_DEMO === true && window.MathAnalytics) window.MathAnalytics.setContext(user);
     if (window.MathApp.components.Navbar) window.MathApp.components.Navbar.updateUser(user);
     document.dispatchEvent(new CustomEvent('mathapp:user-ready', { detail: user }));
   });

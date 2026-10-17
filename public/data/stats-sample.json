@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-17T08:00:00Z",
+  "period": { "from": "2026-10-10", "to": "2026-10-16" },
+  "users": {
+    "daily": [{"label":"10/10","value":12,"n":12},{"label":"11/10","value":15,"n":15},{"label":"12/10","value":14,"n":14},{"label":"13/10","value":19,"n":19},{"label":"14/10","value":21,"n":21},{"label":"15/10","value":18,"n":18},{"label":"16/10","value":24,"n":24}],
+    "weekly": [{"label":"Tuần 41","value":42,"n":42},{"label":"Tuần 42","value":57,"n":57}],
+    "returning": {"value":18,"n":57},
+    "roles": [{"label":"Giáo viên","value":8,"n":57},{"label":"Học sinh","value":49,"n":57}],
+    "classes": [{"label":"3A","value":30,"n":57},{"label":"3B","value":19,"n":57},{"label":"Chưa chọn","value":8,"n":57}],
+    "screens": [{"label":"Máy tính bảng","value":32,"n":57},{"label":"Máy tính","value":19,"n":57},{"label":"Điện thoại","value":6,"n":57}]
+  },
+  "usage": {
+    "sessions": {"value":126,"n":57}, "avgSessionSec": {"value":480,"n":126},
+    "pages": [{"label":"Mục lục","value":115,"n":126},{"label":"Bài học","value":92,"n":126},{"label":"AI Safe","value":40,"n":126}],
+    "funnel": [{"label":"Mở bài","value":84,"n":84},{"label":"Nộp lượt 1","value":69,"n":84},{"label":"Làm lại","value":36,"n":84},{"label":"Hoàn thành ≥ 50%","value":55,"n":84}],
+    "hintRate": {"value":32,"n":84}, "gamePlays": {"value":73,"n":57}
+  },
+  "learning": {
+    "byLesson": [{"label":"Bài 9","value":76,"n":25},{"label":"Bài 10","value":69,"n":22},{"label":"Bài 11","value":73,"n":20}],
+    "bySet": [{"label":"Cơ bản","value":78,"n":48},{"label":"Nâng cao","value":64,"n":31}],
+    "completionRate": {"value":68,"n":79}, "firstLast": {"first":62,"last":77,"n":23},
+    "mistakes": [{"label":"q-bai9-01 · phép nhân","value":14,"n":26},{"label":"q-bai10-03 · phép chia","value":11,"n":22}],
+    "avgQuestionSec": {"value":48,"n":391}, "topic2Exam": {"value":74,"n":18},
+    "aiSafe": [{"label":"Tình huống 1","value":81,"n":21},{"label":"Tình huống 2","value":76,"n":17}]
+  }
+}

@@ -11,6 +11,14 @@ window.MathApp.components = window.MathApp.components || {};
 window.MathApp.components.Navbar = {
   updateUser(user) {
     if (!user) return;
+    if (user.role === 'teacher') {
+      const nav = document.querySelector('header nav');
+      if (nav && !nav.querySelector('[href="thong-ke.html"]')) {
+        const stats = document.createElement('a'); stats.href = 'thong-ke.html';
+        stats.className = 'font-label-md text-label-md px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container';
+        stats.textContent = 'Thống kê'; nav.append(stats);
+      }
+    }
     // Cập nhật bí danh và lớp trong header theo phiên đăng nhập.
     document.querySelectorAll('header span, header p').forEach((el) => {
       if (el.textContent.trim() === 'Bạn Cú') el.textContent = user.fullName;

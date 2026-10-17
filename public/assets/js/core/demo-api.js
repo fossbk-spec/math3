@@ -53,7 +53,7 @@
       const role = body.role || (body.username === 'giaovien01' ? 'teacher' : 'student');
       const user = state.users.find(u => u.role === role && (u.username === body.username || !body.username));
       if (!user) return fail('Vai demo không hợp lệ.', 401);
-      state.currentId = user.id; save(state); return { user: copy(user) };
+      state.currentId = user.id; save(state); root.MathAnalytics?.setContext(user); return { user: copy(user) };
     }
     if (path === 'auth/logout' && method === 'POST') { state.currentId = null; save(state); return { ok: true }; }
     if (path === 'auth/me') { const user = userFor(state); if (!user) return fail('Chưa đăng nhập.', 401); return { user: copy(user) }; }
@@ -85,6 +85,10 @@
       user.totalStars += starsEarned;
       state.attempts.push({ userId: user.id, refId: body.setId, kind: set.kind, scorePercent: graded.scorePercent, answers: body.answers || {}, day: new Date().toISOString().slice(0, 10) });
       save(state);
+      root.MathAnalytics?.track('submission', { setId: body.setId, lessonId: set.lessonId, kind: set.kind,
+        attemptNo, scorePercent: graded.scorePercent, correctCount: graded.correctCount, totalCount: graded.totalCount,
+        durationSec: Number(body.durationSec) || 0, comment: graded.comment,
+        questions: questions.map(q => ({ questionId: q.id, correct: GRADING.isCorrect(q, (body.answers || {})[q.id]) })) });
       return { ...graded, starsEarned, totalStars: user.totalStars, attemptNo, maxAttempts, attemptsLeft: maxAttempts - attemptNo };
     }
     if (path === 'leaderboard') return { leaderboard: studentRows(state).sort((a, b) => b.total_stars - a.total_stars || a.full_name.localeCompare(b.full_name)).map((r, i) => ({ rank: i + 1, ...r, isMe: r.id === user.id })) };
@@ -147,7 +151,9 @@
       if (method === 'POST' && match[2]) {
         const status = String(body.status || '').toUpperCase();
         if (!['APPROVED', 'REJECTED'].includes(status)) return fail('Trạng thái không hợp lệ.');
-        state.questions[id] = { ...state.questions[id], review_status: status }; save(state); return { ok: true, status };
+        state.questions[id] = { ...state.questions[id], review_status: status }; save(state);
+        root.MathAnalytics?.track('teacher_review', { approved: status === 'APPROVED' ? 1 : 0, rejected: status === 'REJECTED' ? 1 : 0 });
+        return { ok: true, status };
       }
       if (method === 'PUT') { state.questions[id] = { ...state.questions[id], ...body, points: Number(body.points) || 1, review_status: 'APPROVED' }; save(state); return { ok: true }; }
       if (method === 'DELETE') { state.questions[id] = { ...state.questions[id], deleted: true }; save(state); return { ok: true }; }
@@ -156,7 +162,7 @@
     if (match && method === 'POST') {
       let approved = 0;
       questionsFor(state, match[1], data).forEach(q => { if (review(q) === 'DRAFT') { state.questions[q.id] = { ...state.questions[q.id], review_status: 'APPROVED' }; approved++; } });
-      save(state); return { ok: true, approved };
+      save(state); root.MathAnalytics?.track('teacher_review', { approved, rejected: 0 }); return { ok: true, approved };
     }
     if (path === 'teacher/analytics') {
       const students = studentRows(state);
