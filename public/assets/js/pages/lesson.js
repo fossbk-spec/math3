@@ -56,6 +56,7 @@
         const item = document.createElement('li');
         item.textContent = hints[shown++];
         list.append(item);
+        window.MathAnalytics?.track('hint_used', { questionId: questions[index].id, hintNo: shown });
         if (shown === hints.length) button.disabled = true;
       });
       article.append(button, list);
@@ -86,6 +87,7 @@
       }
       const data = await window.MathAPI.get(`/api/question-sets/${encodeURIComponent(setId)}/questions`);
       questions = data.questions;
+      window.MathAnalytics?.track('lesson_open', { lessonId, setId });
       document.getElementById('set-kind').textContent = `Bộ bài: ${setId} • ${questions.length} câu`;
       render();
     } catch (err) { container.innerHTML = `<p class="font-body-md">Chưa tải được bài: ${err.message}</p>`; }

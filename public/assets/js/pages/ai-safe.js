@@ -24,6 +24,7 @@
           button.className = 'min-h-12 px-5 py-3 rounded-2xl bg-primary text-on-primary text-lg font-bold';
           button.textContent = choices[key] || key;
           button.addEventListener('click', () => {
+            if (window.MATH_DEMO === true) window.MathAnalytics?.track('ai_safe_choice', { situationId: situation.id || String(index + 1), choice: key, best: key === situation.best });
             buttons.querySelectorAll('button').forEach(item => {
               item.setAttribute('aria-pressed', String(item === button));
               if (item.dataset.choice === situation.best) item.textContent = `${choices[situation.best] || situation.best} ✓ Lựa chọn tốt nhất`;
