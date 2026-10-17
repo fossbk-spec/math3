@@ -70,3 +70,12 @@ Biểu đồ vẽ bằng SVG/HTML thuần (không thêm thư viện), theo skill
 | A4 | Claude | Deploy Worker (sau khi có token), đặt `ANALYTICS_URL` trong workflow Pages, workflow ảnh chụp hằng tuần, kiểm tra đầu–cuối |
 
 Không làm: thu dữ liệu nhận dạng; thư viện biểu đồ; thay đổi server Express (bản server làm sau).
+
+## Cập nhật 17/10 (chủ nhiệm): gửi cả sự kiện vai học sinh
+
+Nhà trường đã duyệt cho giai đoạn giáo viên dùng thử → **gửi tự động cả sự kiện vai học sinh**. Mỗi sự kiện kèm `deviceId`, `role`, `classCode` và **bí danh** đang dùng (VD "Bạn Cú") để theo dõi theo từng em; **không** thu họ tên thật, ảnh, ngày sinh (chờ chủ nhiệm xác nhận riêng nếu cần tên thật). Giữ nút "Tắt thống kê" và dải thông báo.
+
+### Task A1b (Codex)
+1. `analytics.js`: bỏ chặn vai học sinh; thêm trường `alias` (tên hiển thị hiện tại) và `classCode` vào mọi sự kiện; cập nhật `briefs/analytics-stats-schema.md` (thêm khối "Theo từng em": số lượt, điểm TB, lượt 1 → lượt cuối, theo bí danh + lớp) và `public/data/stats-sample.json`.
+2. `thong-ke.html`: dùng header/footer chung của web như các trang khác (không còn chữ "logout"); khoảng ngày chỉ hiện một lần ở đầu trang, mỗi dòng chỉ còn giá trị + n; thêm khối "Theo từng em"; dải "Tắt thống kê" không che nội dung (chừa khoảng trống cuối trang).
+3. Test: sự kiện vai học sinh được đưa vào lô gửi khi có URL; có `alias`, `classCode`; vẫn không gửi khi URL rỗng hoặc đã tắt.
