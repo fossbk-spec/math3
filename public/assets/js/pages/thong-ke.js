@@ -29,10 +29,10 @@
   const get = (data, path) => path.split('.').reduce((value, key) => value?.[key], data);
   const periodText = data => `${data.period?.from || '?'} đến ${data.period?.to || '?'}`;
   const format = (value, unit) => value == null ? 'Chưa có dữ liệu' : unit === 'percent' ? `${num(value)}%` : unit === 'seconds' ? `${num(value)} giây` : String(num(value));
-  function row(document, label, item, unit, period, max) {
+  function row(document, label, item, unit, max) {
     const wrap = document.createElement('div'); wrap.className = 'row';
     const heading = document.createElement('div'); heading.className = 'text-lg';
-    heading.textContent = `${label}: ${format(item?.value, unit)} · n=${num(item?.n)} · ${period}`;
+    heading.textContent = `${label}: ${format(item?.value, unit)} · n=${num(item?.n)}`;
     wrap.append(heading);
     const bar = document.createElement('div'); bar.className = 'bar'; bar.setAttribute('role', 'img');
     bar.setAttribute('aria-label', heading.textContent);
@@ -41,7 +41,6 @@
   }
   function render(data, document) {
     const host = document.getElementById('stats-blocks'); host.replaceChildren();
-    const period = periodText(data);
     for (const [title, groups] of definitions) {
       const card = document.createElement('section'); card.className = 'card';
       const h2 = document.createElement('h2'); h2.textContent = title; card.append(h2);
@@ -49,22 +48,38 @@
         const h3 = document.createElement('h3'); h3.className = 'mt-5 mb-2'; h3.textContent = label; card.append(h3);
         const value = get(data, path);
         if (unit === 'pair') {
-          card.append(row(document, 'Lượt 1', { value: value?.first, n: value?.n }, 'percent', period, 100));
-          card.append(row(document, 'Lượt cuối', { value: value?.last, n: value?.n }, 'percent', period, 100));
+          card.append(row(document, 'Lượt 1', { value: value?.first, n: value?.n }, 'percent', 100));
+          card.append(row(document, 'Lượt cuối', { value: value?.last, n: value?.n }, 'percent', 100));
           continue;
         }
         const items = Array.isArray(value) ? value : [value];
         const max = unit === 'percent' ? 100 : Math.max(1, ...items.map(item => num(item?.value)));
-        for (const item of items) card.append(row(document, item?.label || label, item, unit, period, max));
+        for (const item of items) card.append(row(document, item?.label || label, item, unit, max));
       }
       if (title === 'Học tập') {
         const delta = calc(data).firstLastDelta;
         const summary = document.createElement('p'); summary.className = 'text-lg mt-5';
-        summary.textContent = `Chênh lệch lượt 1 → lượt cuối: ${delta >= 0 ? '+' : ''}${delta} điểm phần trăm · n=${num(data.learning?.firstLast?.n)} cặp · ${period}`;
+        summary.textContent = `Chênh lệch lượt 1 → lượt cuối: ${delta >= 0 ? '+' : ''}${delta} điểm phần trăm · n=${num(data.learning?.firstLast?.n)} cặp`;
         card.append(summary);
       }
       host.append(card);
     }
+    const card = document.createElement('section'); card.className = 'card';
+    const heading = document.createElement('h2'); heading.textContent = 'Theo từng em'; card.append(heading);
+    const students = Array.isArray(data.students) ? data.students : [];
+    if (!students.length) {
+      const empty = document.createElement('p'); empty.className = 'text-lg mt-5'; empty.textContent = 'Chưa có dữ liệu theo từng em.'; card.append(empty);
+    }
+    for (const student of students) {
+      const name = document.createElement('h3'); name.className = 'mt-5 mb-2';
+      name.textContent = `${student.alias || 'Chưa chọn bí danh'} · Lớp ${student.classCode || 'chưa chọn'}`;
+      card.append(name);
+      card.append(row(document, 'Số lượt', student.attempts, 'count', Math.max(1, num(student.attempts?.value))));
+      card.append(row(document, 'Điểm trung bình', student.avgScorePercent, 'percent', 100));
+      card.append(row(document, 'Lượt 1', { value: student.firstLast?.first, n: student.firstLast?.n }, 'percent', 100));
+      card.append(row(document, 'Lượt cuối', { value: student.firstLast?.last, n: student.firstLast?.n }, 'percent', 100));
+    }
+    host.append(card);
   }
   function csvRows(data) {
     const rows = [['Khối', 'Chỉ số', 'Giá trị', 'n', 'Từ ngày', 'Đến ngày']];
@@ -73,6 +88,13 @@
       const items = Array.isArray(value) ? value : path === 'learning.firstLast' ? [
         { label: 'Lượt 1', value: value?.first, n: value?.n }, { label: 'Lượt cuối', value: value?.last, n: value?.n }] : [value];
       for (const item of items) rows.push([title, item?.label || label, item?.value == null ? '' : num(item.value), num(item?.n), data.period?.from || '', data.period?.to || '']);
+    }
+    for (const student of data.students || []) {
+      const label = `${student.alias || 'Chưa chọn bí danh'} · Lớp ${student.classCode || 'chưa chọn'}`;
+      for (const [metric, item] of [['Số lượt', student.attempts], ['Điểm trung bình', student.avgScorePercent],
+        ['Lượt 1', { value: student.firstLast?.first, n: student.firstLast?.n }], ['Lượt cuối', { value: student.firstLast?.last, n: student.firstLast?.n }]]) {
+        rows.push(['Theo từng em', `${label} · ${metric}`, item?.value == null ? '' : num(item.value), num(item?.n), data.period?.from || '', data.period?.to || '']);
+      }
     }
     return rows.map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(',')).join('\r\n');
   }
@@ -83,10 +105,11 @@
     const readFeedback = () => { try { const value = JSON.parse(root.localStorage.getItem(feedbackKey) || '[]'); return Array.isArray(value) ? value : []; } catch { return []; } };
     const count = () => {
       const answers = readFeedback();
-      const from = answers.length ? answers[0].at.slice(0, 10) : 'chưa có';
-      document.getElementById('feedback-count').textContent = `Số phiếu trả lời trên máy này: n=${answers.length} · ${from} đến ${new Date().toISOString().slice(0, 10)}.`;
+      document.getElementById('feedback-count').textContent = `Số phiếu trả lời trên máy này: n=${answers.length}.`;
     };
     document.addEventListener('mathapp:user-ready', async () => {
+      const logout = document.getElementById('btn-logout');
+      if (logout) logout.textContent = 'Đăng xuất';
       const source = document.getElementById('stats-source');
       const url = String(root.MATH_ANALYTICS_URL || '').trim().replace(/\/+$/, '');
       try {

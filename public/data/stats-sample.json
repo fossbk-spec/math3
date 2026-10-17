@@ -23,5 +23,10 @@
     "mistakes": [{"label":"q-bai9-01 · phép nhân","value":14,"n":26},{"label":"q-bai10-03 · phép chia","value":11,"n":22}],
     "avgQuestionSec": {"value":48,"n":391}, "topic2Exam": {"value":74,"n":18},
     "aiSafe": [{"label":"Tình huống 1","value":81,"n":21},{"label":"Tình huống 2","value":76,"n":17}]
-  }
+  },
+  "students": [
+    {"alias":"Bạn Cú","classCode":"3A","attempts":{"value":5,"n":1},"avgScorePercent":{"value":76,"n":5},"firstLast":{"first":60,"last":84,"n":2}},
+    {"alias":"Bạn Thỏ","classCode":"3A","attempts":{"value":4,"n":1},"avgScorePercent":{"value":70,"n":4},"firstLast":{"first":62,"last":78,"n":1}},
+    {"alias":"Bạn Gấu","classCode":"3B","attempts":{"value":2,"n":1},"avgScorePercent":{"value":65,"n":2},"firstLast":{"first":null,"last":null,"n":0}}
+  ]
 }
