@@ -69,12 +69,22 @@
   }
 
   function renderMatrix() {
+    const doneCount = Object.keys(answers).length;
+    const percent = questions.length ? Math.round(doneCount / questions.length * 100) : 0;
+    setText('#exam-done-count', `${doneCount} / ${questions.length} hoàn thành`);
+    setText('#exam-progress-percent', `${percent}%`);
+    const bar = document.getElementById('exam-progress-bar');
+    if (bar) bar.style.width = `${percent}%`;
     document.querySelectorAll('.matrix-btn').forEach((btn, i) => {
       if (i >= questions.length) return;
       const done = answers[questions[i].id];
       btn.classList.toggle('ring-4', i === current);
       btn.classList.toggle('ring-tertiary-fixed-dim', i === current);
       btn.style.opacity = done || i === current ? '1' : '0.75';
+      btn.classList.toggle('bg-primary', Boolean(done));
+      btn.classList.toggle('text-on-primary', Boolean(done));
+      btn.classList.toggle('bg-surface-container', !done);
+      btn.classList.toggle('text-on-surface-variant', !done);
       if (flagged.has(i) && !btn.textContent.includes('flag')) btn.innerHTML = `${i + 1} <span class="material-symbols-outlined text-[13px]">flag</span>`;
       if (!flagged.has(i)) btn.textContent = String(i + 1);
     });

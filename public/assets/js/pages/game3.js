@@ -11,6 +11,7 @@ const MEMORY_BASE_MATCHED = 4; // 4 cặp đã mở sẵn trên bàn theo thiế
 
 const matchedEl = document.getElementById('matchedCount');
 const flipEl = document.getElementById('flipCount');
+const memoryScoreEl = document.getElementById('memory-score');
 if (matchedEl) matchedEl.textContent = String(MEMORY_BASE_MATCHED);
 if (flipEl) flipEl.textContent = '0';
 
@@ -68,6 +69,7 @@ function flipSampleCard(buttonElement, mathText) {
     const [a, b] = flipped; flipped = [];
     if (a.value === b.value) {
       memoryFound++; memoryScore += 40;
+      if (memoryScoreEl) memoryScoreEl.textContent = String(memoryScore);
       [a, b].forEach(f => {
         f.btn.dataset.done = '1';
         f.btn.classList.remove('bg-tertiary-fixed', 'ring-4');

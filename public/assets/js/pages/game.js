@@ -9,6 +9,7 @@
 
   const balloons = [...document.querySelectorAll('button[onclick*="handleBalloonClick"]')];
   const scoreVal = document.getElementById('score-val');
+  const currentScoreEl = document.getElementById('game-current');
   const toast = document.getElementById('game-toast');
   const countdown = document.getElementById('countdown-val');
   if (scoreVal) scoreVal.innerText = '0';
@@ -45,6 +46,7 @@
     if (correct) {
       score += 30;
       if (scoreVal) scoreVal.innerText = String(score);
+      if (currentScoreEl) currentScoreEl.textContent = String(score);
       btn.classList.add('scale-125');
       setTimeout(() => btn.classList.remove('scale-125'), 150);
       if (toast) { toast.classList.remove('hidden'); toast.classList.add('flex'); }
@@ -66,5 +68,12 @@
     if (countdown && timeLeft > 0) { timeLeft--; countdown.textContent = `${timeLeft} giây`; if (timeLeft === 0) finish(); }
   }, 1000);
   window.MathGameScore.addFinishButton('game-bong-bay', () => score, startedAt);
+  document.addEventListener('mathapp:user-ready', async () => {
+    try {
+      const { games } = await window.MathAPI.get('/api/me/game-scores');
+      const bestEl = document.getElementById('game-best');
+      if (bestEl) bestEl.textContent = String(games['game-bong-bay']?.best || 0);
+    } catch { /* Điểm ván vẫn chơi được nếu chưa tải được kỷ lục. */ }
+  });
   newRound();
 })();

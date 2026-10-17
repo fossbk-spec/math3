@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="utf-8"/>
@@ -10,8 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;1,6..12,400&amp;family=Quicksand:wght@600;700&amp;display=swap" rel="stylesheet"/>
 <link href="assets/css/tailwind.build.css" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="assets/js/tailwind.config.js"></script>
 <link href="assets/css/app.css" rel="stylesheet"/>
 </head>
 <body class="bg-background font-body-md text-on-surface antialiased min-h-screen" data-page="exam"><a class="skip-link" href="#main-content">Bỏ qua đến nội dung chính</a>
@@ -208,17 +206,17 @@
               Bảng ma trận 20 câu hỏi
             </h2>
 <span class="font-label-sm text-label-sm text-primary font-bold bg-primary-fixed/40 px-2.5 py-1 rounded-full">
-              14 / 20 hoàn thành
+              <span id="exam-done-count">0 / 20 hoàn thành</span>
             </span>
 </div>
 <!-- Progress Bar Meter -->
 <div class="space-y-1.5">
 <div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
 <span>Tiến độ làm bài</span>
-<span class="font-bold text-primary">70%</span>
+<span class="font-bold text-primary" id="exam-progress-percent">0%</span>
 </div>
 <div class="w-full h-3 rounded-full bg-surface-container overflow-hidden">
-<div class="h-full bg-primary rounded-full transition-all duration-500" style="width: 70%"></div>
+<div class="h-full bg-primary rounded-full transition-[width] duration-500" id="exam-progress-bar" style="width: 0%"></div>
 </div>
 </div>
 <!-- 20-Question Grid -->
@@ -262,19 +260,19 @@
 <div class="pt-4 space-y-2.5 font-label-sm text-label-sm text-on-surface-variant">
 <div class="flex items-center gap-2.5">
 <span class="w-4 h-4 rounded-md bg-primary flex-shrink-0"></span>
-<span>Đã hoàn thành câu trả lời (12 câu)</span>
+<span>Đã hoàn thành câu trả lời</span>
 </div>
 <div class="flex items-center gap-2.5">
 <span class="w-4 h-4 rounded-md bg-secondary-container flex-shrink-0"></span>
-<span>Đang làm hiện tại (Câu 15)</span>
+<span>Đang làm hiện tại</span>
 </div>
 <div class="flex items-center gap-2.5">
 <span class="w-4 h-4 rounded-md bg-tertiary-fixed flex-shrink-0 flex items-center justify-center text-[10px]">🚩</span>
-<span>Đánh dấu cần xem lại (2 câu: 7, 12)</span>
+<span>Đánh dấu cần xem lại</span>
 </div>
 <div class="flex items-center gap-2.5">
 <span class="w-4 h-4 rounded-md bg-surface-container flex-shrink-0"></span>
-<span>Chưa làm (5 câu: 16 - 20)</span>
+<span>Chưa làm</span>
 </div>
 </div>
 </div>

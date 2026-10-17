@@ -5,6 +5,7 @@ let currentLane = 1; // 0: Trái, 1: Giữa, 2: Phải
 const car = document.getElementById('race-car-container');
 const raceStartedAt = Date.now();
 let raceScore = 0, raceDistance = 0, raceFinished = false, correctLane = 1;
+const raceScoreEl = document.getElementById('race-score');
 
 const gateBox = document.querySelector('.absolute.top-10.inset-x-4');
 const gateEls = gateBox ? [...gateBox.querySelectorAll('span')].filter(s => /^\d+$/.test(s.textContent.trim())) : [];
@@ -43,9 +44,11 @@ function triggerTurbo() {
   setTimeout(() => car.classList.remove('scale-110'), 400);
   if (currentLane === correctLane) {
     raceScore += 100; raceDistance = Math.min(1000, raceDistance + 100);
+    if (raceScoreEl) raceScoreEl.textContent = String(raceScore);
     newGate();
   } else {
     raceScore = Math.max(0, raceScore - 20);
+    if (raceScoreEl) raceScoreEl.textContent = String(raceScore);
     car.classList.add('translate-x-2'); setTimeout(() => car.classList.remove('translate-x-2'), 150);
     if (comboEl) comboEl.innerHTML = `<span class="material-symbols-outlined text-[18px]">warning</span> Sai cổng! Điểm: ${raceScore}`;
   }
