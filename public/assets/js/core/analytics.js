@@ -1,4 +1,4 @@
-/* Anonymous, bounded analytics queue for the static demo. */
+/* Bounded analytics queue for the static demo; display aliases only. */
 (function (root, factory) {
   const api = factory(root);
   if (typeof module === 'object' && module.exports) module.exports = factory;
@@ -27,14 +27,17 @@
     if (!id) { id = root.crypto?.randomUUID?.(); if (id) put(DEVICE, id); }
     return id || null;
   };
-  let context = { role: null, classCode: null };
+  let context = { role: null, classCode: null, alias: null };
   let sessionTracked = false;
   function setContext(user) {
+    const displayName = String(user?.alias || user?.fullName || '').trim();
+    const pseudonym = /^Bạn (Cú|Thỏ|Gấu|Mèo|Sóc|Voi|Cáo|Hươu|Rùa|Nhím|Ếch|Ong|Bướm|Gà|Vịt|Chim|Cá Heo)$/u.test(displayName);
     context = {
       role: ['student', 'teacher'].includes(user?.role) ? user.role : null,
       classCode: /^[\p{L}\p{N}-]{1,12}$/u.test(String(user?.className || '')) ? user.className : null,
+      alias: pseudonym || (user?.role === 'teacher' && displayName === 'Cô giáo Demo') ? displayName : null,
     };
-    if (context.role) put(QUEUE, JSON.stringify(queue().map(event => event.role ? event : { ...event, role: context.role, classCode: context.classCode })));
+    if (context.role) put(QUEUE, JSON.stringify(queue().map(event => event.role ? { alias: null, ...event } : { ...event, role: context.role, classCode: context.classCode, alias: context.alias })));
     if (!sessionTracked && context.role) {
       sessionTracked = true;
       const width = root.screen?.width || root.innerWidth || 1024;
@@ -44,7 +47,7 @@
   function flush() {
     if (!enabled() || !url() || !root.navigator?.sendBeacon) return false;
     const pending = queue();
-    const outbound = pending.filter(event => event.role === 'teacher').slice(0, 20);
+    const outbound = pending.filter(event => ['student', 'teacher'].includes(event.role)).slice(0, 20);
     if (!outbound.length) return false;
     try {
       const payload = JSON.stringify({ schemaVersion: 1, events: outbound });
@@ -65,7 +68,7 @@
       else if (typeof value === 'number' && Number.isFinite(value)) data[key] = value;
       else if (typeof value === 'boolean') data[key] = value;
     }
-    const event = { type, deviceId: deviceId(), role: context.role, classCode: context.classCode, at: new Date().toISOString(), ...data };
+    const event = { type, deviceId: deviceId(), role: context.role, classCode: context.classCode, alias: context.alias, at: new Date().toISOString(), ...data };
     put(QUEUE, JSON.stringify([...queue(), event].slice(-MAX)));
     if (queue().length >= 20) flush();
     return true;
@@ -95,7 +98,13 @@
     button.type = 'button'; button.style.cssText = 'min-height:48px;padding:8px 18px;border-radius:12px;background:white;color:#164e32;font:700 18px system-ui,sans-serif';
     button.addEventListener('click', () => setEnabled(!enabled()));
     bar.append(message, button);
-    root.document.body.append(bar);
+    const spacer = root.document.createElement('div');
+    spacer.setAttribute('aria-hidden', 'true');
+    root.document.body.append(spacer, bar);
+    const reserveSpace = () => { spacer.style.height = `${bar.getBoundingClientRect().height}px`; };
+    reserveSpace();
+    if (root.ResizeObserver) new root.ResizeObserver(reserveSpace).observe(bar);
+    else root.addEventListener?.('resize', reserveSpace);
     updateBanner();
     track('page_view', { page: root.location?.pathname?.split('/').pop() || 'index.html' });
     flush();
