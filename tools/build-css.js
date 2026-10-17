@@ -25,8 +25,8 @@ fs.writeFileSync(inputCss, `@tailwind base;\n@tailwind components;\n@tailwind ut
   fs.readFileSync(path.join(ROOT, 'public/assets/css/app.css'), 'utf8'));
 
 const out = path.join(ROOT, 'public/assets/css/tailwind.build.css');
-execFileSync(process.platform === 'win32' ? 'npx.cmd' : 'npx',
-  ['tailwindcss', '-c', tmpConfig, '-i', inputCss, '-o', out, '--minify'],
+execFileSync(process.execPath,
+  [require.resolve('tailwindcss/lib/cli.js'), '-c', tmpConfig, '-i', inputCss, '-o', out, '--minify'],
   { cwd: ROOT, stdio: 'inherit' });
 fs.rmSync(tmpConfig, { force: true }); fs.rmSync(inputCss, { force: true });
 console.log(`Đã tạo ${path.relative(ROOT, out)} (${(fs.statSync(out).size / 1024).toFixed(0)} KB)`);

@@ -162,7 +162,7 @@ let activeInputId = 'math-input-3';
   }
 
   // Gentle timer counter
-  let seconds = 342;
+  let seconds = 0;
   setInterval(() => {
     seconds++;
     const m = String(Math.floor(seconds / 60)).padStart(2, '0');

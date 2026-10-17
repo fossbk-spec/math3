@@ -7,7 +7,9 @@
   let round = 0, score = 0, caught = 0, finished = false, answer = null, timeLeft = 60;
 
   const questionEl = [...document.querySelectorAll('span')].find(e => /^\d+\s*:\s*\d+\s*=\s*\?$/.test(e.textContent.trim()));
-  const basketEl = [...document.querySelectorAll('span, div, p')].find(e => /Giỏ cá/.test(e.textContent) && e.children.length <= 3);
+  const countEl = document.getElementById('fish-count');
+  const scoreEl = document.getElementById('fish-score');
+  const timeEl = document.getElementById('fish-time');
   const dropBtn = document.getElementById('btn-drop-hook');
 
   // Nhận diện 4 chú cá: khối có tên "Cá ..." và 1 nhãn số
@@ -29,7 +31,8 @@
       if (el) el.textContent = String(val);
       if (fishes[i]) fishes[i].dataset.value = String(val);
     });
-    if (basketEl) basketEl.innerHTML = basketEl.innerHTML.replace(/Giỏ cá[^<]*/, `Giỏ cá ${caught} / ${TOTAL} con • Điểm ${score} • Vòng ${round}/${TOTAL}`);
+    if (countEl) countEl.textContent = String(caught);
+    if (scoreEl) scoreEl.textContent = String(score);
   }
 
   function finish() {
@@ -37,7 +40,14 @@
     window.MathGameScore.finish('game-cau-ca', score, startedAt);
   }
 
-  fishes.forEach(fish => fish.addEventListener('click', () => {
+  fishes.forEach(fish => {
+    fish.setAttribute('role', 'button');
+    fish.tabIndex = 0;
+    fish.setAttribute('aria-label', `Chọn ${fish.textContent.trim().replace(/\s+/g, ' ')}`);
+    fish.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); fish.click(); }
+    });
+    fish.addEventListener('click', () => {
     if (finished) return;
     if (Number(fish.dataset.value) === answer) {
       score += 30; caught++;
@@ -48,14 +58,20 @@
       fish.classList.add('translate-x-2');
       setTimeout(() => fish.classList.remove('translate-x-2'), 150);
     }
-  }));
+    });
+  });
 
   if (dropBtn) dropBtn.addEventListener('click', () => {
     const target = fishes.find(f => Number(f.dataset.value) === answer);
     if (target) target.click();
   });
 
-  setInterval(() => { if (!finished && --timeLeft <= 0) finish(); }, 1000);
+  setInterval(() => {
+    if (finished) return;
+    timeLeft--;
+    if (timeEl) timeEl.textContent = String(Math.max(0, timeLeft));
+    if (timeLeft <= 0) finish();
+  }, 1000);
   window.MathGameScore.addFinishButton('game-cau-ca', () => score, startedAt);
   newRound();
 })();

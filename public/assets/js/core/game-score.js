@@ -19,6 +19,8 @@ window.MathGameScore = {
     document.getElementById('game-result-panel')?.remove();
     const panel = document.createElement('div');
     panel.id = 'game-result-panel';
+    panel.setAttribute('role', 'status');
+    panel.setAttribute('aria-live', 'polite');
     panel.className = 'fixed inset-x-0 bottom-0 z-[90] flex justify-center p-4 pointer-events-none';
     panel.innerHTML = `
       <div class="pointer-events-auto w-full max-w-xl rounded-3xl bg-surface-container-lowest shadow-[0_16px_40px_rgba(0,97,39,0.25)] border-4 border-tertiary-fixed p-5 text-center">

@@ -95,6 +95,12 @@
 (function teacherEnhancements() {
   const tbody = document.getElementById('studentTableBody');
   if (!tbody) return;
+  tbody.replaceChildren();
+  ['Tiến Độ Làm Bài Theo Tuần', 'Chẩn Đoán Sư Phạm'].forEach((label) => {
+    const head = [...document.querySelectorAll('h2,h3')].find(el => el.textContent.trim().startsWith(label));
+    const section = head?.closest('section');
+    if (section) section.style.display = 'none';
+  });
 
   function groupOf(avg) {
     if (avg == null) return 'khá';
@@ -400,6 +406,8 @@
   tbody.closest('table')?.parentElement?.prepend(panel);
 
   function render(a) {
+    const studentCount = document.getElementById('teacher-students');
+    if (studentCount) studentCount.textContent = `${a.students} học sinh`;
     const maxDay = Math.max(1, ...a.last7.map(d => d.c));
     const bars = a.last7.length ? a.last7.map(d => `
       <div class="flex-1 flex flex-col items-center gap-1">

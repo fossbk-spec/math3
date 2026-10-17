@@ -11,9 +11,10 @@ window.MathApp.components = window.MathApp.components || {};
 window.MathApp.components.Navbar = {
   updateUser(user) {
     if (!user) return;
-    // Thay tên mẫu "Bảo Nam" bằng tên thật trong vùng header/footer
+    // Cập nhật bí danh và lớp trong header theo phiên đăng nhập.
     document.querySelectorAll('header span, header p').forEach((el) => {
-      if (el.textContent.trim() === 'Bảo Nam' || el.textContent.trim() === 'Nguyễn Bảo Nam') el.textContent = user.fullName;
+      if (el.textContent.trim() === 'Bạn Cú') el.textContent = user.fullName;
+      if (el.textContent.trim() === 'Lớp 3A' || el.textContent.trim().startsWith('Lớp 3A •')) el.textContent = `Lớp ${user.className || '3A'}`;
     });
     const header = document.querySelector('header');
     if (!header || header.querySelector('#btn-logout')) return;
@@ -21,7 +22,8 @@ window.MathApp.components.Navbar = {
     btn.id = 'btn-logout';
     btn.type = 'button';
     btn.title = `Đăng xuất (${user.fullName})`;
-    btn.className = 'ml-1 w-10 h-10 shrink-0 rounded-full bg-surface-container hover:bg-error-container text-on-surface-variant hover:text-on-error-container flex items-center justify-center transition-all';
+    btn.setAttribute('aria-label', `Đăng xuất (${user.fullName})`);
+    btn.className = 'ml-1 min-w-12 min-h-12 shrink-0 rounded-full bg-surface-container hover:bg-error-container text-on-surface-variant hover:text-on-error-container flex items-center justify-center transition-colors';
     btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">logout</span>';
     btn.addEventListener('click', async () => {
       await window.MathAPI.logout();
