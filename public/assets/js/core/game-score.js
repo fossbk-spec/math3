@@ -4,15 +4,15 @@
  * Server cộng sao theo phần điểm vượt kỷ lục cũ của chính học sinh đó.
  */
 window.MathGameScore = {
-  async finish(gameId, score, startedAt) {
+  async finish(gameId, score, startedAt, { showResult = true } = {}) {
     const durationSec = startedAt ? Math.round((Date.now() - startedAt) / 1000) : 0;
     if (window.MATH_DEMO === true) window.MathAnalytics?.track('game_end', { gameId, score, durationSec });
     try {
       const r = await window.MathAPI.post('/api/game-scores', { gameId, score, durationSec });
-      this.showResult(r);
+      if (showResult) this.showResult(r);
       return r;
     } catch (err) {
-      this.showResult({ score, error: err.message });
+      if (showResult) this.showResult({ score, error: err.message });
       return null;
     }
   },

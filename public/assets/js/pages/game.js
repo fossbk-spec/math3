@@ -1,79 +1,120 @@
-/* Mini-game 1: Bắn Bóng Phép Tính (Đợt 2 — chơi thật nhiều vòng + lưu điểm)
- * Giữ nguyên giao diện/bóng bay gốc; mỗi vòng sinh phép nhân mới, đáp án xáo trộn.
- * Điểm: đúng +30. Hết 10 vòng hoặc hết 60 giây -> gửi điểm lên server. */
+/* M3: Bóng bay dùng bộ sinh Đố nhanh chung với Node và bản demo. */
 (function balloonGame() {
-  const startedAt = Date.now();
-  const TOTAL_ROUNDS = 10;
-  let round = 0, score = 0, finished = false, timeLeft = 60;
-  let currentAnswer = null;
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const form = byId('quick-quiz-settings');
+  const stage = byId('quick-quiz-stage');
+  const results = byId('quick-quiz-results');
+  const balloons = [...document.querySelectorAll('[data-quiz-option]')];
+  let startedAt, deadline, timer, transition;
+  let settings, random, current, recent, mistakes;
+  let score = 0, answered = 0, active = false, locked = true;
 
-  const balloons = [...document.querySelectorAll('button[onclick*="handleBalloonClick"]')];
-  const scoreVal = document.getElementById('score-val');
-  const currentScoreEl = document.getElementById('game-current');
-  const toast = document.getElementById('game-toast');
-  const countdown = document.getElementById('countdown-val');
-  if (scoreVal) scoreVal.innerText = '0';
+  function lock(value) {
+    locked = value;
+    balloons.forEach(btn => { btn.disabled = value; });
+  }
 
-  const questionEl = [...document.querySelectorAll('span, div, p')].find(e => /^\d+\s*×\s*\d+\s*=\s*\?$/.test(e.textContent.trim()) && e.children.length === 0);
-  const roundEl = [...document.querySelectorAll('span, div, p')].find(e => /^Vòng \d+\/10$/.test(e.textContent.trim()));
-
-  function newRound() {
-    if (round >= TOTAL_ROUNDS) return finish();
-    round++;
-    const a = 6 + Math.floor(Math.random() * 4);       // bảng 6..9
-    const b = 2 + Math.floor(Math.random() * 8);       // ×2..×9
-    currentAnswer = a * b;
-    if (questionEl) questionEl.textContent = `${a} × ${b} = ?`;
-    if (roundEl) roundEl.textContent = `Vòng ${round}/${TOTAL_ROUNDS}`;
-    const options = new Set([currentAnswer]);
-    while (options.size < 4) options.add(currentAnswer + [-12, -6, -3, 3, 6, 12][Math.floor(Math.random() * 6)]);
-    [...options].sort(() => Math.random() - 0.5).forEach((val, i) => {
-      const btn = balloons[i];
-      if (!btn) return;
-      btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
-      btn.removeAttribute('onclick');
-      const numSpan = [...btn.querySelectorAll('span')].find(s => /^\d+$/.test(s.textContent.trim()));
-      if (numSpan) numSpan.textContent = String(val); else btn.textContent = String(val);
-      btn.dataset.value = String(val);
+  function nextRound() {
+    if (!active) return;
+    if (Date.now() >= deadline) return finish();
+    current = window.MathQuickQuiz.nextGameQuestion(settings, recent, random);
+    recent.push(current.key);
+    recent = recent.slice(-10);
+    byId('quiz-question').textContent = current.stem;
+    byId('quiz-round').textContent = `Câu ${answered + 1}`;
+    balloons.forEach((btn, i) => {
+      btn.dataset.value = String(current.options[i]);
+      btn.querySelector('[data-quiz-value]').textContent = String(current.options[i]);
     });
-    if (toast) { toast.classList.add('hidden'); toast.classList.remove('flex'); }
+    byId('game-toast').hidden = true;
+    lock(false);
+    balloons[0].focus();
   }
 
-  // Giữ tên hàm cũ để tương thích, nhưng logic dùng dataset mới
-  window.handleBalloonClick = function (btn) {
-    if (finished) return;
-    const correct = Number(btn.dataset.value) === currentAnswer;
-    if (correct) {
-      score += 30;
-      if (scoreVal) scoreVal.innerText = String(score);
-      if (currentScoreEl) currentScoreEl.textContent = String(score);
-      btn.classList.add('scale-125');
-      setTimeout(() => btn.classList.remove('scale-125'), 150);
-      if (toast) { toast.classList.remove('hidden'); toast.classList.add('flex'); }
-      setTimeout(newRound, 650);
-    } else {
-      btn.classList.add('translate-x-2');
-      setTimeout(() => btn.classList.remove('translate-x-2'), 120);
+  function tick() {
+    const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+    byId('countdown-val').textContent = String(left);
+    if (!left) finish();
+  }
+
+  async function finish() {
+    if (!active) return;
+    active = false;
+    lock(true);
+    clearInterval(timer);
+    clearTimeout(transition);
+    stage.hidden = true;
+    results.hidden = false;
+    byId('quiz-result-summary').textContent = `Em được ${score} điểm qua ${answered} câu đã trả lời.`;
+    const list = byId('quiz-mistakes');
+    list.replaceChildren();
+    mistakes.forEach(({ answer, fact }) => {
+      const item = document.createElement('li');
+      item.textContent = `Em chọn ${answer}. Phép tính đúng: ${fact}.`;
+      list.appendChild(item);
+    });
+    if (!mistakes.length) {
+      const item = document.createElement('li');
+      item.textContent = answered ? 'Em không có câu trả lời sai trong ván này!' : 'Em chưa trả lời câu nào. Hãy thử một ván mới nhé!';
+      list.appendChild(item);
     }
-  };
-  balloons.forEach(btn => btn.addEventListener('click', () => window.handleBalloonClick(btn)));
-  window.nextMathRound = newRound;
-
-  function finish() {
-    if (finished) return; finished = true;
-    window.MathGameScore.finish('game-bong-bay', score, startedAt);
+    byId('quiz-result-title').focus();
+    byId('quiz-save-status').textContent = 'Đang lưu điểm…';
+    byId('quiz-replay').disabled = true;
+    const result = await window.MathGameScore.finish('game-bong-bay', score, startedAt, { showResult: false });
+    byId('quiz-save-status').textContent = result ? 'Đã lưu điểm ván chơi của em.' : 'Chưa lưu được điểm. Em kiểm tra đăng nhập hoặc kết nối nhé!';
+    if (result) byId('game-best').textContent = String(result.bestScore);
+    byId('quiz-replay').disabled = false;
   }
-  setInterval(() => {
-    if (finished) return;
-    if (countdown && timeLeft > 0) { timeLeft--; countdown.textContent = `${timeLeft} giây`; if (timeLeft === 0) finish(); }
-  }, 1000);
-  window.MathGameScore.addFinishButton('game-bong-bay', () => score, startedAt);
+
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (active) return;
+    settings = {
+      tables: byId('quiz-tables').value === 'mixed' ? 'mixed' : Number(byId('quiz-tables').value),
+      ops: byId('quiz-ops').value,
+      durationSec: Number(byId('quiz-duration').value),
+    };
+    startedAt = Date.now();
+    deadline = startedAt + settings.durationSec * 1000;
+    random = window.MathQuickQuiz.seededRandom(startedAt);
+    recent = []; mistakes = []; score = 0; answered = 0; active = true;
+    byId('score-val').textContent = '0';
+    byId('game-current').textContent = '0';
+    form.hidden = true;
+    results.hidden = true;
+    stage.hidden = false;
+    nextRound();
+    tick();
+    timer = setInterval(tick, 250);
+  });
+
+  balloons.forEach(btn => btn.addEventListener('click', () => {
+    if (!active || locked) return;
+    if (Date.now() >= deadline) return finish();
+    lock(true);
+    answered++;
+    const answer = Number(btn.dataset.value);
+    const correct = answer === current.answer;
+    if (correct) score += 30;
+    else mistakes.push({ answer, fact: current.fact });
+    byId('score-val').textContent = String(score);
+    byId('game-current').textContent = String(score);
+    byId('quiz-feedback').textContent = correct ? 'Chính xác! +30 điểm.' : 'Mình sẽ cùng xem lại phép tính này sau ván nhé!';
+    byId('game-toast').hidden = false;
+    transition = setTimeout(nextRound, 650);
+  }));
+  byId('quiz-finish').addEventListener('click', finish);
+  byId('quiz-replay').addEventListener('click', () => {
+    results.hidden = true;
+    form.hidden = false;
+    byId('quiz-tables').focus();
+  });
   document.addEventListener('mathapp:user-ready', async () => {
     try {
       const { games } = await window.MathAPI.get('/api/me/game-scores');
-      const bestEl = document.getElementById('game-best');
-      if (bestEl) bestEl.textContent = String(games['game-bong-bay']?.best || 0);
-    } catch { /* Điểm ván vẫn chơi được nếu chưa tải được kỷ lục. */ }
+      byId('game-best').textContent = String(games['game-bong-bay']?.best || 0);
+    } catch { /* Vẫn chơi được khi chưa tải được kỷ lục cá nhân. */ }
   });
-  newRound();
 })();
