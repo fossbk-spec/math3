@@ -8,58 +8,61 @@ tailwind.config = {
   "theme": {
     "extend": {
       "colors": {
-        "secondary-fixed-dim": "#6ddd81",
-        "on-surface-variant": "#3f493f",
+        "secondary-fixed-dim": "#86efac",
+        "on-surface-variant": "#475569",
         "inverse-surface": "#2e3130",
-        "secondary": "#006e2c",
+        "secondary": "#14532d",
         "on-secondary-fixed-variant": "#005320",
         "inverse-on-surface": "#eff1ef",
-        "surface-bright": "#f8faf8",
+        "surface-bright": "#ffffff",
         "on-primary-container": "#b4ffba",
         "on-primary": "#ffffff",
-        "surface-container-low": "#f2f4f2",
-        "surface-dim": "#d8dad9",
-        "on-background": "#191c1b",
+        "surface-container-low": "#f0fdf4",
+        "surface-dim": "#bbf7d0",
+        "on-background": "#0f172a",
         "on-tertiary-fixed-variant": "#5b4300",
         "on-error-container": "#93000a",
-        "background": "#f8faf8",
+        "background": "#f0fdf4",
         "error": "#ba1a1a",
-        "surface-container": "#eceeec",
+        "surface-container": "#dcfce7",
         "on-error": "#ffffff",
-        "tertiary-fixed-dim": "#f7be23",
-        "surface-tint": "#056d2e",
+        "tertiary-fixed-dim": "#fbbf24",
+        "surface-tint": "#15803d",
         "on-primary-fixed-variant": "#005320",
-        "surface-variant": "#e1e3e1",
-        "outline-variant": "#bfcabb",
-        "surface-container-high": "#e6e9e7",
-        "surface-container-highest": "#e1e3e1",
+        "surface-variant": "#dcfce7",
+        "outline-variant": "#86efac",
+        "surface-container-high": "#dcfce7",
+        "surface-container-highest": "#dcfce7",
         "on-primary-fixed": "#002109",
         "on-secondary": "#ffffff",
-        "on-secondary-container": "#00722f",
-        "tertiary-container": "#886600",
-        "secondary-container": "#86f898",
-        "tertiary-fixed": "#ffdf9d",
-        "surface": "#f8faf8",
-        "primary-fixed": "#9cf7a7",
+        "on-secondary-container": "#14532d",
+        "tertiary-container": "#f59e0b",
+        "secondary-container": "#dcfce7",
+        "tertiary-fixed": "#fef3c7",
+        "surface": "#ffffff",
+        "primary-fixed": "#bbf7d0",
         "on-tertiary-fixed": "#251a00",
-        "on-surface": "#191c1b",
+        "on-surface": "#0f172a",
         "error-container": "#ffdad6",
         "on-tertiary": "#ffffff",
-        "tertiary": "#6a4f00",
+        "tertiary": "#92400e",
         "on-tertiary-container": "#ffebc7",
-        "secondary-fixed": "#89fa9b",
+        "secondary-fixed": "#dcfce7",
         "surface-container-lowest": "#ffffff",
-        "outline": "#6f7a6e",
-        "primary": "#006127",
+        "outline": "#475569",
+        "primary": "#15803d",
         "inverse-primary": "#80da8d",
         "primary-fixed-dim": "#80da8d",
-        "primary-container": "#1e7b3a",
+        "primary-container": "#14532d",
+        "sky": "#2563eb",
+        "sun": "#f59e0b",
+        "berry": "#ec4899",
         "on-secondary-fixed": "#002108"
       },
       "borderRadius": {
         "DEFAULT": "1rem",
-        "lg": "2rem",
-        "xl": "3rem",
+        "lg": "1.25rem",
+        "xl": "1.5rem",
         "full": "9999px"
       },
       "spacing": {
@@ -75,40 +78,40 @@ tailwind.config = {
       },
       "fontFamily": {
         "headline-lg": [
-          "Quicksand"
+          "Nunito"
         ],
         "headline-md": [
-          "Quicksand"
+          "Nunito"
         ],
         "label-lg": [
-          "Quicksand"
+          "Nunito"
         ],
         "body-lg": [
           "Nunito Sans"
         ],
         "headline-lg-mobile": [
-          "Quicksand"
+          "Nunito"
         ],
         "body-md": [
           "Nunito Sans"
         ],
         "label-md": [
-          "Quicksand"
+          "Nunito"
         ],
         "label-sm": [
-          "Quicksand"
+          "Nunito"
         ],
         "headline-xl-mobile": [
-          "Quicksand"
+          "Nunito"
         ],
         "body-sm": [
           "Nunito Sans"
         ],
         "headline-sm": [
-          "Quicksand"
+          "Nunito"
         ],
         "headline-xl": [
-          "Quicksand"
+          "Nunito"
         ]
       },
       "fontSize": {
@@ -116,21 +119,21 @@ tailwind.config = {
           "32px",
           {
             "lineHeight": "44px",
-            "fontWeight": "700"
+            "fontWeight": "800"
           }
         ],
         "headline-md": [
           "24px",
           {
             "lineHeight": "34px",
-            "fontWeight": "700"
+            "fontWeight": "800"
           }
         ],
         "label-lg": [
           "18px",
           {
             "lineHeight": "26px",
-            "fontWeight": "700"
+            "fontWeight": "800"
           }
         ],
         "body-lg": [
@@ -144,7 +147,7 @@ tailwind.config = {
           "26px",
           {
             "lineHeight": "36px",
-            "fontWeight": "700"
+            "fontWeight": "800"
           }
         ],
         "body-md": [
@@ -172,7 +175,7 @@ tailwind.config = {
           "30px",
           {
             "lineHeight": "40px",
-            "fontWeight": "700"
+            "fontWeight": "800"
           }
         ],
         "body-sm": [
@@ -186,14 +189,14 @@ tailwind.config = {
           "20px",
           {
             "lineHeight": "30px",
-            "fontWeight": "700"
+            "fontWeight": "800"
           }
         ],
         "headline-xl": [
           "40px",
           {
             "lineHeight": "52px",
-            "fontWeight": "700"
+            "fontWeight": "800"
           }
         ]
       }

@@ -147,4 +147,10 @@
   window.MathAPI.get('/api/question-sets/bai-15-kiem-tra/questions')
     .then(({ questions: qs }) => { questions = qs; renderQuestion(); })
     .catch((err) => { if (timerElement) timerElement.textContent = '--:--'; console.warn('Không tải được đề thi:', err.message); });
+  document.addEventListener('mathapp:user-ready', async () => {
+    try {
+      const progress = await window.MathAPI.get('/api/me/progress');
+      document.getElementById('exam-stars').textContent = `${Number(progress.totalStars || 0).toLocaleString('vi-VN')} sao`;
+    } catch (_) { document.getElementById('exam-stars').textContent = 'Chưa tải được sao'; }
+  }, { once: true });
 })();

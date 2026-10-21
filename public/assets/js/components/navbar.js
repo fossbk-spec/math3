@@ -19,6 +19,31 @@ window.MathApp.components.Navbar = {
         link.style.cssText = 'display:inline-flex;align-items:center;min-height:48px;padding:8px 16px;font-size:18px';
         nav.append(link);
       }
+      const headerRow = ['index', 'lesson', 'practice', 'exercise'].includes(document.body.dataset.page)
+        ? document.querySelector('header > div') : null;
+      if (headerRow && !headerRow.querySelector('.student-menu')) {
+        const menu = document.createElement('details');
+        menu.className = 'student-menu';
+        const summary = document.createElement('summary');
+        summary.textContent = '☰ Menu';
+        menu.append(summary);
+        const links = document.createElement('nav');
+        links.setAttribute('aria-label', 'Điều hướng học sinh');
+        for (const [label, href] of [
+          ['Mục Lục SGK', 'index.html'],
+          ['Luyện tập thích ứng', 'practice.html'],
+          ['Phiếu bài tập', 'exercise.html'],
+          ['Đấu Trường Toán Học', 'game.html'],
+          ['AI Safe & Smart', 'ai-safe.html'],
+        ]) {
+          const link = document.createElement('a');
+          link.href = href;
+          link.textContent = label;
+          links.append(link);
+        }
+        menu.append(links);
+        headerRow.append(menu);
+      }
     }
     if (user.role === 'teacher') {
       const nav = document.querySelector('header nav');
@@ -50,7 +75,8 @@ window.MathApp.components.Navbar = {
       await window.MathAPI.logout();
       location.href = 'login.html';
     });
-    (header.querySelector('.flex.items-center.gap-space-sm:last-of-type') || header.firstElementChild || header).appendChild(btn);
+    const actions = document.body.dataset.page === 'exam' ? header.querySelector('#submit-exam-btn')?.parentElement : null;
+    (actions || header.querySelector('.flex.items-center.gap-space-sm:last-of-type') || header.firstElementChild || header).appendChild(btn);
   },
 };
 
@@ -59,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!nav) return;
   const link = document.createElement('a');
   link.href = 'ai-safe.html';
-  link.className = 'font-label-md text-label-md px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container';
+  link.className = 'font-label-md text-lg px-4 py-2 rounded-full text-on-surface-variant hover:text-on-surface hover:bg-surface-container min-h-12 inline-flex items-center';
   link.textContent = 'AI Safe & Smart';
   nav.append(link);
 });
