@@ -30,7 +30,11 @@ window.MathApp.components.Navbar = {
     }
     // Cập nhật bí danh và lớp trong header theo phiên đăng nhập.
     document.querySelectorAll('header span, header p').forEach((el) => {
-      if (el.textContent.trim() === 'Bạn Cú') el.textContent = user.fullName;
+      if (el.textContent.trim() === 'Bạn Cú') {
+        el.textContent = `Chào ${user.fullName}`;
+        el.style.fontSize = '18px'; el.style.overflowWrap = 'anywhere';
+        el.style.maxWidth = '240px'; el.style.lineHeight = '1.2';
+      }
       if (el.textContent.trim() === 'Lớp 3A' || el.textContent.trim().startsWith('Lớp 3A •')) el.textContent = `Lớp ${user.className || '3A'}`;
     });
     const header = document.querySelector('header');

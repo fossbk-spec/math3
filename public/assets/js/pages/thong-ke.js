@@ -39,7 +39,7 @@
     const fill = document.createElement('span'); fill.style.width = `${Math.max(0, Math.min(100, max ? num(item?.value) / max * 100 : 0))}%`;
     bar.append(fill); wrap.append(bar); return wrap;
   }
-  function render(data, document) {
+  function render(data, document, names = new Map()) {
     const host = document.getElementById('stats-blocks'); host.replaceChildren();
     for (const [title, groups] of definitions) {
       const card = document.createElement('section'); card.className = 'card';
@@ -70,37 +70,54 @@
     if (!students.length) {
       const empty = document.createElement('p'); empty.className = 'text-lg mt-5'; empty.textContent = 'Chưa có dữ liệu theo từng em.'; card.append(empty);
     }
-    for (const student of students) {
-      const name = document.createElement('h3'); name.className = 'mt-5 mb-2';
-      name.textContent = `${student.alias || 'Chưa chọn bí danh'} · Lớp ${student.classCode || 'chưa chọn'}`;
-      card.append(name);
-      card.append(row(document, 'Số lượt', student.attempts, 'count', Math.max(1, num(student.attempts?.value))));
-      card.append(row(document, 'Điểm trung bình', student.avgScorePercent, 'percent', 100));
-      card.append(row(document, 'Lượt 1', { value: student.firstLast?.first, n: student.firstLast?.n }, 'percent', 100));
-      card.append(row(document, 'Lượt cuối', { value: student.firstLast?.last, n: student.firstLast?.n }, 'percent', 100));
+    const table = document.createElement('table'); table.style.cssText = 'width:100%;font-size:18px;text-align:left';
+    const header = document.createElement('tr');
+    for (const label of ['Mã / bí danh', 'Họ tên', 'Số lượt', 'Điểm TB', 'Lượt 1', 'Lượt cuối']) {
+      const th = document.createElement('th'); th.textContent = label; th.scope = 'col'; header.append(th);
     }
+    const thead = document.createElement('thead'); thead.append(header); table.append(thead);
+    const tbody = document.createElement('tbody');
+    for (const student of students) {
+      const tr = document.createElement('tr');
+      const id = String(student.id || student.alias || '');
+      for (const value of [`${student.alias || id} · Lớp ${student.classCode || 'chưa chọn'}`, names.get(id) || 'Chưa mở danh sách',
+        `${format(student.attempts?.value, 'count')} · n=${num(student.attempts?.n)}`, `${format(student.avgScorePercent?.value, 'percent')} · n=${num(student.avgScorePercent?.n)}`,
+        `${format(student.firstLast?.first, 'percent')} · n=${num(student.firstLast?.n)}`, `${format(student.firstLast?.last, 'percent')} · n=${num(student.firstLast?.n)}`]) {
+        const td = document.createElement('td'); td.textContent = value; td.style.padding = '8px'; tr.append(td);
+      }
+      tbody.append(tr);
+    }
+    table.append(tbody);
+    const scroll = document.createElement('div'); scroll.style.overflowX = 'auto'; scroll.append(table); card.append(scroll);
     host.append(card);
   }
-  function csvRows(data) {
-    const rows = [['Khối', 'Chỉ số', 'Giá trị', 'n', 'Từ ngày', 'Đến ngày']];
+  function csvRows(data, names = new Map()) {
+    const rows = [['Khối', 'Chỉ số', 'Giá trị', 'n', 'Từ ngày', 'Đến ngày', 'Mã học sinh', 'Họ tên']];
     for (const [title, groups] of definitions) for (const [label, path] of groups) {
       const value = get(data, path);
       const items = Array.isArray(value) ? value : path === 'learning.firstLast' ? [
         { label: 'Lượt 1', value: value?.first, n: value?.n }, { label: 'Lượt cuối', value: value?.last, n: value?.n }] : [value];
-      for (const item of items) rows.push([title, item?.label || label, item?.value == null ? '' : num(item.value), num(item?.n), data.period?.from || '', data.period?.to || '']);
+      for (const item of items) rows.push([title, item?.label || label, item?.value == null ? '' : num(item.value), num(item?.n), data.period?.from || '', data.period?.to || '', '', '']);
     }
     for (const student of data.students || []) {
       const label = `${student.alias || 'Chưa chọn bí danh'} · Lớp ${student.classCode || 'chưa chọn'}`;
       for (const [metric, item] of [['Số lượt', student.attempts], ['Điểm trung bình', student.avgScorePercent],
         ['Lượt 1', { value: student.firstLast?.first, n: student.firstLast?.n }], ['Lượt cuối', { value: student.firstLast?.last, n: student.firstLast?.n }]]) {
-        rows.push(['Theo từng em', `${label} · ${metric}`, item?.value == null ? '' : num(item.value), num(item?.n), data.period?.from || '', data.period?.to || '']);
+        rows.push(['Theo từng em', `${label} · ${metric}`, item?.value == null ? '' : num(item.value), num(item?.n), data.period?.from || '', data.period?.to || '', student.id || student.alias || '', names.get(String(student.id || student.alias || '')) || '']);
       }
     }
-    return rows.map(row => row.map(value => `"${String(value).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    return rows.map(row => row.map(value => {
+      const text = String(value);
+      return `"${(/^[\s]*[=+\-@]/.test(text) ? "'" : '') + text.replace(/"/g, '""')}"`;
+    }).join(',')).join('\r\n');
   }
   function init(root) {
     const document = root.document;
     let data;
+    let names = new Map();
+    root.MathClassroom.picker(root, document.getElementById('stats-blocks').parentElement, roster => {
+      names = roster; if (data) render(data, document, names);
+    });
     const feedbackKey = 'math3_teacher_feedback_v1';
     const readFeedback = () => { try { const value = JSON.parse(root.localStorage.getItem(feedbackKey) || '[]'); return Array.isArray(value) ? value : []; } catch { return []; } };
     const count = () => {
@@ -123,7 +140,7 @@
           data = await response.json(); source.textContent = `DỮ LIỆU MẪU · ${periodText(data)} · n là mẫu số minh họa`;
         }
         if (data.schemaVersion !== 1) throw new Error('Định dạng số liệu chưa được hỗ trợ.');
-        render(data, document);
+        render(data, document, names);
       } catch (error) { source.textContent = `Chưa tải được thống kê: ${error.message}`; }
     });
     const form = document.getElementById('teacher-feedback');
@@ -145,7 +162,7 @@
     });
     document.getElementById('download-csv').addEventListener('click', () => {
       if (!data) return;
-      const href = root.URL.createObjectURL(new root.Blob(['\ufeff', csvRows(data)], { type: 'text/csv;charset=utf-8' }));
+      const href = root.URL.createObjectURL(new root.Blob(['\ufeff', csvRows(data, names)], { type: 'text/csv;charset=utf-8' }));
       const link = document.createElement('a'); link.href = href; link.download = 'thong-ke-tong-hop.csv'; link.click();
       root.setTimeout(() => root.URL.revokeObjectURL(href), 1000);
     });

@@ -108,33 +108,46 @@
     if (avg < 60) return 'can-ho-tro';
     return 'khá';
   }
-  function rowHtml(s) {
-    const avg = s.avg_score;
-    const initials = s.full_name.split(' ').map(w => w[0]).slice(-2).join('').toUpperCase();
-    const status = avg == null ? 'Chưa có lượt làm bài' : avg >= 90 ? 'Xuất sắc' : avg < 60 ? 'Cần bồi dưỡng' : 'Đạt chuẩn';
-    const note = avg == null ? 'Chưa có dữ liệu' : avg < 60 ? 'Cần theo dõi thêm' : avg >= 90 ? 'Nắm vững kiến thức' : 'Tiếp tục rèn luyện';
-    return `<td class="py-3 px-4"><div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-full bg-secondary-fixed text-on-secondary-fixed font-headline-sm flex items-center justify-center font-bold text-label-md">${initials}</div>
-        <div><p class="font-headline-sm text-label-md text-on-surface">${s.full_name}</p>
-        <span class="text-on-surface-variant font-label-sm text-[12px] font-bold">${s.username} • Lớp ${s.class_name || ''} • ${s.total_stars} sao</span></div></div></td>
-      <td class="py-3 px-3"><span class="inline-flex px-2.5 py-1 rounded-full bg-surface-container font-label-sm text-label-sm font-bold">${status}</span></td>
-      <td class="py-3 px-3 text-center"><span class="font-headline-sm text-label-lg font-extrabold">${avg == null ? '—' : avg}</span></td>
-      <td class="py-3 px-3 text-center font-bold text-on-surface-variant">${s.attempts_count} lượt</td>
-      <td class="py-3 px-4"><span class="inline-block px-2.5 py-1 rounded-lg bg-surface-container text-on-surface-variant font-label-sm text-[13px]">${note}</span></td>
-      <td class="py-3 px-4 text-center"><button type="button" class="px-3 py-1.5 rounded-xl bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold"
-        onclick="resetStudentPassword(${s.id}, '${s.full_name.replace(/'/g, '')}')">Đặt lại MK</button></td>`;
+  let names = new Map(), studentRows = [];
+  function renderStudents() {
+    const rows = studentRows.map(s => ({ ...s }));
+    for (const [id] of names) if (!rows.some(s => String(s.id) === id)) rows.push({ id, full_name: id, class_name: '3A2', avg_score: null, attempts_count: 0, total_stars: 0 });
+    tbody.replaceChildren();
+    for (const s of rows) {
+      const name = names.get(String(s.id)) || s.full_name || String(s.id);
+      const tr = document.createElement('tr'); tr.className = 'student-row';
+      tr.dataset.group = groupOf(s.avg_score); tr.dataset.name = name.toLowerCase();
+      const status = s.avg_score == null ? 'Chưa có lượt làm bài' : s.avg_score >= 90 ? 'Xuất sắc' : s.avg_score < 60 ? 'Cần bồi dưỡng' : 'Đạt chuẩn';
+      const note = s.avg_score == null ? 'Chưa có dữ liệu' : s.avg_score < 60 ? 'Cần theo dõi thêm' : s.avg_score >= 90 ? 'Nắm vững kiến thức' : 'Tiếp tục rèn luyện';
+      for (const value of [name, status, s.avg_score ?? '—', `${s.attempts_count} lượt`, note]) {
+        const td = document.createElement('td'); td.className = 'py-3 px-4'; td.textContent = value; tr.append(td);
+      }
+      const action = document.createElement('td');
+      if (typeof s.id === 'number') {
+        const button = document.createElement('button'); button.type = 'button'; button.textContent = 'Đặt lại MK';
+        button.className = 'min-h-12 px-3 rounded-xl bg-tertiary-fixed';
+        button.addEventListener('click', () => window.resetStudentPassword(s.id, name)); action.append(button);
+      } else action.textContent = 'Mật khẩu do giáo viên cấp';
+      tr.append(action); tbody.append(tr);
+    }
   }
-
+  const rosterHost = tbody.closest('table').parentElement;
+  tbody.closest('table').querySelector('th').textContent = 'Họ tên / mã học sinh';
+  window.MathClassroom.picker(window, rosterHost, roster => { names = roster; renderStudents(); });
+  const exportButton = document.createElement('button'); exportButton.type = 'button'; exportButton.textContent = 'Tải CSV học sinh';
+  exportButton.style.cssText = 'min-height:48px;padding:10px 18px;font-size:18px;background:#164e32;color:white;border-radius:12px';
+  rosterHost.prepend(exportButton);
+  exportButton.addEventListener('click', () => {
+    const rows = studentRows.map(s => [s.id, names.get(String(s.id)) || s.full_name, s.class_name, s.attempts_count, s.avg_score ?? '']);
+    for (const [id, name] of names) if (!studentRows.some(s => String(s.id) === id)) rows.push([id, name, '3A2', 0, '']);
+    const href = URL.createObjectURL(new Blob(['\uFEFF', window.MathClassroom.csv([['Mã học sinh', 'Họ tên', 'Lớp', 'Số lượt', 'Điểm TB'], ...rows])], { type: 'text/csv;charset=utf-8' }));
+    const link = document.createElement('a'); link.href = href; link.download = 'hoc-sinh.csv'; link.click();
+    setTimeout(() => URL.revokeObjectURL(href), 1000);
+  });
   async function loadStudents() {
     try {
       const { students } = await window.MathAPI.get('/api/teacher/students');
-      tbody.innerHTML = students.map(s => {
-        const tr = document.createElement('tr');
-        tr.className = 'student-row hover:bg-surface-container-low/60 transition-colors';
-        tr.dataset.group = groupOf(s.avg_score); tr.dataset.name = s.full_name.toLowerCase();
-        tr.innerHTML = rowHtml(s);
-        return tr.outerHTML;
-      }).join('');
+      studentRows = students; renderStudents();
     } catch (err) { console.warn('Không tải được danh sách học sinh:', err.message); }
   }
 

@@ -8,9 +8,11 @@ if (window.MATH_DEMO === true) {
   panel.className = 'space-y-3 my-5';
   panel.innerHTML = '<button type="button" data-demo-role="student" class="w-full min-h-14 p-3 rounded-2xl bg-primary text-on-primary text-lg font-bold">Vào với vai Học sinh (Bạn Cú)</button><button type="button" data-demo-role="teacher" class="w-full min-h-14 p-3 rounded-2xl bg-secondary text-on-secondary text-lg font-bold">Vào với vai Giáo viên</button><button type="button" id="demo-reset" class="w-full min-h-12 p-3 rounded-2xl bg-surface-container text-on-surface text-lg">Xoá dữ liệu demo</button>';
   form.before(panel);
-  form.hidden = true;
-  const roleTabs = document.getElementById('btnRoleStudent')?.parentElement?.parentElement;
-  if (roleTabs) roleTabs.hidden = true;
+  form.style.fontSize = '18px';
+  form.querySelectorAll('label,input,select,button').forEach(el => { el.style.fontSize = '18px'; if (el.matches('input,select,button')) el.style.minHeight = '48px'; });
+  document.querySelector('#toastMessage p').style.fontSize = '18px';
+  document.getElementById('formSubtitle').style.fontSize = '18px';
+  document.getElementById('formSubtitle').textContent = 'Điền tên đăng nhập và mật khẩu do thầy cô cấp, hoặc chọn tài khoản mẫu bên dưới.';
   panel.addEventListener('click', async event => {
     const role = event.target.dataset.demoRole;
     if (event.target.id === 'demo-reset') {
@@ -108,13 +110,16 @@ if (window.MATH_DEMO === true) {
     const password = passField.value;
     if (!username || !password) { showToast('Em điền tên đăng nhập và mật khẩu nhé!'); return; }
     showToast('Đang mở cánh cổng Vườn Toán Lớp 3...');
+    const submit = document.querySelector('#authForm button[type="submit"]');
+    if (submit?.disabled) return;
+    if (submit) submit.disabled = true;
     try {
       const { user } = await window.MathAPI.post('/api/auth/login', { username, password, role: selectedRole });
       showToast(`Chào ${user.fullName}! Đang vào Vườn Toán...`);
       setTimeout(() => { location.href = user.role === 'teacher' ? 'schedule.html' : 'index.html'; }, 600);
     } catch (err) {
       showToast(err.message);
-    }
+    } finally { if (submit) submit.disabled = false; }
   }
 
   // Toast Functionality

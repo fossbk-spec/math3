@@ -31,12 +31,13 @@
   let context = { role: null, classCode: null, alias: null };
   let sessionTracked = false;
   function setContext(user) {
+    const classId = user?.role === 'student' && /^3A2-\d{2}$/.test(String(user?.id || '')) && user.className === '3A2' ? user.id : null;
     const displayName = String(user?.alias || user?.fullName || '').trim();
     const pseudonym = /^Bạn (Cú|Thỏ|Gấu|Mèo|Sóc|Voi|Cáo|Hươu|Rùa|Nhím|Ếch|Ong|Bướm|Gà|Vịt|Chim|Cá Heo)$/u.test(displayName);
     context = {
       role: ['student', 'teacher'].includes(user?.role) ? user.role : null,
       classCode: /^[\p{L}\p{N}-]{1,12}$/u.test(String(user?.className || '')) ? user.className : null,
-      alias: pseudonym || (user?.role === 'teacher' && displayName === 'Cô giáo Demo') ? displayName : null,
+      alias: classId || (pseudonym || (user?.role === 'teacher' && displayName === 'Cô giáo Demo') ? displayName : null),
     };
     if (context.role) put(QUEUE, JSON.stringify(queue().map(event => event.role ? { alias: null, ...event } : { ...event, role: context.role, classCode: context.classCode, alias: context.alias })));
     if (!sessionTracked && context.role) {

@@ -1,4 +1,8 @@
-document.addEventListener('mathapp:user-ready', async () => {
+document.addEventListener('mathapp:user-ready', async event => {
+  const welcome = document.createElement('p');
+  welcome.textContent = `Chào ${event.detail.fullName}!`;
+  welcome.style.cssText = 'font-size:24px;margin:16px auto;padding:0 24px;max-width:1200px;overflow-wrap:anywhere';
+  document.getElementById('main-content').prepend(welcome);
   const grid = document.getElementById('lesson-grid');
   const status = document.getElementById('lesson-status');
   try {

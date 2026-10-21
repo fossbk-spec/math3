@@ -135,10 +135,11 @@
                   Lớp của em:
                 </label>
 <div class="relative">
-<select class="w-full h-14 pl-4 pr-10 rounded-2xl bg-surface-container-low text-on-surface font-headline-sm text-headline-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer border-b-4 border-surface-dim">
+<select aria-label="Lớp của em" class="w-full h-14 pl-4 pr-10 rounded-2xl bg-surface-container-low text-on-surface font-headline-sm text-headline-sm focus:outline-none focus:ring-2 focus:ring-primary appearance-none cursor-pointer border-b-4 border-surface-dim">
+<option selected value="3A2">Lớp 3A2</option>
 <option value="3A">Lớp 3A 🌻</option>
 <option value="3B">Lớp 3B 🚀</option>
-<option selected="" value="3C">Lớp 3C ⭐</option>
+<option value="3C">Lớp 3C ⭐</option>
 <option value="3D">Lớp 3D 🐬</option>
 <option value="3E">Lớp 3E 🎨</option>
 </select>
@@ -149,10 +150,10 @@
 <div class="sm:col-span-7 flex flex-col">
 <label class="font-label-md text-label-md text-on-surface font-bold mb-1.5 flex items-center gap-1.5">
 <span class="material-symbols-outlined text-primary text-[18px]">badge</span>
-                  Họ tên hoặc Mã số:
+                  Tên đăng nhập:
                 </label>
 <div class="relative">
-<input class="w-full h-14 px-4 rounded-2xl bg-surface-container-low text-on-surface font-body-lg text-body-lg placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary border-b-4 border-surface-dim" id="studentCodeInput" placeholder="VD: HM-3C-12 hoặc Bạn Cú" type="text" value="hocsinh01"/>
+<input class="w-full h-14 px-4 rounded-2xl bg-surface-container-low text-on-surface font-body-lg text-body-lg placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary border-b-4 border-surface-dim" id="studentCodeInput" aria-label="Tên đăng nhập" name="username" autocomplete="username" spellcheck="false" placeholder="Tên đăng nhập thầy cô cấp…" type="text"/>
 <span class="material-symbols-outlined absolute right-3.5 top-1/2 -translate-y-1/2 text-secondary">check_circle</span>
 </div>
 </div>
@@ -170,8 +171,8 @@
 </div>
 <!-- Input Container -->
 <div class="relative">
-<input class="w-full h-14 px-4 pr-12 rounded-2xl bg-surface-container-low text-on-surface font-headline-sm text-headline-sm tracking-widest focus:outline-none focus:ring-2 focus:ring-primary border-b-4 border-surface-dim" id="passwordField" placeholder="Nhập 4 số bí mật (VD: 2016)" type="password" value="123456"/>
-<button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface flex items-center p-1 rounded-lg" id="togglePasswordBtn" type="button">
+<input class="w-full h-14 px-4 pr-12 rounded-2xl bg-surface-container-low text-on-surface font-headline-sm text-headline-sm tracking-widest focus:outline-none focus:ring-2 focus:ring-primary border-b-4 border-surface-dim" id="passwordField" aria-label="Mật khẩu" name="password" autocomplete="current-password" placeholder="Mật khẩu thầy cô cấp…" type="password"/>
+<button class="absolute right-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface flex items-center p-1 rounded-lg" id="togglePasswordBtn" aria-label="Ẩn hoặc hiện mật khẩu" type="button">
 <span class="material-symbols-outlined" id="eyeIcon">visibility</span>
 </button>
 </div>
@@ -266,6 +267,7 @@
 </div>
 </div>
 </main>
+<script src="assets/js/core/classroom.js"></script>
 <script src="assets/js/core/api.js"></script>
 <script src="assets/js/components/sidebar.js"></script>
 <script src="assets/js/components/navbar.js"></script>
