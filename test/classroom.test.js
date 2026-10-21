@@ -84,6 +84,8 @@ test('Công cụ tạo file mã hoá; demo đăng nhập; thống kê gửi mã,
     for (const secret of [user.fullName, roster[1].username, creds.password]) assert.equal(payload.includes(secret), false);
     await call('auth/logout', {});
     await assert.rejects(call('auth/login', { ...creds, password: 'wrong-password' }), e => e.status === 401 && e.message === 'Tên đăng nhập hoặc mật khẩu chưa đúng.');
+    const capitalized = creds.password[0].toUpperCase() + creds.password.slice(1);
+    if (capitalized !== creds.password) { assert.equal((await call('auth/login', { ...creds, password: capitalized })).user.id, '3A2-07'); await call('auth/logout', {}); }
     await assert.rejects(call('auth/me', {}, 'GET'), e => e.status === 401);
     await call('auth/login', { role: 'teacher' });
     const students = (await call('teacher/students', {}, 'GET')).students;
