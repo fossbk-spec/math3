@@ -49,7 +49,7 @@
       box.classList.remove('hidden');
       box.replaceChildren();
       const heading = document.createElement('h3');
-      heading.className = 'font-headline-md text-headline-md';
+      heading.className = 'font-headline-md text-headline-md reward-pop';
       heading.textContent = `${r.scorePercent >= 80 ? '🎉' : r.scorePercent >= 50 ? '💪' : '🌱'} Em đạt ${r.scorePercent}% — ${r.comment}`;
       box.append(heading);
       const summary = document.createElement('p');

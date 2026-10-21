@@ -84,7 +84,7 @@
   function updateBanner() {
     const bar = root?.document?.getElementById('math-analytics-notice');
     if (!bar) return;
-    const button = bar.querySelector('button');
+    const button = bar.querySelector('.analytics-toggle');
     if (button) button.textContent = enabled() ? 'Tắt thống kê' : 'Bật thống kê';
     const message = bar.querySelector('span');
     if (message) message.textContent = enabled() ? 'Web ghi nhận ẩn danh cách sử dụng để cải thiện sản phẩm.' : 'Thống kê đã tắt trên máy này.';
@@ -94,19 +94,31 @@
     const bar = root.document.createElement('div');
     bar.id = 'math-analytics-notice';
     bar.setAttribute('role', 'note');
-    bar.style.cssText = 'position:fixed;bottom:0;left:0;right:0;z-index:9998;background:#164e32;color:white;padding:8px 16px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;font:18px/1.4 system-ui,sans-serif';
+    bar.style.cssText = 'position:fixed;bottom:12px;right:12px;z-index:9998;background:#14532d;color:white;padding:8px 16px;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;max-width:min(620px,calc(100vw - 24px));border-radius:16px;font:18px/1.4 Nunito Sans,sans-serif;box-shadow:0 5px 0 #052e16,0 10px 20px rgb(0 0 0 / .14)';
     const message = root.document.createElement('span');
     const button = root.document.createElement('button');
-    button.type = 'button'; button.style.cssText = 'min-height:48px;padding:8px 18px;border-radius:12px;background:white;color:#164e32;font:700 18px system-ui,sans-serif';
+    button.type = 'button'; button.className = 'analytics-toggle';
+    button.style.cssText = 'min-height:48px;padding:8px 18px;border-radius:12px;background:white;color:#14532d;font:800 18px Nunito,sans-serif';
     button.addEventListener('click', () => setEnabled(!enabled()));
-    bar.append(message, button);
-    const spacer = root.document.createElement('div');
-    spacer.setAttribute('aria-hidden', 'true');
-    root.document.body.append(spacer, bar);
-    const reserveSpace = () => { spacer.style.height = `${bar.getBoundingClientRect().height}px`; };
-    reserveSpace();
-    if (root.ResizeObserver) new root.ResizeObserver(reserveSpace).observe(bar);
-    else root.addEventListener?.('resize', reserveSpace);
+    const acknowledge = root.document.createElement('button');
+    acknowledge.type = 'button'; acknowledge.textContent = 'Đã hiểu';
+    acknowledge.style.cssText = button.style.cssText;
+    const compact = root.document.createElement('button');
+    compact.type = 'button'; compact.textContent = 'Thống kê';
+    compact.setAttribute('aria-label', 'Mở thông báo thống kê');
+    compact.style.cssText = button.style.cssText;
+    let dismissed = false;
+    try { dismissed = root.localStorage?.getItem('math-analytics-notice-dismissed') === 'true'; } catch (_) { /* Bộ nhớ bị khóa. */ }
+    const show = () => { message.hidden = button.hidden = acknowledge.hidden = dismissed; compact.hidden = !dismissed; };
+    acknowledge.addEventListener('click', () => {
+      dismissed = true;
+      try { root.localStorage?.setItem('math-analytics-notice-dismissed', 'true'); } catch (_) { /* Vẫn thu gọn trong phiên này. */ }
+      show();
+    });
+    compact.addEventListener('click', () => { dismissed = false; show(); });
+    bar.append(message, button, acknowledge, compact);
+    root.document.body.append(bar);
+    show();
     updateBanner();
     track('page_view', { page: root.location?.pathname?.split('/').pop() || 'index.html' });
     flush();

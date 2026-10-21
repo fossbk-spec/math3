@@ -20,11 +20,14 @@ document.addEventListener('mathapp:user-ready', async event => {
     grid.replaceChildren();
     for (const lesson of lessons) {
       const card = document.createElement('article');
-      card.className = 'rounded-3xl bg-surface-container-lowest p-6 shadow-sm flex flex-col gap-3';
+      card.className = 'clay-card p-6 flex flex-col gap-3';
       card.id = `lesson-${lesson.number}`;
+      const number = document.createElement('span');
+      number.className = 'chip w-fit';
+      number.textContent = `Bài ${lesson.number}`;
       const heading = document.createElement('h3');
       heading.className = 'font-headline-md text-headline-md text-primary';
-      heading.textContent = `Bài ${lesson.number}: ${lesson.title}`;
+      heading.textContent = lesson.title;
       const description = document.createElement('p');
       description.className = 'font-body-md text-lg text-on-surface-variant';
       description.textContent = lesson.description || '';
@@ -33,11 +36,21 @@ document.addEventListener('mathapp:user-ready', async event => {
       page.textContent = lesson.page ? `SGK tập một, tr. ${lesson.page}` : '';
       const state = document.createElement('p');
       state.className = 'font-headline-sm text-lg';
-      state.textContent = lesson.completed ? `Đã hoàn thành · Điểm cao nhất ${lesson.bestScore}/100` : lesson.locked ? 'Chưa mở' : 'Sẵn sàng học';
-      card.append(heading, description, page, state);
+      state.textContent = lesson.completed ? `✓ Đã hoàn thành · Điểm cao nhất ${lesson.bestScore}/100` : lesson.locked ? '🔒 Chưa mở' : '▶ Sẵn sàng học';
+      const progress = document.createElement('div');
+      progress.className = 'lesson-card-progress';
+      progress.setAttribute('role', 'progressbar');
+      progress.setAttribute('aria-label', `Tiến độ ${number.textContent}`);
+      progress.setAttribute('aria-valuenow', lesson.completed ? '100' : '0');
+      progress.setAttribute('aria-valuemin', '0');
+      progress.setAttribute('aria-valuemax', '100');
+      const fill = document.createElement('span');
+      fill.style.width = lesson.completed ? '100%' : '0%';
+      progress.append(fill);
+      card.append(number, heading, description, page, state, progress);
       for (const set of lesson.questionSets || []) {
         const link = document.createElement('a');
-        link.className = 'min-h-12 px-4 py-3 rounded-2xl bg-primary text-on-primary font-headline-sm text-lg flex items-center justify-center text-center';
+        link.className = 'clay-btn';
         link.textContent = set.title || 'Luyện tập';
         link.href = `${set.kind === 'exercise' ? 'exercise' : 'lesson'}.html?lesson=${encodeURIComponent(lesson.id)}&set=${encodeURIComponent(set.id)}`;
         if (lesson.locked) {

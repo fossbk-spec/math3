@@ -73,9 +73,9 @@
       if (result.correct || attemptNo === 3) {
         results.push({ ...result, question, hadError: question.hadError });
         el('question').querySelectorAll('button,input').forEach(control => { control.disabled = true; });
-        message(`${result.correct ? 'Đúng rồi!' : 'Mình cùng xem bài chữa nhé.'}\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
+        message(`${result.correct ? '✓ Đúng rồi!' : '✗ Chưa đúng. Mình cùng xem bài chữa nhé.'}\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
         el('next').textContent = results.length === 10 ? 'Xem kết quả lượt luyện' : 'Câu tiếp theo'; el('next').hidden = false;
-      } else { message(`Chưa đúng, em thử lại nhé. Còn ${3 - attemptNo} lần thử.`); el('answer').disabled = false; }
+      } else { message(`✗ Chưa đúng, em thử lại nhé. Còn ${3 - attemptNo} lần thử.`); el('answer').disabled = false; }
     } catch (e) { message(e.message); el('answer').disabled = false; }
     finally { busy = false; el('hint').disabled = el('answer').disabled || hintsUsed >= question.hints.length; }
   });

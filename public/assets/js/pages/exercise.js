@@ -58,7 +58,7 @@
     try {
       const result = await window.MathAPI.post('/api/submissions', { setId, answers: { ...answers }, durationSec: elapsed() });
       exhausted = result.attemptsLeft === 0;
-      modal.querySelector('h4').textContent = `Em đạt ${result.scorePercent}% — ${result.comment}`;
+      modal.querySelector('h4').textContent = `${result.scorePercent >= 80 ? '✓' : '☆'} Em đạt ${result.scorePercent}% — ${result.comment}`;
       if (result.message) modal.querySelector('h4').textContent += ` — ${result.message}`;
       modal.querySelector('p').textContent = `Đúng ${result.correctCount}/${result.totalCount} câu. Còn ${result.attemptsLeft} lượt. Nhận thêm ${result.starsEarned || 0} sao. Kết quả đã được lưu.`;
       modal.querySelector('[data-corrections]')?.remove();
@@ -68,7 +68,7 @@
         if (item.correctAnswer === undefined) return;
         const line = document.createElement('p');
         const question = questions.find(q => q.id === item.questionId);
-        line.textContent = `Câu ${index + 1}: ${item.correct ? 'Đúng' : 'Chưa đúng'} — Đáp án: ${window.MathQuestionView.formatAnswer(question, item.correctAnswer)}`;
+        line.textContent = `Câu ${index + 1}: ${item.correct ? '✓ Đúng' : '✗ Chưa đúng'} — Đáp án: ${window.MathQuestionView.formatAnswer(question, item.correctAnswer)}`;
         if (item.solution) line.textContent += ` — Bài chữa: ${Array.isArray(item.solution) ? item.solution.join(' ') : JSON.stringify(item.solution)}`;
         corrections.append(line);
       });

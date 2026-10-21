@@ -8,7 +8,8 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;1,6..12,400&amp;family=Quicksand:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&amp;family=Nunito+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="favicon.ico" rel="icon" sizes="32x32"/>
 <link href="assets/css/tailwind.build.css" rel="stylesheet"/>
 <link href="assets/css/app.css" rel="stylesheet"/>
 </head>
@@ -16,7 +17,7 @@
 <main id="main-content" class="w-full min-h-screen bg-background"><div class="flex flex-col w-full">
 <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
 <!-- Official Exam Header Banner -->
-<header class="bg-surface-container-lowest rounded-xl shadow-xl p-5 md:p-6 relative overflow-hidden">
+<header class="bg-surface-container-lowest clay-card p-5 md:p-6 relative overflow-hidden">
 <div class="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-secondary-container/20 pointer-events-none"></div>
 <div class="absolute bottom-0 left-1/4 w-32 h-32 rounded-full bg-tertiary-fixed/30 pointer-events-none blur-xl"></div>
 <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-6 relative z-10">
@@ -27,10 +28,10 @@
 </div>
 <div>
 <div class="flex flex-wrap items-center gap-2">
-<span class="bg-primary/10 text-primary px-3 py-0.5 rounded-full font-label-sm text-label-sm tracking-wider uppercase">
+<span class="bg-primary/10 text-primary px-3 py-0.5 rounded-full font-label-sm text-lg tracking-wider uppercase">
                 BÀI KIỂM TRA DEMO
               </span>
-<span class="bg-surface-container-high text-on-surface-variant px-2.5 py-0.5 rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="bg-surface-container-high text-on-surface-variant px-2.5 py-0.5 rounded-full font-label-sm text-lg flex items-center gap-1">
 <span class="material-symbols-outlined text-sm text-primary">verified</span>
                 Tiểu học Hoàng Mai
               </span>
@@ -38,7 +39,7 @@
 <h1 class="font-headline-md text-headline-md text-on-surface mt-1">
               BÀI KIỂM TRA TOÁN 3
             </h1>
-<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1 text-on-surface-variant font-body-sm text-lg">
 <span class="flex items-center gap-1 font-label-md text-on-surface">
 <span class="material-symbols-outlined text-base text-primary">person</span>
                 Bạn Cú
@@ -46,6 +47,7 @@
 <span>• SBD: <strong class="text-on-surface">HM-3A-08</strong></span>
 <span>• Lớp: <strong class="text-on-surface">3A</strong></span>
 <span>• Tổng thời gian: <strong>35 phút</strong></span>
+<span class="chip"><span class="material-symbols-outlined" aria-hidden="true">star</span><span id="exam-stars">… sao</span></span>
 </div>
 </div>
 </div>
@@ -53,18 +55,18 @@
 <div class="flex flex-wrap items-center justify-between xl:justify-end gap-4 pt-3 xl:pt-0">
 <!-- Digital Countdown Clock -->
 <div class="flex items-center gap-3 bg-surface-container-low px-4 py-3 rounded-lg shadow-inner">
-<div class="w-10 h-10 rounded-full bg-tertiary-container/20 text-tertiary flex items-center justify-center animate-pulse">
+<div class="w-10 h-10 rounded-full bg-tertiary-container/20 text-tertiary flex items-center justify-center ">
 <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">hourglass_top</span>
 </div>
 <div>
-<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Thời gian còn lại</div>
+<div class="font-label-sm text-lg text-on-surface-variant uppercase tracking-wider">Thời gian còn lại</div>
 <div class="font-headline-lg text-headline-lg text-tertiary font-bold tracking-widest tabular-nums" id="exam-timer">
                 35:00
               </div>
 </div>
 </div>
 <!-- Submit Exam Button with 3D Depth -->
-<button class="flex items-center justify-center gap-2 bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg px-6 py-4 rounded-lg shadow-md active:translate-y-1 transition-all cursor-pointer" id="submit-exam-btn">
+<button class="clay-btn flex items-center justify-center gap-2 bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg px-6 py-4 rounded-lg shadow-md active:translate-y-1 transition-transform cursor-pointer" id="submit-exam-btn">
 <span class="material-symbols-outlined text-2xl">assignment_turned_in</span>
 <span>Nộp Bài Thi</span>
 </button>
@@ -76,7 +78,7 @@
 <!-- LEFT COLUMN: Question Content & Answering Area (8 cols) -->
 <section class="lg:col-span-8 space-y-6">
 <!-- Active Question Box -->
-<div class="bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden">
+<div class="bg-surface-container-lowest clay-card overflow-hidden">
 <!-- Question Top Bar Ribbon -->
 <div class="bg-primary/10 px-6 py-4 flex flex-wrap items-center justify-between gap-3">
 <div class="flex items-center gap-3">
@@ -86,10 +88,10 @@
 <div>
 <span class="font-headline-sm text-headline-sm text-on-surface">Đang tải câu hỏi…</span>
 <span class="mx-2 text-outline">•</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant"></span>
+<span class="font-body-sm text-lg text-on-surface-variant"></span>
 </div>
 </div>
-<span class="bg-surface-container-lowest text-primary font-label-md text-label-md px-3 py-1 rounded-full shadow-sm">
+<span class="bg-surface-container-lowest text-primary font-label-md text-lg px-3 py-1 rounded-full shadow-sm">
               
             </span>
 </div>
@@ -102,7 +104,7 @@
 <!-- Educational Visual Illustration Placeholder -->
 <div class="relative w-full h-48 md:h-56 rounded-lg overflow-hidden bg-surface-container shadow-inner">
 
-<div class="absolute bottom-2 right-2 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant shadow-sm flex items-center gap-1">
+<div class="absolute bottom-2 right-2 bg-surface-container-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full font-label-sm text-lg text-on-surface-variant shadow-sm flex items-center gap-1">
 <span class="material-symbols-outlined text-xs text-primary">auto_stories</span>
                   
                 </div>
@@ -110,12 +112,12 @@
 </div>
 <!-- Multiple Choice Answer Options -->
 <div class="space-y-3 pt-2">
-<div class="font-label-md text-label-md text-on-surface-variant flex items-center gap-2">
+<div class="font-label-md text-lg text-on-surface-variant flex items-center gap-2">
 <span class="material-symbols-outlined text-lg text-primary">touch_app</span>
                 Chọn một phương án đúng nhất:
               </div>
 <!-- Option A -->
-<div class="option-card cursor-pointer p-4 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-all flex items-center gap-4 shadow-sm" data-option="A">
+<div class="option-card cursor-pointer p-4 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-transform flex items-center gap-4 shadow-sm" data-option="A">
 <div class="w-12 h-12 rounded-full bg-surface-container text-on-surface font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0 transition-colors">
                   A
                 </div>
@@ -125,7 +127,7 @@
 <span class="material-symbols-outlined text-outline text-2xl radio-icon">radio_button_unchecked</span>
 </div>
 <!-- Option B (Currently Selected State) -->
-<div class="option-card cursor-pointer p-4 rounded-lg bg-secondary-container/40 transition-all flex items-center gap-4 shadow-sm" data-option="B">
+<div class="option-card cursor-pointer p-4 rounded-lg bg-secondary-container/40 transition-transform flex items-center gap-4 shadow-sm" data-option="B">
 <div class="w-12 h-12 rounded-full bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0 shadow-sm">
                   B
                 </div>
@@ -135,7 +137,7 @@
 <span class="material-symbols-outlined text-primary text-2xl radio-icon" style="font-variation-settings: 'FILL' 1;">check_circle</span>
 </div>
 <!-- Option C -->
-<div class="option-card cursor-pointer p-4 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-all flex items-center gap-4 shadow-sm" data-option="C">
+<div class="option-card cursor-pointer p-4 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-transform flex items-center gap-4 shadow-sm" data-option="C">
 <div class="w-12 h-12 rounded-full bg-surface-container text-on-surface font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0 transition-colors">
                   C
                 </div>
@@ -145,7 +147,7 @@
 <span class="material-symbols-outlined text-outline text-2xl radio-icon">radio_button_unchecked</span>
 </div>
 <!-- Option D -->
-<div class="option-card cursor-pointer p-4 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-all flex items-center gap-4 shadow-sm" data-option="D">
+<div class="option-card cursor-pointer p-4 rounded-lg bg-surface-container-lowest hover:bg-surface-container transition-transform flex items-center gap-4 shadow-sm" data-option="D">
 <div class="w-12 h-12 rounded-full bg-surface-container text-on-surface font-headline-sm text-headline-sm flex items-center justify-center flex-shrink-0 transition-colors">
                   D
                 </div>
@@ -159,36 +161,36 @@
 <div class="pt-4">
 <div class="bg-surface-container-low rounded-lg p-4 space-y-2">
 <div class="flex items-center justify-between">
-<label class="font-label-md text-label-md text-on-surface flex items-center gap-2" for="scratchpad-input">
+<label class="font-label-md text-lg text-on-surface flex items-center gap-2" for="scratchpad-input">
 <span class="material-symbols-outlined text-tertiary">edit_note</span>
                     Bảng nháp tính toán tại chỗ (tự động lưu tạm)
                   </label>
-<button class="font-label-sm text-label-sm text-outline hover:text-error transition-colors flex items-center gap-1" onclick="document.getElementById('scratchpad-input').value = ''" type="button">
+<button class="font-label-sm text-lg text-outline hover:text-error transition-colors flex items-center gap-1" onclick="document.getElementById('scratchpad-input').value = ''" type="button">
 <span class="material-symbols-outlined text-sm">delete_sweep</span>
                     Xóa nháp
                   </button>
 </div>
-<textarea class="w-full bg-surface-container-lowest rounded-md p-3 font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:ring-2 focus:ring-primary" id="scratchpad-input" placeholder="Nháp phép tính của con ở đây (Ví dụ: 48 : 6 = 8 quyển; 12 : 6 = 2 quyển; 8 + 2 = 10 quyển)..." rows="3"></textarea>
+<textarea class="w-full bg-surface-container-lowest rounded-md p-3 font-body-md text-body-md text-on-surface placeholder:text-outline " id="scratchpad-input" placeholder="Nháp phép tính của con ở đây (Ví dụ: 48 : 6 = 8 quyển)…" rows="3"></textarea>
 </div>
 </div>
 <!-- Examination Strict Rule Alert -->
 <div class="bg-surface-container-high rounded-lg p-4 flex items-start gap-3">
 <span class="material-symbols-outlined text-tertiary text-2xl flex-shrink-0">warning</span>
-<p class="font-body-sm text-body-sm text-on-surface-variant">
+<p class="font-body-sm text-lg text-on-surface-variant">
 <strong>Quy chế thi:</strong> Trong bài kiểm tra chính thức, hệ thống sẽ <strong>không báo đáp án đúng sai</strong> sau khi chọn. Con hãy suy nghĩ thật kỹ trước khi nộp bài!
               </p>
 </div>
 <!-- Bottom Question Navigation -->
 <div class="pt-4 flex flex-wrap items-center justify-between gap-4">
-<button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md px-5 py-3.5 rounded-lg transition-all shadow-sm active:translate-y-0.5">
+<button class="flex items-center gap-2 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-lg px-5 py-3.5 rounded-lg transition-transform shadow-sm active:translate-y-0.5">
 <span class="material-symbols-outlined">arrow_back</span>
 <span>Câu 14</span>
 </button>
-<button class="flex items-center gap-2 bg-tertiary-fixed text-on-tertiary-fixed hover:bg-tertiary-fixed-dim font-label-md text-label-md px-5 py-3.5 rounded-lg shadow-sm active:translate-y-0.5 transition-all" id="bookmark-btn">
+<button class="flex items-center gap-2 bg-tertiary-fixed text-on-tertiary-fixed hover:bg-tertiary-fixed-dim font-label-md text-lg px-5 py-3.5 rounded-lg shadow-sm active:translate-y-0.5 transition-transform" id="bookmark-btn">
 <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">flag</span>
 <span>Đánh dấu xem lại sau 🚩</span>
 </button>
-<button class="flex items-center gap-2 bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md px-6 py-3.5 rounded-lg shadow-sm active:translate-y-0.5 transition-all">
+<button class="flex items-center gap-2 bg-primary hover:bg-primary-container text-on-primary font-label-md text-lg px-6 py-3.5 rounded-lg shadow-sm active:translate-y-0.5 transition-transform">
 <span>Câu 16</span>
 <span class="material-symbols-outlined">arrow_forward</span>
 </button>
@@ -199,65 +201,65 @@
 <!-- RIGHT COLUMN: Matrix Navigation & Status Panel (4 cols) -->
 <aside class="lg:col-span-4 space-y-6">
 <!-- Question Matrix Card -->
-<div class="bg-surface-container-lowest rounded-xl shadow-xl p-6 space-y-5">
+<div class="bg-surface-container-lowest clay-card p-6 space-y-5">
 <div class="flex items-center justify-between pb-3">
 <h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">apps</span>
               Bảng ma trận 20 câu hỏi
             </h2>
-<span class="font-label-sm text-label-sm text-primary font-bold bg-primary-fixed/40 px-2.5 py-1 rounded-full">
+<span class="font-label-sm text-lg text-primary font-bold bg-primary-fixed/40 px-2.5 py-1 rounded-full">
               <span id="exam-done-count">0 / 20 hoàn thành</span>
             </span>
 </div>
 <!-- Progress Bar Meter -->
 <div class="space-y-1.5">
-<div class="flex justify-between font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex justify-between font-label-sm text-lg text-on-surface-variant">
 <span>Tiến độ làm bài</span>
 <span class="font-bold text-primary" id="exam-progress-percent">0%</span>
 </div>
 <div class="w-full h-3 rounded-full bg-surface-container overflow-hidden">
-<div class="h-full bg-primary rounded-full transition-[width] duration-500" id="exam-progress-bar" style="width: 0%"></div>
+<div class="h-full bg-primary rounded-full " id="exam-progress-bar" style="width: 0%"></div>
 </div>
 </div>
 <!-- 20-Question Grid -->
 <div class="grid grid-cols-5 gap-2.5 pt-2">
 <!-- 1 to 6 (Done) -->
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">1</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">2</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">3</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">4</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">5</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">6</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">1</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">2</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">3</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">4</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">5</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">6</button>
 <!-- 7 (Marked for review 🚩) -->
-<button class="matrix-btn h-12 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-headline-sm flex flex-col items-center justify-center relative shadow-sm hover:opacity-90 active:scale-95 transition-all">
+<button class="matrix-btn h-12 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-headline-sm flex flex-col items-center justify-center relative shadow-sm hover:opacity-90 active:scale-95 transition-transform">
 <span>7</span>
 <span class="material-symbols-outlined text-xs absolute top-1 right-1" style="font-variation-settings: 'FILL' 1;">flag</span>
 </button>
 <!-- 8 to 11 (Done) -->
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">8</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">9</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">10</button>
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">11</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">8</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">9</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">10</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">11</button>
 <!-- 12 (Marked for review 🚩) -->
-<button class="matrix-btn h-12 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-headline-sm flex flex-col items-center justify-center relative shadow-sm hover:opacity-90 active:scale-95 transition-all">
+<button class="matrix-btn h-12 rounded-lg bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-headline-sm flex flex-col items-center justify-center relative shadow-sm hover:opacity-90 active:scale-95 transition-transform">
 <span>12</span>
 <span class="material-symbols-outlined text-xs absolute top-1 right-1" style="font-variation-settings: 'FILL' 1;">flag</span>
 </button>
 <!-- 13 (Done) -->
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">13</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">13</button>
 <!-- 14 (Done / Previous) -->
-<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-all">14</button>
+<button class="matrix-btn h-12 rounded-lg bg-primary text-on-primary font-headline-sm text-headline-sm flex items-center justify-center shadow-sm hover:opacity-90 active:scale-95 transition-transform">14</button>
 <!-- 15 (CURRENT ACTIVE QUESTION) -->
-<button class="matrix-btn h-12 rounded-lg bg-secondary-container text-on-secondary-container font-headline-sm text-headline-sm flex items-center justify-center shadow-md scale-105 transition-all">15</button>
+<button class="matrix-btn h-12 rounded-lg bg-secondary-container text-on-secondary-container font-headline-sm text-headline-sm flex items-center justify-center shadow-md scale-105 transition-transform">15</button>
 <!-- 16 to 20 (Unanswered) -->
-<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-all">16</button>
-<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-all">17</button>
-<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-all">18</button>
-<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-all">19</button>
-<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-all">20</button>
+<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-transform">16</button>
+<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-transform">17</button>
+<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-transform">18</button>
+<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-transform">19</button>
+<button class="matrix-btn h-12 rounded-lg bg-surface-container text-on-surface-variant font-headline-sm text-headline-sm flex items-center justify-center hover:bg-surface-container-high transition-transform">20</button>
 </div>
 <!-- Color Legend -->
-<div class="pt-4 space-y-2.5 font-label-sm text-label-sm text-on-surface-variant">
+<div class="pt-4 space-y-2.5 font-label-sm text-lg text-on-surface-variant">
 <div class="flex items-center gap-2.5">
 <span class="w-4 h-4 rounded-md bg-primary flex-shrink-0"></span>
 <span>Đã hoàn thành câu trả lời</span>
@@ -284,23 +286,23 @@
 </div>
 <h3 class="font-headline-sm text-headline-sm text-on-surface">Cam kết trung thực</h3>
 </div>
-<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<p class="font-body-sm text-lg text-on-surface-variant leading-relaxed">
             “Học sinh Trường Tiểu học Hoàng Mai: <strong>Trung thực – Tự tin – Đạt điểm mười rạng rỡ!</strong> Chúc con làm bài thật bình tĩnh và chính xác.”
           </p>
 </div>
 <!-- Candidate Info Widget -->
-<div class="bg-surface-container-lowest rounded-xl shadow-xl p-5 space-y-3">
-<div class="font-label-md text-label-md text-on-surface flex items-center gap-2 pb-2">
+<div class="bg-surface-container-lowest clay-card p-5 space-y-3">
+<div class="font-label-md text-lg text-on-surface flex items-center gap-2 pb-2">
 <span class="material-symbols-outlined text-primary">badge</span>
             Thông tin phòng thi trực tuyến
           </div>
-<div class="grid grid-cols-2 gap-3 text-body-sm font-body-sm">
+<div class="grid grid-cols-2 gap-3 text-lg font-body-sm">
 <div class="bg-surface-container-low p-2.5 rounded-lg">
-<span class="text-on-surface-variant text-label-sm block">Giám thị 1</span>
+<span class="text-on-surface-variant text-lg block">Giám thị 1</span>
 <span class="font-bold text-on-surface">Cô giáo Demo</span>
 </div>
 <div class="bg-surface-container-low p-2.5 rounded-lg">
-<span class="text-on-surface-variant text-label-sm block">Phòng máy số</span>
+<span class="text-on-surface-variant text-lg block">Phòng máy số</span>
 <span class="font-bold text-on-surface">Lab Tin học 02</span>
 </div>
 </div>
@@ -319,6 +321,3 @@
 <script src="assets/js/pages/exam.js"></script>
 </body>
 </html>
-
-
-
