@@ -58,7 +58,11 @@
       if (!user && username && role === 'student' && root.MathClassroom) {
         const response = await fetch('data/class-3a2.json');
         if (response.ok) {
-          const account = await root.MathClassroom.login(await response.json(), username, body.password || '', root.crypto);
+          const classData = await response.json();
+          const password = String(body.password || '').trim();
+          // Máy tính bảng hay tự viết hoa chữ đầu: thử lại với chữ thường nếu mật khẩu gõ có chữ hoa.
+          let account = await root.MathClassroom.login(classData, username, password, root.crypto);
+          if (!account && password !== password.toLowerCase()) account = await root.MathClassroom.login(classData, username, password.toLowerCase(), root.crypto);
           if (account) {
             user = state.users.find(u => u.id === account.id);
             if (user) Object.assign(user, account, { totalStars: user.totalStars || 0 });

@@ -108,7 +108,9 @@ if (window.MATH_DEMO === true) {
   async function handleLoginSubmit() {
     const username = studentCodeInput.value.trim();
     const password = passField.value;
-    if (!username || !password) { showToast('Em điền tên đăng nhập và mật khẩu nhé!'); return; }
+    const errorBox = loginError();
+    errorBox.hidden = true;
+    if (!username || !password) { showLoginError('Em điền tên đăng nhập và mật khẩu nhé!'); return; }
     showToast('Đang mở cánh cổng Vườn Toán Lớp 3...');
     const submit = document.querySelector('#authForm button[type="submit"]');
     if (submit?.disabled) return;
@@ -118,8 +120,29 @@ if (window.MATH_DEMO === true) {
       showToast(`Chào ${user.fullName}! Đang vào Vườn Toán...`);
       setTimeout(() => { location.href = user.role === 'teacher' ? 'schedule.html' : 'index.html'; }, 600);
     } catch (err) {
-      showToast(err.message);
+      showLoginError(err.message);
     } finally { if (submit) submit.disabled = false; }
+  }
+
+  // Lỗi đăng nhập hiện ngay dưới ô mật khẩu (toast ở đáy dễ bị che), giữ đến khi em gõ lại.
+  function loginError() {
+    let box = document.getElementById('loginError');
+    if (!box) {
+      box = document.createElement('p');
+      box.id = 'loginError';
+      box.setAttribute('role', 'alert');
+      box.hidden = true;
+      box.style.cssText = 'font-size:18px;font-weight:700;color:#ba1a1a;background:#ffdad6;border-radius:16px;padding:12px 16px;margin-top:12px';
+      passField.closest('div').after(box);
+      [studentCodeInput, passField].forEach(el => el.addEventListener('input', () => { box.hidden = true; }));
+    }
+    return box;
+  }
+  function showLoginError(message) {
+    const box = loginError();
+    box.textContent = message;
+    box.hidden = false;
+    showToast(message);
   }
 
   // Toast Functionality
