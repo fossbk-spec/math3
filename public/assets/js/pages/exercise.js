@@ -1,172 +1,86 @@
-/* Logic trang Luyện Tập — tương tác giữ nguyên bản gốc; phần "Kiểm Tra Đáp Án"
- * được nối API: đáp án gửi lên server chấm (server không gửi đáp án xuống),
- * điểm + sao + tiến độ được lưu vào DB nên tải lại trang không mất. */
-let activeInputId = 'math-input-3';
-  let currentBrush = 'green';
-  let hintCount = 2;
-
-  function setActiveInput(id) {
-    activeInputId = id;
-    ['math-input-1', 'math-input-2', 'math-input-3'].forEach(name => {
-      const el = document.getElementById(name);
-      if (el) {
-        if (name === id) {
-          el.classList.add('ring-2', 'ring-tertiary-fixed-dim');
-        } else {
-          el.classList.remove('ring-2', 'ring-tertiary-fixed-dim');
-        }
-      }
-    });
+/* Phiếu bài tập từ API, dùng renderer chung với lesson.js. */
+(function exercisePlayer() {
+  'use strict';
+  const startedAt = Date.now();
+  const params = new URLSearchParams(location.search);
+  const container = document.getElementById('questions-container');
+  const submit = document.getElementById('btn-submit-exercise');
+  const reset = document.getElementById('btn-reset-exercise');
+  const modal = document.getElementById('feedback-modal');
+  let setId;
+  let questions = [];
+  let answers = {};
+  let exhausted = false;
+  let busy = false;
+  function updateProgress() {
+    const done = questions.filter(q => answers[q.id] != null && String(answers[q.id]).trim() !== '').length;
+    document.getElementById('exercise-progress-text').textContent = `Đã trả lời ${done}/${questions.length} câu`;
+    document.getElementById('exercise-progress').style.width = `${questions.length ? Math.round(done / questions.length * 100) : 0}%`;
   }
-
-  function pressKey(val) {
-    if (!activeInputId) return;
-    const target = document.getElementById(activeInputId);
-    if (!target) return;
-
-    if (val === 'OK') {
-      if (activeInputId === 'math-input-1') setActiveInput('math-input-2');
-      else if (activeInputId === 'math-input-2') setActiveInput('math-input-3');
-      return;
-    }
-
-    if (target.value === '?' || target.value === '') {
-      target.value = val;
-    } else if (target.value.length < 2) {
-      target.value += val;
-    }
-  }
-
-  function clearKey() {
-    if (!activeInputId) return;
-    const target = document.getElementById(activeInputId);
-    if (target) {
-      target.value = '';
-    }
-  }
-
-  function setCompare(slotId, sign) {
-    const el = document.getElementById(slotId);
-    if (el) {
-      el.textContent = sign;
-      el.classList.add('bg-secondary-container', 'text-on-secondary-container', 'font-bold');
-      el.classList.remove('text-primary');
-    }
-  }
-
-  function selectBrush(color) {
-    currentBrush = color;
-    const btnGreen = document.getElementById('brush-green');
-    const btnYellow = document.getElementById('brush-yellow');
-
-    if (color === 'green') {
-      btnGreen.classList.add('ring-2', 'ring-primary');
-      btnYellow.classList.remove('ring-2', 'ring-primary');
-    } else {
-      btnYellow.classList.add('ring-2', 'ring-primary');
-      btnGreen.classList.remove('ring-2', 'ring-primary');
-    }
-  }
-
-  function paintCard(btn) {
-    const statusLabel = btn.querySelector('span:nth-child(2)');
-    if (currentBrush === 'green') {
-      btn.className = "h-24 rounded-2xl bg-secondary-fixed-dim text-on-secondary-fixed p-3 flex flex-col items-center justify-center shadow-[0_4px_0_0_#006e2c] transition-transform active:scale-95 group";
-      if (statusLabel) {
-        statusLabel.textContent = "Đã tô Xanh lá (=12)";
-        statusLabel.className = "text-[12px] font-label-sm text-secondary font-bold mt-1";
-      }
-    } else {
-      btn.className = "h-24 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed p-3 flex flex-col items-center justify-center shadow-[0_4px_0_0_#e6a400] transition-transform active:scale-95 group";
-      if (statusLabel) {
-        statusLabel.textContent = "Đã tô Vàng (=18)";
-        statusLabel.className = "text-[12px] font-label-sm text-tertiary font-bold mt-1";
-      }
-    }
-  }
-
-  function useHint() {
-    if (hintCount > 0) {
-      hintCount--;
-      const btn = document.getElementById('btn-hint');
-      if (btn) {
-        btn.innerHTML = `<span class="material-symbols-outlined text-[20px]">help_center</span><span>Xem gợi ý chi tiết (Còn ${hintCount} lần)</span>`;
-      }
-      alert("Ong Vàng mách nước: 36 : 6 nghĩa là mấy nhân với 6 bằng 36 nhỉ? Đúng rồi, 6 × 6 = 36!");
-    } else {
-      alert("Em đã dùng hết quyền trợ giúp trong lượt này. Hãy thử tự suy luận nhé!");
-    }
-  }
-
-  function resetWorksheet() {
-    ['slot-1-1', 'slot-1-2', 'slot-1-3'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.textContent = '?';
-        el.className = "w-12 h-12 rounded-2xl bg-surface-container-lowest text-primary flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] font-headline-lg";
-      }
-    });
-
-    ['math-input-1', 'math-input-2', 'math-input-3'].forEach(id => {
-      const inp = document.getElementById(id);
-      if (inp) inp.value = '';
-    });
-
-    alert("Đã làm mới lại phiếu bài tập. Chúc bé luyện tập vui vẻ!");
-  }
-
-  /** Thu thập đáp án trên phiếu theo đúng id câu hỏi trong DB (data/seed.json). */
-  function collectAnswers() {
-    const answers = {};
-    ['slot-1-1', 'slot-1-2', 'slot-1-3'].forEach((id, i) => {
-      const el = document.getElementById(id);
-      answers[`compare-${i + 1}`] = el && el.textContent.trim() !== '?' ? el.textContent.trim() : '';
-    });
-    ['math-input-1', 'math-input-2', 'math-input-3'].forEach((id, i) => {
-      const el = document.getElementById(id);
-      answers[`input-${i + 1}`] = el ? el.value.trim() : '';
-    });
-    document.querySelectorAll('button[onclick*="paintCard"]').forEach((btn, i) => {
-      const label = btn.textContent;
-      answers[`paint-${i + 1}`] = label.includes('Xanh') ? 'green' : label.includes('Vàng') ? 'yellow' : '';
-    });
-    return answers;
-  }
-
-  async function submitExam() {
-    const modal = document.getElementById('feedback-modal');
-    try {
-      const result = await window.MathAPI.post('/api/submissions', {
-        setId: 'phieu-bai-9-10', answers: collectAnswers(), durationSec: Math.max(0, seconds - 342),
-      });
-      if (modal) {
-        const title = modal.querySelector('h4');
-        const desc = modal.querySelector('p');
-        if (title) title.textContent = result.scorePercent >= 80 ? 'Xuất sắc quá! 🎉' : result.scorePercent >= 50 ? 'Tốt lắm, cố thêm chút nữa nhé! 💪' : 'Mình cùng ôn lại rồi làm lại nhé! 🌱';
-        if (desc) desc.innerHTML = `Em làm đúng <strong>${result.correctCount}/${result.totalCount}</strong> phần, đạt <strong>${result.scorePercent}%</strong>` +
-          (result.starsEarned ? ` và nhận thêm <strong class="text-tertiary">+${result.starsEarned} Sao</strong> vàng!` : ' (điểm chưa cao hơn lần tốt nhất nên chưa cộng thêm sao).') +
-          `<br/>Điểm đã được lưu vào hồ sơ học tập của em.`;
-        modal.classList.remove('hidden');
-      }
-    } catch (err) {
-      alert(err.message === 'Bạn chưa đăng nhập.' ? 'Phiên đăng nhập đã hết, em đăng nhập lại nhé!' : `Chưa nộp được bài: ${err.message}`);
-      if (err.message === 'Bạn chưa đăng nhập.') location.href = 'login.html';
-    }
-  }
-
-  function closeModal() {
-    const modal = document.getElementById('feedback-modal');
-    if (modal) {
-      modal.classList.add('hidden');
-    }
-  }
-
-  // Gentle timer counter
-  let seconds = 0;
+  const render = () => window.MathQuestionView.render(container, questions, answers, updateProgress);
+  const elapsed = () => Math.round((Date.now() - startedAt) / 1000);
   setInterval(() => {
-    seconds++;
-    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
-    const s = String(seconds % 60).padStart(2, '0');
-    const timerEl = document.getElementById('display-timer');
-    if (timerEl) timerEl.textContent = `${m}:${s}`;
+    const seconds = elapsed();
+    document.getElementById('display-timer').textContent = `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
   }, 1000);
+  async function init() {
+    try {
+      const { lessons } = await window.MathAPI.get('/api/lessons');
+      const requestedLesson = params.get('lesson');
+      setId = params.get('set');
+      const candidates = lessons.filter(l => !l.locked && l.questionSets.some(s => s.kind === 'exercise' && s.id === `${l.id}-co-ban`));
+      const lesson = requestedLesson ? lessons.find(l => l.id === requestedLesson)
+        : setId ? lessons.find(l => l.questionSets.some(s => s.id === setId))
+          : candidates.find(l => !l.completed) || candidates[0];
+      if (!lesson || lesson.locked) throw new Error('Bài học chưa sẵn sàng. Em quay lại Mục Lục chọn bài nhé!');
+      const set = lesson.questionSets.find(s => s.id === (setId || `${lesson.id}-co-ban`) && s.kind === 'exercise');
+      if (!set) throw new Error('Chưa có phiếu bài tập này. Em quay lại Mục Lục chọn bộ bài nhé!');
+      setId = set.id;
+      document.getElementById('exercise-lesson').textContent = `Bài ${lesson.number}: ${lesson.title}`;
+      document.getElementById('exercise-title').textContent = set.title;
+      questions = (await window.MathAPI.get(`/api/question-sets/${encodeURIComponent(setId)}/questions`)).questions;
+      if (!questions.length) throw new Error('Bộ bài chưa có câu hỏi.');
+      render();
+      submit.disabled = reset.disabled = false;
+      window.MathAnalytics?.track('lesson_open', { lessonId: lesson.id, setId });
+    } catch (err) { container.textContent = `Chưa tải được bài: ${err.message}`; }
+    finally { container.setAttribute('aria-busy', 'false'); }
+  }
+  reset.addEventListener('click', () => { answers = {}; modal.classList.add('hidden'); render(); });
+  document.getElementById('btn-close-result').addEventListener('click', () => modal.classList.add('hidden'));
+  submit.addEventListener('click', async () => {
+    if (busy || exhausted || !questions.length) return;
+    const missing = questions.filter(q => !String(answers[q.id] ?? '').trim()).length;
+    if (missing && !confirm(`Em còn ${missing} câu chưa trả lời. Vẫn nộp bài nhé?`)) return;
+    busy = true;
+    submit.disabled = reset.disabled = true;
+    submit.textContent = 'Đang kiểm tra…';
+    try {
+      const result = await window.MathAPI.post('/api/submissions', { setId, answers: { ...answers }, durationSec: elapsed() });
+      exhausted = result.attemptsLeft === 0;
+      modal.querySelector('h4').textContent = `Em đạt ${result.scorePercent}% — ${result.comment}`;
+      modal.querySelector('p').textContent = `Đúng ${result.correctCount}/${result.totalCount} câu. Còn ${result.attemptsLeft} lượt. Nhận thêm ${result.starsEarned || 0} sao. Kết quả đã được lưu.`;
+      modal.querySelector('[data-corrections]')?.remove();
+      const corrections = document.createElement('div');
+      corrections.dataset.corrections = '';
+      (result.detail || []).forEach((item, index) => {
+        if (item.correctAnswer === undefined) return;
+        const line = document.createElement('p');
+        line.textContent = `Câu ${index + 1}: ${item.correct ? 'Đúng' : 'Chưa đúng'} — Đáp án: ${item.correctAnswer}`;
+        if (item.solution) line.textContent += ` — Bài chữa: ${Array.isArray(item.solution) ? item.solution.join(' ') : JSON.stringify(item.solution)}`;
+        corrections.append(line);
+      });
+      modal.append(corrections);
+      modal.classList.remove('hidden');
+    } catch (err) {
+      if (err.status === 409) exhausted = true;
+      alert(`Chưa nộp được bài: ${err.message}`);
+    } finally {
+      busy = false;
+      submit.disabled = exhausted;
+      reset.disabled = false;
+      submit.textContent = exhausted ? 'Đã hết lượt làm bài' : 'Kiểm tra đáp án & nhận sao';
+    }
+  });
+  document.addEventListener('mathapp:user-ready', init, { once: true });
+})();

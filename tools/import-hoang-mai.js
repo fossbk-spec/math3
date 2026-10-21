@@ -19,9 +19,11 @@ const curriculum = read('content/grade3/curriculum.json');
 const aiSafe = read('content/grade3/ai-safe.json');
 const active = new Set(curriculum.activeLessons);
 const lessons = [];
+const lessonSkills = new Map();
 for (const t of curriculum.topics) {
   for (const l of t.lessons) {
     if (!active.has(l.number)) continue;
+    lessonSkills.set(l.number, l.skills[0]);
     lessons.push({ id: `bai-${l.number}`, number: l.number, title: l.title, page: l.page || null,
       topic: `Chủ đề ${t.number}: ${t.title}`, description: `SGK Toán 3 tập một, trang ${l.page}` });
   }
@@ -33,8 +35,8 @@ const skipped = {};
 const skip = (why) => { skipped[why] = (skipped[why] || 0) + 1; return null; };
 
 /** Đổi 1 câu (phiếu hoặc bank) sang dạng câu hỏi của math3. */
-function convert({ id, stem, answerType, options, answer, level, source, hints, solution, origin }) {
-  const base = { id, prompt: stem, level: level || 'co-ban', source, origin,
+function convert({ id, stem, answerType, options, answer, level, source, hints, solution, origin, skillId, cognitiveLevel }) {
+  const base = { id, prompt: stem, level: level || 'co-ban', source, origin, skillId, cognitiveLevel, reviewStatus: 'DRAFT',
     solution: solution && solution.length ? solution : null, hints: hints && hints.length ? hints : null };
   if (answerType === 'choice') {
     if (!Array.isArray(options) || options.length < 2 || options.length > 4) return skip('choice-khong-2-4-lua-chon');
@@ -73,20 +75,25 @@ for (const f of fs.readdirSync(wsDir).filter(f => f.endsWith('.json')).sort()) {
     const s = it.source || {};
     const src = `Phiếu GV: ${s.file || f}${s.exercise ? ' · ' + s.exercise : ''}${s.question ? ' · ' + s.question : ''}`;
     addTo(`bai-${lessonNum}-${level}`, { title: `Bài ${lessonNum} · ${LEVEL_LABEL[level]}`, kind: 'exercise', lessonId: `bai-${lessonNum}`, level },
-      convert({ id: `ws-${it.id}`, stem: it.stem, answerType: it.answerType, options: it.options, answer: it.answer, level, source: src, origin: 'worksheet' }));
+      convert({ id: `ws-${it.id}`, stem: it.stem, answerType: it.answerType, options: it.options, answer: it.answer, level, source: src, origin: 'worksheet',
+        skillId: lessonSkills.get(lessonNum), cognitiveLevel: level === 'nang-cao' ? 2 : 1 }));
   }
 }
 
 // 2) Câu tự sinh (bank) cho bài thiếu câu phiếu: bài 13 (tìm thành phần), 14 (một phần mấy), 15 (bảng 6–9)
 const BANK_TO_LESSON = { 'g3.number.find-component': 13, 'g3.number.fraction-unit': 14, 'g3.number.tables-6-9': 15 };
+const practiceQuestions = [];
+let prerequisiteCount = 0;
 for (const b of read('content/bank/grade3.json')) {
   const n = BANK_TO_LESSON[b.skillId];
-  if (!n) continue;
-  addTo(`bai-${n}-luyen-them`, { title: `Bài ${n} · Luyện thêm (câu tự sinh)`, kind: 'exercise', lessonId: `bai-${n}`, level: 'co-ban' },
-    convert({ id: `bank-${b.skillId.split('.').pop()}-${b.templateId.split('#').pop()}-${b.seed}-${b.cognitiveLevel}`, stem: b.stem,
+  if (!n && (b.skillId !== 'g3.number.tables' || prerequisiteCount >= 12)) continue;
+  const q = convert({ id: `bank-${b.skillId.split('.').pop()}-${b.templateId.split('#').pop()}-${b.seed}-${b.cognitiveLevel}`, stem: b.stem,
       answerType: b.answerType, options: b.options, answer: b.correctAnswer, level: b.level || 'co-ban',
-      source: `Tự sinh: ${b.templateId} (seed ${b.seed})`, hints: b.hints, solution: b.solution, origin: 'template' }));
+      source: `Tự sinh: ${b.templateId} (seed ${b.seed})`, hints: b.hints, solution: b.solution, origin: 'template', skillId: b.skillId, cognitiveLevel: b.cognitiveLevel });
+  if (n) addTo(`bai-${n}-luyen-them`, { title: `Bài ${n} · Luyện thêm (câu tự sinh)`, kind: 'exercise', lessonId: `bai-${n}`, level: 'co-ban' }, q);
+  else if (q) { practiceQuestions.push(q); prerequisiteCount++; }
 }
+if (prerequisiteCount !== 12) throw new Error('Thiếu 12 câu bank ôn tiền đề');
 
 // 3) Đề kiểm tra chủ đề 2: 20 câu trắc nghiệm 4 lựa chọn, rải đều bài 9–15 (exam.html chỉ hiển thị dạng này)
 const pool = Object.values(sets).flatMap(s => s.questions.map(q => ({ ...q, lessonId: s.lessonId })))
@@ -102,13 +109,22 @@ sets['bai-15-kiem-tra'] = { title: 'Kiểm tra Chủ đề 2 (bài 9–15)', kin
 
 // Kiểm tra trùng id
 const ids = new Set();
-for (const s of Object.values(sets)) for (const q of s.questions) {
+const allQuestions = [...Object.values(sets).flatMap(s => s.questions), ...practiceQuestions];
+const usedSkills = new Set(allQuestions.map(q => q.skillId));
+const skills = read('content/grade3/skills.json').filter(s => s.grade === 3 && usedSkills.has(s.id))
+  .map(({ id, title, prerequisites }) => ({ id, title, prerequisites: prerequisites.filter(id => usedSkills.has(id)) }));
+const skillIds = new Set(skills.map(s => s.id));
+for (const q of allQuestions) {
   if (ids.has(q.id)) throw new Error(`Trùng id câu hỏi: ${q.id}`);
+  if (!skillIds.has(q.skillId) || ![1, 2, 3].includes(q.cognitiveLevel)) throw new Error(`Sai kỹ năng/mức: ${q.id}`);
   ids.add(q.id);
 }
+const practicePool = [...Object.values(sets).filter(s => s.kind === 'exercise').flatMap(s => s.questions), ...practiceQuestions]
+  .filter(q => skillIds.has(q.skillId)).map(q => q.id);
+const feedbackRules = read('content/grade3/feedback-rules.json');
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, JSON.stringify({ source: 'fossbk-spec/hoang-mai-math', lessons, questionSets: sets, aiSafe }, null, 2) + '\n');
+fs.writeFileSync(OUT, JSON.stringify({ source: 'fossbk-spec/hoang-mai-math', lessons, questionSets: sets, skills, practiceQuestions, practicePool, feedbackRules, aiSafe }, null, 2) + '\n', 'utf8');
 console.log(`Đã ghi ${path.relative(process.cwd(), OUT)}: ${lessons.length} bài, ${Object.keys(sets).length} bộ, ${ids.size} câu.`);
 for (const [id, s] of Object.entries(sets)) console.log(`  ${id.padEnd(22)} ${String(s.questions.length).padStart(3)} câu`);
 console.log('Bỏ qua:', skipped);

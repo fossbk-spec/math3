@@ -35,7 +35,7 @@ document.addEventListener('mathapp:user-ready', async () => {
         const link = document.createElement('a');
         link.className = 'min-h-12 px-4 py-3 rounded-2xl bg-primary text-on-primary font-headline-sm text-lg flex items-center justify-center text-center';
         link.textContent = set.title || 'Luyện tập';
-        link.href = `lesson.html?lesson=${encodeURIComponent(lesson.id)}&set=${encodeURIComponent(set.id)}`;
+        link.href = `${set.kind === 'exercise' ? 'exercise' : 'lesson'}.html?lesson=${encodeURIComponent(lesson.id)}&set=${encodeURIComponent(set.id)}`;
         if (lesson.locked) {
           link.removeAttribute('href');
           link.setAttribute('aria-disabled', 'true');

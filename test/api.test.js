@@ -38,7 +38,7 @@ test('API T1 với DB mới', async () => {
     assert.deepEqual(lessons.map(l => l.number), [9, 10, 11, 12, 13, 14, 15]);
     assert.equal(lessons[0].page, require('../data/content/grade3.json').lessons[0].page);
     assert.ok(lessons[0].questionSets.length > 1);
-    const setId = lessons[0].questionSets.find(s => s.id !== 'phieu-bai-9-10').id;
+    const setId = lessons[0].questionSets.find(s => s.id === 'bai-9-co-ban').id;
     assert.equal((await request(`/question-sets/${setId}/questions`, student)).status, 404);
     const sets = (await request('/teacher/question-sets', teacher)).data.questionSets;
     const examId = sets.find(s => s.kind === 'exam').id;
@@ -46,6 +46,12 @@ test('API T1 với DB mới', async () => {
     assert.equal(examBefore.status, 404);
     assert.equal((await request(`/teacher/question-sets/${setId}/approve-all`, teacher, 'POST', {})).status, 200);
     const qs = (await request(`/question-sets/${setId}/questions`, student)).data.questions;
+    const demo = require('./helpers/demo')();
+    await demo('auth/login', 'POST', { role: 'student' });
+    const demoQuestions = (await demo(`question-sets/${setId}/questions`)).questions;
+    const comparable = rows => rows.map(q => ({ id: q.id, prompt: q.prompt, type: q.type, options: q.options, hints: q.hints }));
+    assert.deepEqual(comparable(qs), comparable(demoQuestions));
+    assert.ok(!lessons[0].questionSets.some(s => s.id === 'phieu-bai-9-10'));
     assert.ok(qs.length > 0);
     assert.ok(qs.every(q => Array.isArray(q.hints)));
     assert.ok(qs.every(q => q.correctAnswer === undefined && q.solution === undefined && q.hints_json === undefined));

@@ -31,8 +31,8 @@ window.MathApp.resolveRoute = function (el) {
   if (hay.includes('cau-ca') || hay.includes('câu cá')) return routes.game4;
   if (hay.includes('ban-bong') || hay.includes('bắn bóng') || hay.includes('bong-bay')) return routes.games;
   if (hay.includes('dau-truong') || hay.includes('đấu trường') || hay.includes('tro-choi') || hay.includes('trò chơi')) return routes.games;
-  if (hay.includes('kiem-tra') || hay.includes('kiểm tra')) return routes.exam;
   if (hay.includes('luyen-tap') || hay.includes('luyện tập')) return routes.exercise;
+  if (hay.includes('kiem-tra') || hay.includes('kiểm tra')) return routes.exam;
   if (hay.includes('muc-luc') || hay.includes('mục lục') || hay.includes('sgk')) return routes.curriculum;
   if (hay.includes('trang-chu') || hay.includes('trang chủ')) return routes.home;
   return routes.home;
