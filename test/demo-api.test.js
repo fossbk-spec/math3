@@ -9,7 +9,7 @@ test('demo API: học sinh làm 3 lượt, bài chữa cuối, giáo viên duy�
   const data = require('../data/content/grade3.json');
   const memory = new Map();
   const localStorage = { getItem: key => memory.get(key) ?? null, setItem: (key, value) => memory.set(key, value), removeItem: key => memory.delete(key) };
-  const context = { window: { MathGrading: require('../public/assets/js/core/grading.js') }, localStorage,
+  const context = { window: { MathPractice: require('../public/assets/js/core/practice.js'), MathGrading: require('../public/assets/js/core/grading.js') }, localStorage,
     fetch: async url => { assert.equal(url, 'data/grade3.json'); return { ok: true, json: async () => data }; },
     URL, Date, Math, Object, JSON };
   context.window.localStorage = localStorage;

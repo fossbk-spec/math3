@@ -5,7 +5,8 @@
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
   'use strict';
   const escape = value => String(value).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  function render(container, questions, answers, updateProgress) {
+  // Mặc định giữ nhãn cho exercise/lesson; practice có tiến độ riêng bên ngoài.
+  function render(container, questions, answers, updateProgress, { hideLabel = false } = {}) {
     container.innerHTML = questions.map((q, idx) => {
       let body = '';
       if (q.type === 'multiple-choice' && q.options) {
@@ -21,10 +22,10 @@
         body = `<div class="flex gap-2.5 mt-3">${['>', '<', '='].map(s => `
           <button type="button" data-q="${escape(q.id)}" data-val="${escape(s)}" class="opt-btn w-14 h-14 rounded-2xl bg-surface-container-low font-headline-lg text-primary">${escape(s)}</button>`).join('')}</div>`;
       } else {
-        body = `<input data-q="${escape(q.id)}" aria-label="Đáp số câu ${idx + 1}" type="text" inputmode="numeric" placeholder="Điền đáp số..." class="mt-3 w-56 h-14 text-center rounded-2xl bg-surface-container-low text-primary font-headline-lg focus:outline-none focus:ring-4 focus:ring-primary-fixed"/>`;
+        body = `<input data-q="${escape(q.id)}" aria-label="${hideLabel ? 'Đáp số' : `Đáp số câu ${idx + 1}`}" type="text" inputmode="numeric" placeholder="Điền đáp số..." class="mt-3 w-56 h-14 text-center rounded-2xl bg-surface-container-low text-primary font-headline-lg focus:outline-none focus:ring-4 focus:ring-primary-fixed"/>`;
       }
       return `<article class="rounded-3xl bg-surface-container-lowest shadow-[0_8px_24px_rgba(0,97,39,0.06)] p-6">
-        <p class="font-label-sm text-label-sm text-tertiary font-bold">Câu ${idx + 1} • ${q.points || 1} điểm${q.category ? ' • ' + escape(q.category) : ''}</p>
+        ${hideLabel ? '' : `<p class="font-label-sm text-label-sm text-tertiary font-bold">Câu ${idx + 1} • ${q.points || 1} điểm${q.category ? ' • ' + escape(q.category) : ''}</p>`}
         <h3 class="font-headline-md text-headline-md mt-1">${escape(q.prompt)}</h3>${body}</article>`;
     }).join('');
 
@@ -61,5 +62,14 @@
     updateProgress();
   }
 
-  return { render };
+  // Chỉ định dạng đáp án API đã trả; không suy ra đáp án khi đang làm bài.
+  function formatAnswer(question, answer) {
+    const value = String(answer ?? '').trim();
+    const index = ['A', 'B', 'C', 'D'].indexOf(value.toUpperCase());
+    if (question?.type === 'multiple-choice' && index >= 0 && question.options?.[index] != null) {
+      return `${value.toUpperCase()}. ${question.options[index]}`;
+    }
+    return value;
+  }
+  return { render, formatAnswer };
 });

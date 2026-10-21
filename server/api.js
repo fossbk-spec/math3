@@ -7,7 +7,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const db = require('./db');
-const { aiSafe } = require('../data/content/grade3.json');
+const { aiSafe, feedbackRules } = require('../data/content/grade3.json');
 const { gradeSubmission, isCorrect } = require('../public/assets/js/core/grading');
 const { setAuthCookie, clearAuthCookie, requireAuth, requireTeacher } = require('./auth');
 
@@ -49,6 +49,7 @@ function lessonsWithProgress(userId) {
     };
   });
 }
+require('./practice-api')(router, db, requireAuth, lessonsWithProgress, ALLOW_DRAFT);
 router.get('/lessons', requireAuth, (req, res) => res.json({ lessons: lessonsWithProgress(req.user.id) }));
 router.get('/me/progress', requireAuth, (req, res) => res.json({ lessons: lessonsWithProgress(req.user.id), totalStars: req.user.total_stars }));
 
@@ -77,7 +78,7 @@ router.post('/submissions', requireAuth, (req, res) => {
   const attemptNo = used + 1;
   const questions = db.prepare(`SELECT * FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(setId);
   if (!questions.length) return res.status(404).json({ error: 'Bộ bài chưa có câu hỏi để làm.' });
-  const graded = gradeSubmission(questions, answers, { kind: meta.kind, lastAttempt: attemptNo === maxAttempts });
+  const graded = gradeSubmission(questions, answers, { kind: meta.kind, lastAttempt: attemptNo === maxAttempts, feedbackRules });
   const { scorePercent: percent, correctCount: correct } = graded;
 
   // Sao thưởng chỉ tính trên phần % tiến bộ so với điểm cao nhất cũ (chống "cày" sao bằng cách nộp lại)

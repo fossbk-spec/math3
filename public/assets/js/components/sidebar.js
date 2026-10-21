@@ -7,6 +7,7 @@ window.MathApp.routes = {
   home: 'index.html',
   curriculum: 'index.html#lesson-9',
   exercise: 'exercise.html',
+  practice: 'practice.html',
   exam: 'exam.html',
   games: 'game.html',
   game2: 'game2.html',
@@ -24,6 +25,7 @@ window.MathApp.resolveRoute = function (el) {
   const path = (el.getAttribute('data-path') || '').toLowerCase();
   const text = (el.textContent || '').toLowerCase();
   const hay = `${path} ${text}`;
+  if (hay.includes('thích ứng') || hay.includes('thich-ung')) return routes.practice;
   if (hay.includes('giao-vien') || hay.includes('giáo viên') || hay.includes('thay-co') || hay.includes('thầy cô') || hay.includes('goc-thay')) return routes.teacher;
   if (hay.includes('bang-xep-hang') || hay.includes('xếp hạng') || hay.includes('vinh-danh') || hay.includes('vinh danh')) return routes.leaderboard;
   if (hay.includes('dua-xe') || hay.includes('đua xe')) return routes.game2;
