@@ -4,3 +4,8 @@ data/*.db
 data/*.db-shm
 data/*.db-wal
 .env
+# Danh sách lớp / tài khoản có họ tên thật: chỉ để trên máy giáo viên, không commit
+data/*.csv
+data/*.docx
+data/*.xlsx
+data/~$*
