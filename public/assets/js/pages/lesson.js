@@ -19,60 +19,7 @@
     if (progressText) progressText.textContent = `Đã trả lời ${done}/${questions.length} câu`;
   }
 
-  function render() {
-    container.innerHTML = questions.map((q, idx) => {
-      let body = '';
-      if (q.type === 'multiple-choice' && q.options) {
-        body = `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3">${q.options.map((op, i) => `
-          <button type="button" data-q="${q.id}" data-val="${['A', 'B', 'C', 'D'][i]}" class="opt-btn text-left px-4 py-3 rounded-2xl bg-surface-container-low hover:bg-secondary-container/60 font-body-md transition-all">
-            <strong class="text-primary">${['A', 'B', 'C', 'D'][i]}.</strong> ${op}</button>`).join('')}</div>`;
-      } else if (q.type === 'paint') {
-        body = `<div class="flex gap-2.5 mt-3">
-          <button type="button" data-q="${q.id}" data-val="green" class="opt-btn px-5 py-3 rounded-2xl bg-secondary-fixed text-on-secondary-fixed font-headline-sm">Tô Xanh lá</button>
-          <button type="button" data-q="${q.id}" data-val="yellow" class="opt-btn px-5 py-3 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm">Tô Vàng</button></div>
-          <p class="mt-2 font-label-sm text-label-sm text-on-surface-variant">Chọn màu đúng theo kết quả của phép tính.</p>`;
-      } else if (q.type === 'compare') {
-        body = `<div class="flex gap-2.5 mt-3">${['>', '<', '='].map(s => `
-          <button type="button" data-q="${q.id}" data-val="${s}" class="opt-btn w-14 h-14 rounded-2xl bg-surface-container-low font-headline-lg text-primary">${s}</button>`).join('')}</div>`;
-      } else {
-        body = `<input data-q="${q.id}" type="text" inputmode="numeric" placeholder="Điền đáp số..." class="mt-3 w-56 h-14 text-center rounded-2xl bg-surface-container-low text-primary font-headline-lg focus:outline-none focus:ring-4 focus:ring-primary-fixed"/>`;
-      }
-      return `<article class="rounded-3xl bg-surface-container-lowest shadow-[0_8px_24px_rgba(0,97,39,0.06)] p-6">
-        <p class="font-label-sm text-label-sm text-tertiary font-bold">Câu ${idx + 1} • ${q.points} điểm${q.category ? ' • ' + q.category : ''}</p>
-        <h3 class="font-headline-md text-headline-md mt-1">${q.prompt}</h3>${body}</article>`;
-    }).join('');
-
-    container.querySelectorAll('article').forEach((article, index) => {
-      const hints = questions[index].hints;
-      if (!Array.isArray(hints) || !hints.length) return;
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'mt-4 min-h-12 px-5 rounded-2xl bg-secondary-container text-on-secondary-container font-headline-sm text-lg';
-      button.textContent = 'Gợi ý';
-      const list = document.createElement('ol');
-      list.className = 'mt-3 space-y-2 font-body-md text-lg list-decimal pl-7';
-      let shown = 0;
-      button.addEventListener('click', () => {
-        const item = document.createElement('li');
-        item.textContent = hints[shown++];
-        list.append(item);
-        window.MathAnalytics?.track('hint_used', { questionId: questions[index].id, hintNo: shown });
-        if (shown === hints.length) button.disabled = true;
-      });
-      article.append(button, list);
-    });
-
-    container.querySelectorAll('.opt-btn').forEach(btn => btn.addEventListener('click', () => {
-      answers[btn.dataset.q] = btn.dataset.val;
-      container.querySelectorAll(`.opt-btn[data-q="${btn.dataset.q}"]`).forEach(b =>
-        b.classList.toggle('ring-4', b === btn));
-      if (btn.dataset.val) container.querySelectorAll(`.opt-btn[data-q="${btn.dataset.q}"]`).forEach(b =>
-        b.classList.toggle('ring-primary-fixed-dim', b === btn));
-      updateProgress();
-    }));
-    container.querySelectorAll('input[data-q]').forEach(inp => inp.addEventListener('input', () => { answers[inp.dataset.q] = inp.value.trim(); updateProgress(); }));
-    updateProgress();
-  }
+  function render() { window.MathQuestionView.render(container, questions, answers, updateProgress); }
 
   async function init() {
     if (!setId) { container.innerHTML = '<p class="font-body-md">Thiếu mã bộ bài. Em quay lại Mục Lục chọn bài nhé!</p>'; return; }
@@ -90,7 +37,7 @@
       window.MathAnalytics?.track('lesson_open', { lessonId, setId });
       document.getElementById('set-kind').textContent = `Bộ bài: ${setId} • ${questions.length} câu`;
       render();
-    } catch (err) { container.innerHTML = `<p class="font-body-md">Chưa tải được bài: ${err.message}</p>`; }
+    } catch (err) { container.textContent = `Chưa tải được bài: ${err.message}`; }
   }
 
   document.getElementById('btn-submit-lesson').addEventListener('click', async () => {

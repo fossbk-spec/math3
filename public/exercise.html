@@ -18,11 +18,11 @@
 <!-- Top Action Bar & Path Indicators -->
 <div class="flex flex-wrap items-center justify-between gap-space-sm bg-surface-container-lowest p-space-sm rounded-lg shadow-sm">
 <div class="flex items-center gap-space-xs flex-wrap">
-<a class="inline-flex items-center gap-1.5 px-space-sm py-2 rounded-full bg-surface-container-low text-primary hover:bg-surface-container font-label-md text-label-md transition-all active:scale-95 shadow-[0_3px_0_0_#d8dad9]" href="#">
+<a class="inline-flex items-center gap-1.5 px-space-sm py-2 rounded-full bg-surface-container-low text-primary hover:bg-surface-container font-label-md text-label-md transition-all active:scale-95 shadow-[0_3px_0_0_#d8dad9]" href="index.html#lesson-9">
 <span class="material-symbols-outlined text-[20px]">arrow_back</span>
 <span>Lộ trình Chủ đề 2</span>
 </a>
-<a class="inline-flex items-center gap-1.5 px-space-sm py-2 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all active:scale-95 shadow-[0_3px_0_0_#d8dad9]" href="#">
+<a class="inline-flex items-center gap-1.5 px-space-sm py-2 rounded-full bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-all active:scale-95 shadow-[0_3px_0_0_#d8dad9]" href="index.html">
 <span class="material-symbols-outlined text-[20px]">home</span>
 <span>Mục Lục SGK</span>
 </a>
@@ -40,340 +40,35 @@
 </div>
 </div>
 </div>
-<!-- Lesson Stage Tracker & Heading Banner -->
-<div class="relative overflow-hidden rounded-lg bg-surface-container-lowest p-space-md lg:p-space-lg shadow-sm">
-<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md">
-<div>
-<div class="flex items-center gap-2 mb-1.5">
-<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold tracking-wide uppercase">Bài 9 • Bảng nhân 6, bảng chia 6</span>
-<span class="text-on-surface-variant text-label-sm font-medium">Luyện tập tự do</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight">PHIẾU BÀI TẬP: BẢNG NHÂN 6, BẢNG CHIA 6</h2>
-</div>
-<!-- Question Tracker Bubble Nodes -->
-<div class="flex flex-col items-start lg:items-end gap-2">
-<div class="flex items-center gap-1.5 text-on-surface font-label-md text-label-md">
-<span>Tiến độ hoàn thành:</span>
-<span class="font-bold text-primary font-headline-sm text-label-lg">Bài luyện tập</span>
-</div>
-<div class="flex items-center gap-2">
-<!-- 1 Done -->
-<button class="w-9 h-9 rounded-full bg-primary text-on-primary font-headline-sm text-label-md flex items-center justify-center shadow-[0_3px_0_0_#004419] transition-transform">
-<span class="material-symbols-outlined text-[18px]">check</span>
-</button>
-<!-- 2 Done -->
-<button class="w-9 h-9 rounded-full bg-primary text-on-primary font-headline-sm text-label-md flex items-center justify-center shadow-[0_3px_0_0_#004419] transition-transform">
-<span class="material-symbols-outlined text-[18px]">check</span>
-</button>
-<!-- 3 Done -->
-<button class="w-9 h-9 rounded-full bg-primary text-on-primary font-headline-sm text-label-md flex items-center justify-center shadow-[0_3px_0_0_#004419] transition-transform">
-<span class="material-symbols-outlined text-[18px]">check</span>
-</button>
-<!-- 4 Active Pulse -->
-<button class="w-10 h-10 rounded-full bg-tertiary-fixed-dim text-on-tertiary font-headline-sm text-label-lg flex items-center justify-center shadow-[0_4px_0_0_#c48c00] scale-110">
-              4
-            </button>
-<!-- 5-8 Next -->
-<button class="w-9 h-9 rounded-full bg-surface-container text-on-surface-variant font-headline-sm text-label-md flex items-center justify-center shadow-[0_2px_0_0_#bfcabb]">
-              5
-            </button>
-<button class="w-9 h-9 rounded-full bg-surface-container text-on-surface-variant font-headline-sm text-label-md flex items-center justify-center shadow-[0_2px_0_0_#bfcabb]">
-              6
-            </button>
-<button class="w-9 h-9 rounded-full bg-surface-container text-on-surface-variant font-headline-sm text-label-md flex items-center justify-center shadow-[0_2px_0_0_#bfcabb]">
-              7
-            </button>
-<button class="w-9 h-9 rounded-full bg-surface-container text-on-surface-variant font-headline-sm text-label-md flex items-center justify-center shadow-[0_2px_0_0_#bfcabb]">
-              8
-            </button>
-</div>
-</div>
-</div>
-</div>
-<!-- MAIN WORKSHEET GRID (3 Interactive Exercises + Mascot Guide) -->
+<!-- Phiếu bài tập tải từ API -->
+<section class="rounded-lg bg-surface-container-lowest p-space-md shadow-sm">
+  <p id="exercise-lesson" class="text-lg text-primary"></p>
+  <h2 id="exercise-title" class="font-headline-lg text-headline-lg text-primary">Phiếu bài tập</h2>
+  <p id="exercise-progress-text" class="text-lg" aria-live="polite">Đã trả lời 0/0 câu</p>
+  <div class="h-3 rounded-full bg-surface-container mt-3"><div id="exercise-progress" class="h-3 rounded-full bg-primary" style="width:0%"></div></div>
+</section>
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
-<!-- Center Work Area: Exercises (Col 8) -->
-<div class="lg:col-span-8 flex flex-col gap-space-md">
-<!-- EXERCISE 1: SO SÁNH (>, <, =) -->
-<section class="bg-surface-container-lowest rounded-lg p-space-md lg:p-space-lg shadow-sm relative overflow-hidden">
-<div class="flex items-center justify-between mb-space-md">
-<div class="flex items-center gap-space-xs">
-<span class="w-9 h-9 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-label-lg flex items-center justify-center shadow-[0_3px_0_0_#f7be23]">1</span>
-<h3 class="font-headline-md text-headline-md text-on-surface">Điền dấu &gt;, &lt; hoặc = vào ô trống</h3>
+  <div id="questions-container" class="lg:col-span-8 space-y-space-md" aria-busy="true">Đang tải phiếu bài tập…</div>
+  <aside class="lg:col-span-4 rounded-lg bg-surface-container-lowest p-space-md shadow-sm text-lg">
+    <h3 class="font-headline-md text-headline-md text-primary">Ong Vàng Hoàng Mai</h3>
+    <p>Em đọc kỹ từng câu, điền đáp số hoặc chọn đáp án. Nếu cần, em mở từng bước gợi ý ngay dưới câu hỏi nhé!</p>
+  </aside>
 </div>
-<span class="text-label-sm font-label-sm px-2.5 py-1 rounded-full bg-surface-container-low text-primary font-bold">Luyện tập</span>
-</div>
-<div class="space-y-space-md">
-<!-- Row 1: 6 x 4 [?] 6 x 3 + 6 -->
-<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm p-space-sm bg-surface-container-low rounded-DEFAULT">
-<div class="flex items-center gap-space-sm text-headline-md font-headline-md text-primary">
-<span class="px-3 py-1 bg-surface-container-lowest rounded-lg shadow-sm">6 × 4</span>
-<span class="w-12 h-12 rounded-2xl bg-surface-container-lowest text-primary flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] font-headline-lg" id="slot-1-1">?</span>
-<span class="px-3 py-1 bg-surface-container-lowest rounded-lg shadow-sm">6 × 3 + 6</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="w-12 h-12 rounded-2xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-headline-lg shadow-[0_4px_0_0_#bfcabb] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-1', '&gt;')">&gt;</button>
-<button class="w-12 h-12 rounded-2xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-headline-lg shadow-[0_4px_0_0_#bfcabb] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-1', '&lt;')">&lt;</button>
-<button class="w-12 h-12 rounded-2xl bg-secondary-container text-on-secondary-container font-headline-lg shadow-[0_4px_0_0_#00722f] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-1', '=')">=</button>
-</div>
-</div>
-<!-- Row 2: 30 : 6 [?] 42 : 6 -->
-<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm p-space-sm bg-surface-container-low rounded-DEFAULT">
-<div class="flex items-center gap-space-sm text-headline-md font-headline-md text-primary">
-<span class="px-3 py-1 bg-surface-container-lowest rounded-lg shadow-sm">30 : 6</span>
-<span class="w-12 h-12 rounded-2xl bg-surface-container-lowest text-primary flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] font-headline-lg" id="slot-1-2">?</span>
-<span class="px-3 py-1 bg-surface-container-lowest rounded-lg shadow-sm">42 : 6</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="w-12 h-12 rounded-2xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-headline-lg shadow-[0_4px_0_0_#bfcabb] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-2', '&gt;')">&gt;</button>
-<button class="w-12 h-12 rounded-2xl bg-secondary-container text-on-secondary-container font-headline-lg shadow-[0_4px_0_0_#00722f] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-2', '&lt;')">&lt;</button>
-<button class="w-12 h-12 rounded-2xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-headline-lg shadow-[0_4px_0_0_#bfcabb] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-2', '=')">=</button>
-</div>
-</div>
-<!-- Row 3: 6 x 8 [?] 50 -->
-<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm p-space-sm bg-surface-container-low rounded-DEFAULT">
-<div class="flex items-center gap-space-sm text-headline-md font-headline-md text-primary">
-<span class="px-3 py-1 bg-surface-container-lowest rounded-lg shadow-sm">6 × 8</span>
-<span class="w-12 h-12 rounded-2xl bg-surface-container-lowest text-primary flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.06)] font-headline-lg" id="slot-1-3">?</span>
-<span class="px-3 py-1 bg-surface-container-lowest rounded-lg shadow-sm">50</span>
-</div>
-<div class="flex items-center gap-2">
-<button class="w-12 h-12 rounded-2xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-headline-lg shadow-[0_4px_0_0_#bfcabb] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-3', '&gt;')">&gt;</button>
-<button class="w-12 h-12 rounded-2xl bg-secondary-container text-on-secondary-container font-headline-lg shadow-[0_4px_0_0_#00722f] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-3', '&lt;')">&lt;</button>
-<button class="w-12 h-12 rounded-2xl bg-surface-container-lowest hover:bg-surface-container text-on-surface font-headline-lg shadow-[0_4px_0_0_#bfcabb] active:translate-y-1 active:shadow-none transition-all flex items-center justify-center" onclick="setCompare('slot-1-3', '=')">=</button>
-</div>
-</div>
-</div>
-</section>
-<!-- EXERCISE 2: TÍNH NHẨM ONG TÌM HOA & BÀN PHÍM SỐ -->
-<section class="bg-surface-container-lowest rounded-lg p-space-md lg:p-space-lg shadow-sm relative overflow-hidden">
-<div class="flex items-center justify-between mb-space-md">
-<div class="flex items-center gap-space-xs">
-<span class="w-9 h-9 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-label-lg flex items-center justify-center shadow-[0_3px_0_0_#f7be23]">2</span>
-<h3 class="font-headline-md text-headline-md text-on-surface">Ong Vàng tìm mật: Tính nhanh kết quả</h3>
-</div>
-<span class="text-label-sm font-label-sm px-2.5 py-1 rounded-full bg-surface-container-low text-primary font-bold">Luyện tập</span>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md items-center">
-<!-- Equation slots (Col 7) -->
-<div class="md:col-span-7 space-y-3">
-<!-- Eq 1 -->
-<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-DEFAULT">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-tertiary">pest_control</span>
-<span class="font-headline-md text-headline-md text-primary">54 : 6 =</span>
-</div>
-<input class="w-16 h-14 text-center rounded-2xl bg-surface-container-lowest text-primary font-headline-lg text-headline-lg focus:outline-none focus:ring-4 focus:ring-primary-fixed shadow-[0_3px_0_0_#bfcabb] cursor-pointer" id="math-input-1" onclick="setActiveInput('math-input-1')" readonly="" type="text" value="9"/>
-</div>
-<!-- Eq 2 -->
-<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-DEFAULT">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-tertiary">local_florist</span>
-<span class="font-headline-md text-headline-md text-primary">6 × 7 =</span>
-</div>
-<input class="w-16 h-14 text-center rounded-2xl bg-surface-container-lowest text-primary font-headline-lg text-headline-lg focus:outline-none focus:ring-4 focus:ring-primary-fixed shadow-[0_3px_0_0_#bfcabb] cursor-pointer" id="math-input-2" onclick="setActiveInput('math-input-2')" readonly="" type="text" value="42"/>
-</div>
-<!-- Eq 3 -->
-<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-DEFAULT">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-tertiary">cruelty_free</span>
-<span class="font-headline-md text-headline-md text-primary">36 : 6 =</span>
-</div>
-<input class="w-16 h-14 text-center rounded-2xl bg-surface-container-lowest text-on-surface font-headline-lg text-headline-lg focus:outline-none ring-2 ring-tertiary-fixed-dim shadow-[0_3px_0_0_#bfcabb] cursor-pointer" id="math-input-3" onclick="setActiveInput('math-input-3')" placeholder="?" readonly="" type="text"/>
-</div>
-</div>
-<!-- Interactive Virtual Number Pad (Col 5) -->
-<div class="md:col-span-5 bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-2">
-<div class="flex items-center justify-between px-1">
-<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">Bàn phím tính nhẩm</span>
-<span class="text-[11px] text-primary font-semibold">Chạm để nhập</span>
-</div>
-<div class="grid grid-cols-3 gap-1.5">
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('1')">1</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('2')">2</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('3')">3</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('4')">4</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('5')">5</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('6')">6</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('7')">7</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('8')">8</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('9')">9</button>
-<button class="h-11 rounded-xl bg-error-container text-on-error-container font-headline-sm text-label-sm shadow-[0_3px_0_0_#ba1a1a] active:translate-y-0.5 active:shadow-none flex items-center justify-center" onclick="clearKey()">
-<span class="material-symbols-outlined text-[18px]">backspace</span>
-</button>
-<button class="h-11 rounded-xl bg-surface-container-lowest font-headline-md text-label-lg text-on-surface shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 active:shadow-none" onclick="pressKey('0')">0</button>
-<button class="h-11 rounded-xl bg-secondary-container text-on-secondary-container font-headline-sm text-label-sm shadow-[0_3px_0_0_#00722f] active:translate-y-0.5 active:shadow-none flex items-center justify-center" onclick="pressKey('OK')">
-<span class="material-symbols-outlined text-[18px]">done</span>
-</button>
-</div>
-</div>
-</div>
-</section>
-<!-- EXERCISE 3: TÔ MÀU PHÉP TÍNH THEO KẾT QUẢ -->
-<section class="bg-surface-container-lowest rounded-lg p-space-md lg:p-space-lg shadow-sm relative overflow-hidden">
-<div class="flex items-center justify-between mb-space-sm">
-<div class="flex items-center gap-space-xs">
-<span class="w-9 h-9 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-label-lg flex items-center justify-center shadow-[0_3px_0_0_#f7be23]">3</span>
-<h3 class="font-headline-md text-headline-md text-on-surface">Cọ vẽ thông thái: Tô màu theo kết quả</h3>
-</div>
-<span class="text-label-sm font-label-sm px-2.5 py-1 rounded-full bg-surface-container-low text-primary font-bold">Luyện tập</span>
-</div>
-<!-- Color palette selection -->
-<div class="p-space-sm bg-surface-container-low rounded-DEFAULT flex flex-wrap items-center justify-between gap-space-sm mb-space-md">
-<span class="font-label-md text-label-md text-on-surface-variant font-medium">Chọn cọ vẽ để tô vào thẻ:</span>
-<div class="flex items-center gap-3">
-<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-headline-sm text-label-sm shadow-[0_3px_0_0_#00722f] ring-2 ring-primary" id="brush-green" onclick="selectBrush('green')">
-<span class="w-4 h-4 rounded-full bg-primary inline-block"></span>
-<span>Kết quả = 12 (Xanh lá)</span>
-</button>
-<button class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-headline-sm text-label-sm shadow-[0_3px_0_0_#e6a400]" id="brush-yellow" onclick="selectBrush('yellow')">
-<span class="w-4 h-4 rounded-full bg-tertiary-container inline-block"></span>
-<span>Kết quả = 18 (Vàng)</span>
-</button>
-</div>
-</div>
-<!-- Calculation Token Cards To Paint -->
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-sm">
-<!-- Token 1 (6 x 2 = 12) -->
-<button class="h-24 rounded-2xl bg-secondary-fixed-dim text-on-secondary-fixed p-3 flex flex-col items-center justify-center shadow-[0_4px_0_0_#006e2c] transition-transform active:scale-95 group" onclick="paintCard(this)">
-<span class="font-headline-lg text-headline-lg group-hover:scale-105 transition-transform">6 × 2</span>
-<span class="text-[12px] font-label-sm text-secondary font-bold mt-1">Đã tô Xanh lá (=12)</span>
-</button>
-<!-- Token 2 (6 x 3 = 18) -->
-<button class="h-24 rounded-2xl bg-tertiary-fixed text-on-tertiary-fixed p-3 flex flex-col items-center justify-center shadow-[0_4px_0_0_#e6a400] transition-transform active:scale-95 group" onclick="paintCard(this)">
-<span class="font-headline-lg text-headline-lg group-hover:scale-105 transition-transform">6 × 3</span>
-<span class="text-[12px] font-label-sm text-tertiary font-bold mt-1">Đã tô Vàng (=18)</span>
-</button>
-<!-- Token 3 (24 : 2 = 12) -->
-<button class="h-24 rounded-2xl bg-surface-container-low text-on-surface p-3 flex flex-col items-center justify-center shadow-[0_4px_0_0_#bfcabb] transition-transform active:scale-95 group hover:bg-surface-container" onclick="paintCard(this)">
-<span class="font-headline-lg text-headline-lg group-hover:scale-105 transition-transform">24 : 2</span>
-<span class="text-[12px] font-label-sm text-on-surface-variant font-medium mt-1">Chưa tô màu</span>
-</button>
-<!-- Token 4 (54 : 3 = 18) -->
-<button class="h-24 rounded-2xl bg-surface-container-low text-on-surface p-3 flex flex-col items-center justify-center shadow-[0_4px_0_0_#bfcabb] transition-transform active:scale-95 group hover:bg-surface-container" onclick="paintCard(this)">
-<span class="font-headline-lg text-headline-lg group-hover:scale-105 transition-transform">54 : 3</span>
-<span class="text-[12px] font-label-sm text-on-surface-variant font-medium mt-1">Chưa tô màu</span>
-</button>
-</div>
-</section>
-</div>
-<!-- Right Column: Helper Mascot & Pedagogical Insights (Col 4) -->
-<div class="lg:col-span-4 flex flex-col gap-space-md">
-<!-- Ong Vàng Mascot Card -->
-<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col items-center text-center relative overflow-hidden">
-<div class="w-full flex justify-end">
-<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-label-sm font-bold">Trợ lý học tập</span>
-</div>
-<div class="w-28 h-28 my-space-xs rounded-full bg-tertiary-fixed flex items-center justify-center shadow-[0_6px_0_0_#f7be23] relative">
-<img width="64" height="64" class="w-24 h-24 object-contain" alt="A cute, chubby cartoon honeybee mascot named Ong Vang Hoang Mai wearing a small graduation cap and holding a yellow wooden ruler, soft 3D rendered style with playful cheerful smile on clean light pastel background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiF1_bEHooF3OrUBgxnT1mz7MSNMit5JKf8wLj6k6r8WQrMtCu5QcKiwxfkAIgYoBXdotce5rYb7buEQd1LJJE0OOUfEVgX5eAhwL2WsHROJSryFFQ55wt8F_BkQf6fFUIuHzjMiCxcxSfxif1cC2-_dX-9ug_r-UXhKQMcxDfcQT845c9AQNxds9AsVBY93ypOXEMGLWQD8j-dV_O0yhfsxSHShVvlRp4lsJ5Kc5fdj7SoAIxrmX_Dg"/>
-</div>
-<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Ong Vàng Hoàng Mai</h4>
-<p class="font-label-sm text-label-sm text-on-surface-variant mb-space-sm">Đồng hành tính nhẩm thần tốc</p>
-<!-- Speech bubble tip -->
-<div class="w-full bg-tertiary-fixed/30 rounded-2xl p-space-sm text-left relative mb-space-sm">
-<div class="flex items-start gap-2">
-<span class="material-symbols-outlined text-tertiary mt-0.5" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
-<div class="flex-1">
-<span class="font-headline-sm text-label-sm text-tertiary uppercase block">Mẹo nhỏ cho bé:</span>
-<p class="font-body-sm text-body-sm text-on-surface mt-0.5">Khi nhân một số với 6, em chỉ cần lấy kết quả của số đó nhân với 3, rồi gấp đôi lên là ra ngay đáp án!</p>
-</div>
-</div>
-<div class="mt-2 text-right">
-<span class="font-label-sm text-[12px] text-tertiary-container font-bold">Ví dụ: 6 × 4 = (3 × 4) × 2 = 12 × 2 = 24</span>
-</div>
-</div>
-<button class="w-full py-3 px-space-sm rounded-2xl bg-surface-container hover:bg-surface-container-high text-primary font-headline-sm text-label-md flex items-center justify-center gap-2 shadow-[0_3px_0_0_#bfcabb] active:translate-y-0.5 transition-all" id="btn-hint" onclick="useHint()">
-<span class="material-symbols-outlined text-[20px]">help_center</span>
-<span>Xem gợi ý chi tiết (Còn 2 lần)</span>
-</button>
-</div>
-<!-- Quick Multiplication Table Reference Box -->
-<div class="bg-surface-container-low rounded-lg p-space-md shadow-sm">
-<div class="flex items-center justify-between mb-space-sm">
-<div class="flex items-center gap-1.5">
-<span class="material-symbols-outlined text-primary">menu_book</span>
-<span class="font-headline-sm text-label-lg text-primary">Bảng nhân 6 mini</span>
-</div>
-<span class="text-[12px] font-label-sm text-on-surface-variant">Tra cứu</span>
-</div>
-<div class="grid grid-cols-2 gap-2 text-label-sm font-label-sm text-on-surface">
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 1 =</span>
-<strong class="text-primary font-bold">6</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 6 =</span>
-<strong class="text-primary font-bold">36</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 2 =</span>
-<strong class="text-primary font-bold">12</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 7 =</span>
-<strong class="text-primary font-bold">42</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 3 =</span>
-<strong class="text-primary font-bold">18</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 8 =</span>
-<strong class="text-primary font-bold">48</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 4 =</span>
-<strong class="text-primary font-bold">24</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm">
-<span>6 × 9 =</span>
-<strong class="text-primary font-bold">54</strong>
-</div>
-<div class="p-2 bg-surface-container-lowest rounded-xl flex justify-between shadow-sm col-span-2">
-<span>6 × 5 =</span>
-<strong class="text-primary font-bold">30</strong>
-</div>
-</div>
-</div>
-<!-- Student Cheerful Illustration Card -->
-<div class="relative rounded-lg overflow-hidden h-44 shadow-sm">
-<div class="bg-cover bg-center w-full h-full" data-alt="Vietnamese elementary school students in white shirts with red scarves smiling happily while calculating on colorful worksheets in a sunny modern classroom with green plants" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC2TH_JHQyUGk69pgotVH0mnO_ZRgSvv05E9BUONgpZS74wESi1n-BQyHHsHAzDd3OuaOoMCVauHZBXMNK8t9qLmNiS3L2M_AKtvOOkT0zV4kFZRfs7KfTMyeRIkqt98Es5oibPRYHanyXNYog5J_IYrCrk4OuX12Q9hL2MO4jQa9pCZ9fJ7MYVuMnzTtr2obYjJlV6G9UA0gnTDGGLSCillNkCcdNv7o6AiR8Mu4UUNoQtj5M1j9rUgA')"></div>
-<div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-primary/30 to-transparent flex items-end p-space-sm text-on-primary">
-<span class="font-headline-sm text-label-sm">Học vui - Hiểu sâu - Nhớ lâu cùng Vườn Toán</span>
-</div>
-</div>
-</div>
-</div>
-<!-- BOTTOM ACTION DOCK (STICKY INTERACTION BAR) -->
-<div class="bg-surface-container-lowest p-space-sm lg:p-space-md rounded-lg shadow-sm flex flex-col sm:flex-row items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-xs w-full sm:w-auto">
-<button class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-space-md py-3 rounded-2xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-headline-sm text-label-md shadow-[0_3px_0_0_#bfcabb] active:translate-y-1 transition-all">
-<span class="material-symbols-outlined text-[20px]">chevron_left</span>
-<span>Câu trước</span>
-</button>
-<button class="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-space-md py-3 rounded-2xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-headline-sm text-label-md shadow-[0_3px_0_0_#bfcabb] active:translate-y-1 transition-all" onclick="resetWorksheet()">
-<span class="material-symbols-outlined text-[20px]">restart_alt</span>
-<span>Làm lại bài</span>
-</button>
-</div>
-<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
-<button class="w-full sm:w-auto min-w-[240px] inline-flex items-center justify-center gap-2 px-space-lg py-4 rounded-2xl bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-label-lg shadow-[0_5px_0_0_#004419] active:translate-y-1 active:shadow-none transition-all" onclick="submitExam()">
-<span class="material-symbols-outlined text-[24px]">verified</span>
-<span>Kiểm Tra Đáp Án &amp; Nhận Sao</span>
-</button>
-</div>
+<div class="bg-surface-container-lowest p-space-md rounded-lg flex flex-wrap justify-between gap-3">
+  <button id="btn-reset-exercise" class="min-h-12 px-5 py-3 rounded-2xl bg-surface-container text-lg" disabled>Làm lại bài</button>
+  <button id="btn-submit-exercise" class="min-h-12 px-5 py-3 rounded-2xl bg-primary text-on-primary text-lg" disabled>Kiểm tra đáp án &amp; nhận sao</button>
 </div>
 <!-- Popup Result Toast Notification (Hidden by default, shown upon submit) -->
-<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-11/12 max-w-xl bg-surface-container-lowest p-space-md rounded-lg shadow-xl hidden z-50" id="feedback-modal" role="status" aria-live="polite">
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-11/12 max-w-xl bg-surface-container-lowest p-space-md rounded-lg shadow-xl hidden z-50" style="max-height:70vh;overflow-y:auto" id="feedback-modal" role="status" aria-live="polite">
 <div class="flex items-center gap-space-md">
 <div class="w-14 h-14 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center">
 <span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">celebration</span>
 </div>
 <div class="flex-1">
-<h4 class="font-headline-md text-headline-md text-primary">Xuất sắc quá Bạn Cú ơi!</h4>
+<h4 class="font-headline-md text-headline-md text-primary">Kết quả bài làm</h4>
 <p class="font-body-md text-body-md text-on-surface-variant">Đang kiểm tra kết quả của em…</p>
 </div>
-<button class="w-10 h-10 rounded-full bg-surface-container text-on-surface flex items-center justify-center" onclick="closeModal()">
+<button class="w-10 h-10 rounded-full bg-surface-container text-on-surface flex items-center justify-center" id="btn-close-result" aria-label="Đóng kết quả">
 <span class="material-symbols-outlined">close</span>
 </button>
 </div>
@@ -386,6 +81,7 @@
 <script src="assets/js/components/navbar.js"></script>
 <script src="assets/js/components/footer.js"></script>
 <script src="assets/js/core/app.js"></script>
+<script src="assets/js/core/question-view.js"></script>
 <script src="assets/js/pages/exercise.js"></script>
 </body>
 </html>

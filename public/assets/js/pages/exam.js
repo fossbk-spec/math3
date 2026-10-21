@@ -3,6 +3,7 @@
  * - Chuyển câu bằng nút Trước/Sau + bảng ma trận 20 câu, đánh dấu xem lại
  * - Đồng hồ đếm ngược 35 phút, hết giờ tự nộp; nộp bài server chấm & lưu hồ sơ */
 (function initExamEngine() {
+  const startedAt = Date.now();
   let questions = [];
   let current = 0;
   const answers = {};   // { exam-1: 'B', ... }
@@ -118,7 +119,7 @@
     submitted = true;
     try {
       const r = await window.MathAPI.post('/api/submissions', {
-        setId: 'bai-15-kiem-tra', answers, durationSec: 35 * 60 - totalSeconds,
+        setId: 'bai-15-kiem-tra', answers, durationSec: Math.round((Date.now() - startedAt) / 1000),
       });
       alert(`🎉 Đã nộp bài thành công!\nĐiểm của con: ${r.scorePercent}% — đúng ${r.correctCount}/${r.totalCount} câu.` +
         (r.starsEarned ? `\nCon nhận thêm +${r.starsEarned} Sao vàng.` : '') + '\nKết quả đã được lưu vào hồ sơ học tập.');
