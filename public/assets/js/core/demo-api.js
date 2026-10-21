@@ -8,7 +8,7 @@
     { id: 1, username: 'giaovien01', fullName: 'Cô giáo Demo', role: 'teacher', className: '3A', studentCode: 'GV-01', totalStars: 0 },
     { id: 2, username: 'hocsinh01', fullName: 'Bạn Cú', role: 'student', className: '3A', studentCode: 'HM-3A-08', totalStars: 0 },
   ];
-  const fresh = () => ({ currentId: null, users: users.map(u => ({ ...u })), lessons: {}, sets: {}, questions: {}, attempts: [], progress: {}, gameScores: [] });
+  const fresh = () => ({ currentId: null, users: users.map(u => ({ ...u })), lessons: {}, sets: {}, questions: {}, attempts: [], progress: {}, gameScores: [], practiceAttempts: [] });
   const read = () => { try { return { ...fresh(), ...JSON.parse(localStorage.getItem(KEY)) }; } catch { return fresh(); } };
   const save = state => localStorage.setItem(KEY, JSON.stringify(state));
   const fail = (message, status = 400) => { const error = new Error(message); error.status = status; throw error; };
@@ -68,6 +68,28 @@
       if (!questions.length) return fail('Không tìm thấy bộ câu hỏi.', 404);
       return { setId: match[1], questions };
     }
+    if (path.startsWith('practice/') && method === 'POST') {
+      const engine = root.MathPractice;
+      const bank = engine.pool(data).filter(q => !state.questions[q.id]?.deleted).map(q => ({ ...q, ...state.questions[q.id],
+        reviewStatus: state.questions[q.id]?.review_status || q.reviewStatus || 'DRAFT' }));
+      const history = state.practiceAttempts.filter(a => a.userId === user.id);
+      if (path === 'practice/next') {
+        const result = engine.next(data, bank, history, lessonList(state, data, user), body.lessonId);
+        if (result.question && !history.some(a => !a.completed)) state.practiceAttempts.push({
+          userId: user.id, questionId: result.question.id, skillId: result.question.skillId,
+          cognitiveLevel: result.question.cognitiveLevel, attemptNo: 0, hintsUsed: 0, isCorrect: false, completed: false, reason: result.reason,
+        });
+        save(state);
+        return { ...result, question: engine.studentQuestion(result.question), feedbackRules: copy(data.feedbackRules) };
+      }
+      if (path === 'practice/answer') {
+        const entry = history.find(a => !a.completed);
+        const q = bank.find(q => q.id === body.questionId && q.reviewStatus !== 'REJECTED');
+        if (!q) return fail('Không tìm thấy câu đang mở.', 404);
+        const result = engine.answer(q, entry, body);
+        Object.assign(entry, result.updated); save(state); return result.response;
+      }
+    }
     if (path === 'submissions' && method === 'POST') {
       const set = setsFor(state, data)[body.setId];
       if (!set) return fail('Bộ bài không hợp lệ.');
@@ -77,7 +99,7 @@
       const questions = questionsFor(state, body.setId, data).filter(visible).map(q => ({ ...q, points: q.points || 5, correct_answer: q.correctAnswer, solution: q.solution }));
       if (!questions.length) return fail('Bộ bài chưa có câu hỏi để làm.', 404);
       const attemptNo = used + 1;
-      const graded = GRADING.gradeSubmission(questions, body.answers || {}, { kind: set.kind, lastAttempt: attemptNo === maxAttempts });
+      const graded = GRADING.gradeSubmission(questions, body.answers || {}, { kind: set.kind, lastAttempt: attemptNo === maxAttempts, feedbackRules: data.feedbackRules });
       const key = progressKey(user.id, set.lessonId);
       const prior = state.progress[key] || { bestScore: 0, completed: false };
       const starsEarned = Math.round(Math.max(0, graded.scorePercent - prior.bestScore) / 100 * (set.starReward ?? (set.kind === 'exam' ? 100 : 40)));

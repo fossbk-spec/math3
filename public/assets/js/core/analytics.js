@@ -12,6 +12,7 @@
   const fields = {
     session_start: ['screen'], page_view: ['page'], lesson_open: ['lessonId', 'setId'],
     submission: ['setId', 'lessonId', 'kind', 'attemptNo', 'scorePercent', 'correctCount', 'totalCount', 'durationSec', 'comment', 'questions'],
+    practice_answer: ['skillId', 'level', 'correct', 'attemptNo', 'hintsUsed'],
     hint_used: ['questionId', 'hintNo'], game_end: ['gameId', 'score', 'durationSec'],
     ai_safe_choice: ['situationId', 'choice', 'best'], teacher_review: ['approved', 'rejected'],
   };

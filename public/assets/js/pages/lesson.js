@@ -56,6 +56,9 @@
       summary.className = 'font-body-md mt-2';
       summary.textContent = r.maxAttempts === 1 ? 'Bài kiểm tra đã được ghi nhận.' : `Đúng ${r.correctCount}/${r.totalCount} câu. Lượt ${r.attemptNo}/${r.maxAttempts}; còn ${r.attemptsLeft} lượt. ${r.starsEarned ? `Nhận thêm ${r.starsEarned} sao.` : ''}`;
       box.append(summary);
+      if (r.message) {
+        const feedback = document.createElement('p'); feedback.textContent = r.message; box.append(feedback);
+      }
       if (r.maxAttempts !== 1) {
         const list = document.createElement('div');
         list.className = 'mt-3 space-y-2 font-body-md';

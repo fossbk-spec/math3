@@ -106,6 +106,20 @@ addColumns('questions', {
 });
 addColumns('question_sets', { level: "TEXT DEFAULT 'co-ban'" });
 addColumns('lessons', { page: 'INTEGER' });
+db.exec(`CREATE TABLE IF NOT EXISTS practice_attempts (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  question_id TEXT NOT NULL,
+  skill_id TEXT NOT NULL,
+  cognitive_level INTEGER NOT NULL,
+  attempt_no INTEGER NOT NULL DEFAULT 0,
+  hints_used INTEGER NOT NULL DEFAULT 0,
+  is_correct INTEGER NOT NULL DEFAULT 0,
+  completed INTEGER NOT NULL DEFAULT 0,
+  reason TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+)`);
+
 db.exec(`CREATE TABLE IF NOT EXISTS login_attempts (key TEXT PRIMARY KEY, count INTEGER NOT NULL, reset_at INTEGER NOT NULL)`);
 
 const readJson = p => JSON.parse(fs.readFileSync(p, 'utf8'));
@@ -136,6 +150,13 @@ function seedContent() {
         hintsJson: q.hints ? JSON.stringify(q.hints) : null, solutionJson: q.solution ? JSON.stringify(q.solution) : null,
       }));
     }
+    (content.practiceQuestions || []).forEach((q, i) => insQ.run({
+      id: q.id, setId: '__practice__', lessonId: null, type: q.type, prompt: q.prompt,
+      optionsJson: q.options ? JSON.stringify(q.options) : null, correctAnswer: q.correctAnswer,
+      points: q.points || 1, category: q.category || '', sortOrder: i + 1, level: q.level || 'co-ban',
+      origin: q.origin || 'template', source: q.source || '',
+      hintsJson: JSON.stringify(q.hints || []), solutionJson: JSON.stringify(q.solution || []),
+    }));
   })();
 }
 

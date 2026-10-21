@@ -23,6 +23,15 @@ test('URL rỗng giữ hàng đợi, tuyệt đối không gửi', () => {
   assert.equal(JSON.stringify(analytics.queue()).includes('Không được thu'), false);
 });
 
+test('practice_answer chỉ ghi metadata, không ghi nội dung câu trả lời', () => {
+  const { analytics } = fixture();
+  assert.equal(analytics.track('practice_answer', { skillId: 'skill', level: 2, correct: false, attemptNo: 3, hintsUsed: 2, answer: 'PRIVATE' }), true);
+  const event = analytics.queue()[0];
+  assert.equal(event.skillId, 'skill'); assert.equal(event.level, 2); assert.equal(event.correct, false);
+  assert.equal(event.attemptNo, 3); assert.equal(event.hintsUsed, 2);
+  assert.equal(JSON.stringify(event).includes('PRIVATE'), false);
+});
+
 test('Tắt thống kê xóa hàng đợi và chặn sự kiện, bật lại hoạt động', () => {
   const { analytics, sent } = fixture('https://example.test');
   analytics.setContext({ role: 'student', className: '3A', fullName: 'Bạn Cú' });

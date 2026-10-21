@@ -11,6 +11,15 @@ window.MathApp.components = window.MathApp.components || {};
 window.MathApp.components.Navbar = {
   updateUser(user) {
     if (!user) return;
+    if (user.role === 'student') {
+      const nav = document.querySelector('header nav');
+      if (nav && !nav.querySelector('[href="practice.html"]')) {
+        const link = document.createElement('a'); link.href = 'practice.html';
+        link.textContent = 'Luyện tập thích ứng';
+        link.style.cssText = 'display:inline-flex;align-items:center;min-height:48px;padding:8px 16px;font-size:18px';
+        nav.append(link);
+      }
+    }
     if (user.role === 'teacher') {
       const nav = document.querySelector('header nav');
       if (nav && !nav.querySelector('[href="thong-ke.html"]')) {
