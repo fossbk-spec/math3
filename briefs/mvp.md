@@ -64,3 +64,22 @@ Mỗi task một nhánh, một PR. Thứ tự: M1 → M2 → M3 → M4.
 ## Kiểm tra (Claude chạy ngoài sandbox)
 `npm test`, `node --check` mọi file JS đã sửa, `npm run build:demo`, chạy script rà giao diện 2 cỡ (Edge/Playwright), thử tay luồng học sinh trên bản `dist/`.
 Báo cáo `briefs/mvp-mN-report.md`: PASS / FAIL / NOT RUN / BLOCKED theo log thật, kèm danh sách file đã sửa.
+
+---
+
+## M5 — Tài khoản thật lớp 3A2 (chủ nhiệm duyệt 21/10; giữ tạm đến khi có số liệu đánh giá)
+
+Mục tiêu: học sinh đăng nhập bằng **username + mật khẩu trong file CSV của giáo viên** và thấy **họ tên thật của mình**; giáo viên xem số liệu theo họ tên. Trang github.io và repo là **công khai**: không được có họ tên, username hay mật khẩu dạng đọc được trong repo/bản build.
+
+**Codex KHÔNG đọc `data/taikhoan*.csv` hay `data/*.docx`** (dữ liệu thật). Dùng CSV giả trong `test/fixtures/class-fake.csv` (tên giả, cùng định dạng: `TT,Họ và tên,username,password`, UTF-8 có BOM, dấu phẩy). Claude chạy công cụ trên file thật.
+
+1. `tools/make-class.js <csv> --class 3A2` (Node, `crypto.webcrypto`, không dependency) → `data/content/class-3a2.json`:
+   - `{ classId, kdf: { name: 'PBKDF2', hash: 'SHA-256', iterations: 200000, salt }, students: [{ id: '3A2-07', iv, ct }] }` (base64).
+   - Một khoá cho mỗi lần đăng nhập: `key = PBKDF2(lower(trim(username)) + '\n' + password, salt)`; mỗi em `ct = AES-GCM(key_em, iv, JSON { name, username })`. **Không lưu username hay hash username** (username ghép từ tên, dễ đoán). `id` = `classId-TT` (2 chữ số).
+   - Kiểm tra: TT và username không trùng; mật khẩu ≥ 6 ký tự và khác username (báo lỗi, không ghi file); in ra số em, **không in tên**.
+2. Đăng nhập (chế độ demo, `demo-api.js` `auth/login`): nếu có `data/class-3a2.json` → suy khoá 1 lần, thử giải mã từng `ct` (AES-GCM rẻ), khớp `username` → user `{ id: '3A2-07', role: 'student', className: '3A2', fullName: <tên thật> }`. Sai → 401 "Tên đăng nhập hoặc mật khẩu chưa đúng." Tài khoản mẫu `hocsinh01`/`giaovien01` giữ nguyên. Họ tên chỉ nằm trong `localStorage` của máy đó. Header/trang chủ hiện "Chào <họ tên>".
+3. Thống kê: sự kiện chỉ gửi `id` (`3A2-07`) và `classCode`, **không bao giờ gửi `fullName`/username** (sửa `analytics.js`: alias = id với tài khoản lớp).
+4. Trang giáo viên `thong-ke.html` (và bảng học sinh trong `schedule.html` nếu có): nút **"Mở danh sách lớp (CSV)"** đọc file bằng `FileReader` trên máy, ghép `id`→họ tên **chỉ trong bộ nhớ** (không lưu storage, không gửi đi), hiện cột Họ tên, xuất CSV có họ tên tạo tại máy.
+5. `tools/build-demo.js`: chép thêm `data/content/class-*.json` sang `dist/data/`.
+6. Test (CSV giả): tạo file rồi đăng nhập đúng → đúng tên/id; sai mật khẩu → 401; file JSON không chứa chuỗi nào trong CSV (tên, username, mật khẩu); mật khẩu trùng username → công cụ báo lỗi; payload thống kê sau đăng nhập không chứa tên/username.
+7. Không làm ở M5: đổi mật khẩu trên web, chế độ server (ghi vào báo cáo là việc sau).

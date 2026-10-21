@@ -37,7 +37,8 @@
   const studentRows = state => state.users.filter(u => u.role === 'student').map(u => {
     const attempts = state.attempts.filter(a => a.userId === u.id);
     const scored = attempts.filter(a => a.kind !== 'game');
-    return { id: u.id, username: u.username, full_name: u.fullName, class_name: u.className, student_code: u.studentCode,
+    const classAccount = typeof u.id === 'string' && /^3A2-\d{2}$/.test(u.id);
+    return { id: u.id, username: classAccount ? '' : u.username, full_name: classAccount ? u.id : u.fullName, class_name: u.className, student_code: u.studentCode,
       total_stars: u.totalStars, avg_score: scored.length ? Math.round(scored.reduce((n, a) => n + a.scorePercent, 0) / scored.length * 10) / 10 : null,
       attempts_count: attempts.length };
   });
@@ -51,8 +52,21 @@
     const data = await content();
     if (path === 'auth/login' && method === 'POST') {
       const role = body.role || (body.username === 'giaovien01' ? 'teacher' : 'student');
-      const user = state.users.find(u => u.role === role && (u.username === body.username || !body.username));
-      if (!user) return fail('Vai demo không hợp lệ.', 401);
+      const username = String(body.username || '').trim().toLowerCase();
+      let user = state.users.find(u => typeof u.id === 'number' && u.role === role && (u.username === username || (!username && users.some(sample => sample.id === u.id))));
+      if (user && username && users.some(sample => sample.id === user.id) && body.password !== '123456') user = null;
+      if (!user && username && role === 'student' && root.MathClassroom) {
+        const response = await fetch('data/class-3a2.json');
+        if (response.ok) {
+          const account = await root.MathClassroom.login(await response.json(), username, body.password || '', root.crypto);
+          if (account) {
+            user = state.users.find(u => u.id === account.id);
+            if (user) Object.assign(user, account, { totalStars: user.totalStars || 0 });
+            else { user = account; state.users.push(user); }
+          }
+        } else if (response.status !== 404) return fail('Không tải được tài khoản lớp. Em hãy thử lại.', response.status);
+      }
+      if (!user) return fail('Tên đăng nhập hoặc mật khẩu chưa đúng.', 401);
       state.currentId = user.id; save(state); root.MathAnalytics?.setContext(user); return { user: copy(user) };
     }
     if (path === 'auth/logout' && method === 'POST') { state.currentId = null; save(state); return { ok: true }; }
@@ -133,7 +147,7 @@
     if (path === 'teacher/students' && method === 'POST') {
       if (!body.username || !body.fullName) return fail('Cần tên đăng nhập và bí danh.');
       if (state.users.some(u => u.username === body.username)) return fail('Tên đăng nhập này đã tồn tại.', 409);
-      const student = { id: Math.max(...state.users.map(u => u.id)) + 1, username: body.username, fullName: body.fullName, role: 'student', className: body.className || '3A', studentCode: body.studentCode || '', totalStars: 0 };
+      const student = { id: Math.max(...state.users.map(u => typeof u.id === 'number' ? u.id : 0)) + 1, username: body.username, fullName: body.fullName, role: 'student', className: body.className || '3A', studentCode: body.studentCode || '', totalStars: 0 };
       state.users.push(student); save(state); return { student };
     }
     if (/^teacher\/students\/\d+\/reset-password$/.test(path) && method === 'POST') return { ok: true };
