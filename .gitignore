@@ -4,3 +4,8 @@ data/*.db
 data/*.db-shm
 data/*.db-wal
 .env
+
+# Du lieu ca nhan hoc sinh (khong dua len GitHub)
+data/Danh sách lớp*.docx
+# File khoa tam cua Office
+~$*
