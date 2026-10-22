@@ -4,6 +4,11 @@
   const api = window.MathAPI;
   let question, answers, attemptNo = 0, hintsUsed = 0, busy = false, rules;
   let results = [];
+  // Báo header cập nhật sao; lỗi ở đây không được làm hỏng lượt trả lời.
+  const updateStars = result => {
+    if (result.totalStars == null) return;
+    try { document.dispatchEvent(new CustomEvent('math:stars', { detail: { totalStars: result.totalStars } })); } catch { /* môi trường không có CustomEvent */ }
+  };
   const message = text => { el('message').textContent = text; };
   const friendlyReason = reason => String(reason || '').split(' Đây là điều chỉnh')[0].split('. ').at(-1);
   const solutionText = solution => Array.isArray(solution) ? solution.join('\n') : typeof solution === 'string' ? solution : JSON.stringify(solution);
@@ -26,6 +31,22 @@
       const list = document.createElement('ol');
       (coach.masked || []).forEach(line => { const item = document.createElement('li'); item.textContent = line; list.append(item); });
       body.append(list); el('completion').hidden = false; el('missing').value = '';
+      const rechoose = coach.mode === 'rechoose';
+      el('missing').hidden = rechoose; el('complete').hidden = rechoose;
+      const label = el('completion').querySelector('label');
+      label.hidden = rechoose;
+      const choices = el('rechoose');
+      choices.replaceChildren(); choices.hidden = !rechoose;
+      if (rechoose) {
+        const options = question.type === 'compare' ? ['<', '>', '='] : question.options || [];
+        options.forEach((option, index) => {
+          const button = document.createElement('button');
+          button.type = 'button'; button.className = 'clay-btn';
+          button.textContent = question.type === 'compare' ? option : `${'ABCD'[index]}. ${option}`;
+          button.dataset.answer = question.type === 'compare' ? option : 'ABCD'[index];
+          choices.append(button);
+        });
+      }
     }
   }
   function finish() {
@@ -88,6 +109,7 @@
     message('Đang kiểm tra…');
     try {
       const result = await api.post('/api/practice/answer', { questionId: question.id, answer: answers[question.id], attemptNo: attemptNo + 1, hintsUsed });
+      updateStars(result);
       attemptNo++;
       window.MathAnalytics?.track('practice_answer', { skillId: question.skillId, level: question.cognitiveLevel, correct: result.correct, attemptNo, hintsUsed });
       if (!result.correct) question.hadError = true;
@@ -96,19 +118,19 @@
       if (result.correct || attemptNo === 3) {
         if (result.guided !== 'PENDING') results.push({ ...result, question, hadError: question.hadError });
         el('question').querySelectorAll('button,input').forEach(control => { control.disabled = true; });
-        message(result.guided === 'PENDING' ? 'Em điền số còn thiếu trong lời giải nhé.' : `${result.correct ? '✓ Đúng rồi!' : '✗ Chưa đúng. Mình cùng xem bài chữa nhé.'}\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
+        message(result.guided === 'PENDING' ? (result.coach?.mode === 'rechoose' ? 'Em chọn lại đáp án nhé.' : 'Em điền số còn thiếu trong lời giải nhé.') : `${result.correct ? '✓ Đúng rồi!' : '✗ Chưa đúng. Mình cùng xem bài chữa nhé.'}\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
         el('next').textContent = results.length === 10 ? 'Xem kết quả lượt luyện' : 'Câu tiếp theo'; el('next').hidden = result.guided === 'PENDING';
       } else { message(`✗ Chưa đúng, em thử lại nhé. Còn ${3 - attemptNo} lần thử.`); el('answer').disabled = false; }
     } catch (e) { message(e.message); el('answer').disabled = false; }
     finally { busy = false; el('hint').disabled = el('answer').disabled || hintsUsed >= question.hints.length; }
   });
-  el('complete').addEventListener('click', async () => {
+  async function complete(answer) {
     if (busy) return;
-    const answer = el('missing').value.trim();
     if (!answer) { message('Em điền số còn thiếu nhé.'); return; }
     busy = true; el('complete').disabled = true;
     try {
       const result = await api.post('/api/practice/complete', { questionId: question.id, answer });
+      updateStars(result);
       if (result.guided === 'PENDING') { message('Chưa đúng, em thử điền lại nhé.'); return; }
       el('completion').hidden = true;
       results.push({ ...result, correct: false, question, hadError: true, correctAnswer: result.correctAnswer, solution: result.solution });
@@ -116,6 +138,11 @@
       el('next').textContent = results.length === 10 ? 'Xem kết quả lượt luyện' : 'Câu tiếp theo'; el('next').hidden = false;
     } catch (e) { message(e.message); }
     finally { busy = false; el('complete').disabled = false; }
+  }
+  el('complete').addEventListener('click', () => complete(el('missing').value.trim()));
+  el('rechoose').addEventListener('click', event => {
+    const button = event.target.closest('button[data-answer]');
+    if (button) complete(button.dataset.answer);
   });
   el('read').addEventListener('click', () => {
     if (!question) return;

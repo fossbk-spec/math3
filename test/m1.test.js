@@ -41,7 +41,7 @@ test('M1: metadata, câu ôn tiền đề và feedback khớp nguồn', { skip: 
       } else if (q.origin === 'worksheet') {
         assert.equal(q.skillId, lessons.find(l => `bai-${l.number}` === set.lessonId).skills[0]);
         assert.equal(q.cognitiveLevel, q.level === 'nang-cao' ? 2 : 1);
-      } else assert.ok(bank.some(b => q.skillId === b.skillId && q.cognitiveLevel === b.cognitiveLevel && q.prompt === b.stem));
+      } else assert.ok([...bank, ...source('exports/math3/lesson-questions.json')].some(b => q.skillId === b.skillId && q.cognitiveLevel === b.cognitiveLevel && q.prompt === b.stem));
     }
   }
   assert.deepEqual(data.feedbackRules, source('content/grade3/feedback-rules.json'));

@@ -56,15 +56,18 @@ test('SHA256 H1 sai thì dừng trước khi nhập', () => {
   } finally { fs.rmSync(temp, { recursive: true, force: true }); }
 });
 
-test('dạng không che được giữ lời giải cũ', () => {
-  const q = bank.find(item => item.type === 'multiple-choice');
+test('trắc nghiệm sai 3 lần: chọn lại, không lộ đáp án; chọn đúng → DONE', () => {
+  const q = bank.find(item => item.type === 'multiple-choice' && item.solution?.length);
+  const wrong = ['A', 'B', 'C', 'D'].find(l => l !== q.correctAnswer);
   let current = entry(q);
   let response;
-  for (let i = 1; i <= 3; i++) ({ updated: current, response } = practice.answer(q, current, { questionId: q.id, answer: 'X', attemptNo: i, hintsUsed: 0 }));
-  assert.equal(current.guided, null);
-  assert.equal(current.completed, true);
-  assert.equal(response.correctAnswer, q.correctAnswer);
-  assert.deepEqual(response.solution, q.solution || []);
+  for (let i = 1; i <= 3; i++) ({ updated: current, response } = practice.answer(q, current, { questionId: q.id, answer: wrong, attemptNo: i, hintsUsed: 0 }));
+  assert.equal(current.guided, 'PENDING');
+  assert.equal(response.coach.mode, 'rechoose');
+  assert.equal(response.correctAnswer, undefined);
+  assert.equal(response.solution, undefined);
+  const done = practice.complete(q, current, { questionId: q.id, answer: q.correctAnswer });
+  assert.equal(done.updated.guided, 'DONE');
 });
 
 test('toàn practicePool: thông điệp 1–3 không lộ đáp số đứng riêng', () => {

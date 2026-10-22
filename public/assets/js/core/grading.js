@@ -18,7 +18,7 @@
   function gradeSubmission(questions, answers, { kind = 'exercise', lastAttempt = false, feedbackRules } = {}) {
     let earned = 0, max = 0, correctCount = 0;
     const detail = questions.map(q => {
-      const points = Number(q.points) || 0;
+      const points = 1;
       max += points;
       const ok = isCorrect(q, answers?.[q.id]);
       if (ok) { earned += points; correctCount++; }

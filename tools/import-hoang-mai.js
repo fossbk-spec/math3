@@ -71,6 +71,9 @@ const addTo = (setId, meta, q) => {
 const LEVEL_LABEL = { 'co-ban': 'Cơ bản', 'nang-cao': 'Nâng cao' };
 
 // 1) Phiếu giáo viên
+// Câu phiếu đã được H3 bổ sung gợi ý 3 bậc, lời giải và phép tính: lấy theo id phiếu.
+const exported = JSON.parse(fs.readFileSync(path.join(exportDir, 'lesson-questions.json'), 'utf8'));
+const sheetCoach = new Map(exported.filter(q => q.origin === 'worksheet').map(q => [q.id, q]));
 const wsDir = path.join(SRC, 'content/grade3/worksheets');
 for (const f of fs.readdirSync(wsDir).filter(f => f.endsWith('.json')).sort()) {
   for (const it of JSON.parse(fs.readFileSync(path.join(wsDir, f), 'utf8'))) {
@@ -81,6 +84,7 @@ for (const f of fs.readdirSync(wsDir).filter(f => f.endsWith('.json')).sort()) {
     const src = `Phiếu GV: ${s.file || f}${s.exercise ? ' · ' + s.exercise : ''}${s.question ? ' · ' + s.question : ''}`;
     addTo(`bai-${lessonNum}-${level}`, { title: `Bài ${lessonNum} · ${LEVEL_LABEL[level]}`, kind: 'exercise', lessonId: `bai-${lessonNum}`, level },
       convert({ id: `ws-${it.id}`, stem: it.stem, answerType: it.answerType, options: it.options, answer: it.answer, level, source: src, origin: 'worksheet',
+        hints: sheetCoach.get(it.id)?.hints, solution: sheetCoach.get(it.id)?.solution, verification: sheetCoach.get(it.id)?.verification,
         skillId: lessonSkills.get(lessonNum), cognitiveLevel: level === 'nang-cao' ? 2 : 1 }));
   }
 }
@@ -101,10 +105,10 @@ for (const b of read('content/bank/grade3.json')) {
 if (prerequisiteCount !== 12) throw new Error('Thiếu 12 câu bank ôn tiền đề');
 
 // Gói H1 được xác thực ở đầu tool; giữ nguyên lời giải và nhân chứng tính toán.
-const exported = JSON.parse(fs.readFileSync(path.join(exportDir, 'lesson-questions.json'), 'utf8'));
 if (exported.length !== manifest.questionCount) throw new Error('Số câu gói H1 không khớp manifest');
 let imported = 0, omitted = 0, verified = 0;
 for (const b of exported) {
+  if (b.origin === 'worksheet') continue; // đã nhập ở bước phiếu (id ws-…), tránh trùng
   if (['truefalse', 'multi'].includes(b.answerType)) { omitted++; continue; }
   const lessonNum = b.lessonNumber;
   if (!active.has(lessonNum)) { omitted++; continue; }
@@ -119,15 +123,60 @@ for (const b of exported) {
   if (q.verification) verified++;
 }
 
+// Chọn ổn định, luân phiên nguồn/dạng, rồi bù từ gói câu tự sinh cùng bài và mức.
+const promptKey = q => String(q.prompt).replace(/\s+/g, ' ').trim();
+function chooseDistinct(candidates, limit, existing = []) {
+  const usedPrompts = new Set(existing.map(promptKey));
+  const usedIds = new Set(existing.map(q => q.id));
+  const groups = new Map();
+  for (const q of candidates) {
+    const group = q.templateId || q.source?.replace(/ · .*/, '') || q.origin;
+    if (!groups.has(group)) groups.set(group, []);
+    groups.get(group).push(q);
+  }
+  for (const group of groups.values()) group.sort((a, b) =>
+    Number(!!b.hints && !!b.solution) - Number(!!a.hints && !!a.solution) || a.id.localeCompare(b.id));
+  const chosen = [...existing];
+  while (chosen.length < limit) {
+    let added = false;
+    for (const group of groups.values()) {
+      while (group.length) {
+        const q = group.shift();
+        const key = promptKey(q);
+        if (usedPrompts.has(key) || usedIds.has(q.id)) continue;
+        chosen.push(q); usedPrompts.add(key); usedIds.add(q.id); added = true;
+        break;
+      }
+      if (chosen.length === limit) break;
+    }
+    if (!added) break;
+  }
+  return chosen;
+}
+for (const [setId, set] of Object.entries(sets)) {
+  // Đề kiểm tra giữ số câu, chỉ bỏ câu trùng đề.
+  if (set.kind === 'exam') { set.questions = chooseDistinct(set.questions, set.questions.length); continue; }
+  if (set.kind !== 'exercise') continue;
+  const selected = chooseDistinct(set.questions, 10);
+  if (selected.length < 10) {
+    const generated = practiceQuestions.filter(q => q.lessonId === set.lessonId && q.level === set.level)
+      .map(q => ({ ...q, id: `supplement-${setId}-${q.id}` }));
+    set.questions = chooseDistinct(generated, 10, selected);
+  } else set.questions = selected;
+  if (set.questions.length < 10) console.warn(`CẢNH BÁO: ${setId} chỉ có ${set.questions.length}/10 câu khác đề.`);
+}
+
 // 3) Đề kiểm tra chủ đề 2: 20 câu trắc nghiệm 4 lựa chọn, rải đều bài 9–15 (exam.html chỉ hiển thị dạng này)
 const pool = Object.values(sets).flatMap(s => s.questions.map(q => ({ ...q, lessonId: s.lessonId })))
   .filter(q => q.type === 'multiple-choice' && q.options.length === 4 && q.level === 'co-ban');
 const byLesson = {};
 pool.forEach(q => (byLesson[q.lessonId] = byLesson[q.lessonId] || []).push(q));
 const exam = [];
+const examPrompts = new Set();
 for (let round = 0; exam.length < 20 && round < 20; round++) {
-  for (const l of lessons) { const q = (byLesson[l.id] || [])[round]; if (q && exam.length < 20) exam.push(q); }
+  for (const l of lessons) { const q = (byLesson[l.id] || [])[round]; if (q && exam.length < 20 && !examPrompts.has(promptKey(q))) { exam.push(q); examPrompts.add(promptKey(q)); } }
 }
+if (exam.length < 20) console.warn(`CẢNH BÁO: đề kiểm tra chỉ có ${exam.length}/20 câu khác đề.`);
 sets['bai-15-kiem-tra'] = { title: 'Kiểm tra Chủ đề 2 (bài 9–15)', kind: 'exam', lessonId: 'bai-15', level: 'co-ban', durationMinutes: 35,
   questions: exam.map(({ lessonId, ...q }) => ({ ...q, id: `exam-${q.id}` })) };
 

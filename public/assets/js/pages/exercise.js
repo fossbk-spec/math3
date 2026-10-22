@@ -60,6 +60,7 @@
       exhausted = result.attemptsLeft === 0;
       modal.querySelector('h4').textContent = `${result.scorePercent >= 80 ? '✓' : '☆'} Em đạt ${result.scorePercent}% — ${result.comment}`;
       if (result.message) modal.querySelector('h4').textContent += ` — ${result.message}`;
+      if (result.totalStars != null) document.dispatchEvent(new CustomEvent('math:stars', { detail: { totalStars: result.totalStars } }));
       modal.querySelector('p').textContent = `Đúng ${result.correctCount}/${result.totalCount} câu. Còn ${result.attemptsLeft} lượt. Nhận thêm ${result.starsEarned || 0} sao. Kết quả đã được lưu.`;
       modal.querySelector('[data-corrections]')?.remove();
       const corrections = document.createElement('div');
