@@ -38,11 +38,19 @@ test('ba bước 6 × 7 sai 13: không lộ đáp án, điền đúng và sai ha
 });
 
 test('SHA256 H1 sai thì dừng trước khi nhập', () => {
-  const source = path.join(__dirname, '../../hoang-mai-math/exports/math3');
+  // Gói giả trong thư mục tạm: CI không có repo hoang-mai-math bên cạnh.
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), 'math3-h1-'));
   try {
-    for (const name of ['manifest.json', 'hm-coach.js', 'lesson-questions.json', 'goi-mo-rules.json']) fs.copyFileSync(path.join(source, name), path.join(temp, name));
-    assert.equal(verifyH1(temp).questionCount, 264);
+    const files = { 'hm-coach.js': fs.readFileSync(path.join(__dirname, '../public/assets/js/vendor/hm-coach.js')),
+      'lesson-questions.json': Buffer.from('[{"id":"q1"},{"id":"q2"}]'), 'goi-mo-rules.json': fs.readFileSync(path.join(__dirname, '../data/content/goi-mo-rules.json')) };
+    const sha256 = {};
+    for (const [name, raw] of Object.entries(files)) {
+      const body = raw.toString('utf8').replace(/\r\n/g, '\n');
+      fs.writeFileSync(path.join(temp, name), body);
+      sha256[name] = require('crypto').createHash('sha256').update(body).digest('hex');
+    }
+    fs.writeFileSync(path.join(temp, 'manifest.json'), JSON.stringify({ version: 1, commit: 'test', questionCount: 2, sha256 }));
+    assert.equal(verifyH1(temp).questionCount, 2);
     fs.appendFileSync(path.join(temp, 'hm-coach.js'), 'tampered');
     assert.throws(() => verifyH1(temp), /SHA256 không khớp: hm-coach.js/);
   } finally { fs.rmSync(temp, { recursive: true, force: true }); }
