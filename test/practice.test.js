@@ -69,7 +69,7 @@ test('trang practice: một câu mỗi lần, đủ 10 câu, gợi ý, thử l�
   let call = demoClient(); await call('auth/login', 'POST', { role: 'student' });
   const nodes = new Map();
   const node = () => ({ hidden: false, disabled: false, value: '', textContent: '', children: [], listeners: {},
-    addEventListener(type, fn) { this.listeners[type] = fn; }, append(...children) { this.children.push(...children); },
+    addEventListener(type, fn) { this.listeners[type] = fn; }, querySelector() { return { hidden: false }; }, append(...children) { this.children.push(...children); },
     replaceChildren() { this.children = []; }, get childElementCount() { return this.children.length; }, querySelectorAll() { return []; } });
   const get = id => { if (!nodes.has(id)) nodes.set(id, node()); return nodes.get(id); };
   const document = { getElementById: get, createElement: node, addEventListener(type, fn) { this[type] = fn; } };
@@ -95,9 +95,14 @@ test('trang practice: một câu mỗi lần, đủ 10 câu, gợi ý, thử l�
     assert.equal(get('practice-answer').disabled, false);
     if (i === 0) {
       await get('practice-answer').listeners.click(); await get('practice-answer').listeners.click();
-      assert.ok(get('practice-message').textContent.includes('Em điền số còn thiếu'));
-      get('practice-missing').value = original.correctAnswer;
-      await get('practice-complete').listeners.click();
+      const said = get('practice-message').textContent;
+      if (said.includes('Em điền số còn thiếu')) {
+        get('practice-missing').value = original.correctAnswer;
+        await get('practice-complete').listeners.click();
+      } else if (said.includes('Em chọn lại')) {
+        // Trắc nghiệm, so sánh: bước 3 là chọn lại (H3).
+        await get('practice-rechoose').listeners.click({ target: { closest: () => ({ dataset: { answer: original.correctAnswer } }) } });
+      } else assert.ok(said.includes('Đáp án'), `bước 3 không che được thì giữ cách cũ: ${said}`);
       assert.equal(get('practice-answer').disabled, true);
     } else {
       rendered.answers[original.id] = original.correctAnswer;

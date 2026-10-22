@@ -62,6 +62,13 @@ window.MathApp.components.Navbar = {
       }
       if (el.textContent.trim() === 'Lớp 3A' || el.textContent.trim().startsWith('Lớp 3A •')) el.textContent = `Lớp ${user.className || '3A'}`;
     });
+    // Chip ☆ trên header: lấy tổng sao thật (HTML mẫu ghi sẵn "0") và cập nhật ngay khi em nhận sao.
+    const starChip = [...document.querySelectorAll('header .material-symbols-outlined')].find(icon => icon.textContent.trim() === 'star')?.nextElementSibling;
+    if (starChip && user.role === 'student') {
+      const show = total => { starChip.textContent = Number(total || 0).toLocaleString('vi-VN'); };
+      window.MathAPI.get('/api/me/progress').then(progress => show(progress.totalStars)).catch(() => {});
+      document.addEventListener('math:stars', event => show(event.detail?.totalStars));
+    }
     const header = document.querySelector('header');
     if (!header || header.querySelector('#btn-logout')) return;
     const btn = document.createElement('button');

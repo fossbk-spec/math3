@@ -9,6 +9,7 @@ window.MathGameScore = {
     if (window.MATH_DEMO === true) window.MathAnalytics?.track('game_end', { gameId, score, durationSec });
     try {
       const r = await window.MathAPI.post('/api/game-scores', { gameId, score, durationSec });
+      if (r && r.totalStars != null) document.dispatchEvent(new CustomEvent('math:stars', { detail: { totalStars: r.totalStars } }));
       if (showResult) this.showResult(r);
       return r;
     } catch (err) {

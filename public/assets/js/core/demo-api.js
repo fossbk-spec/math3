@@ -3,6 +3,7 @@
   'use strict';
   const KEY = 'math3_demo_v1';
   const GRADING = root.MathGrading;
+  const STARS = root.MathStars;
   let contentPromise;
   const users = [
     { id: 1, username: 'giaovien01', fullName: 'Cô giáo Demo', role: 'teacher', className: '3A', studentCode: 'GV-01', totalStars: 0 },
@@ -24,7 +25,7 @@
   };
   const review = q => q.review_status || 'DRAFT';
   const visible = q => review(q) !== 'REJECTED';
-  const studentQuestion = q => ({ id: q.id, type: q.type, prompt: q.prompt, options: q.options, points: q.points || 5, category: q.category, level: q.level, hints: q.hints || [] });
+  const studentQuestion = q => ({ id: q.id, type: q.type, prompt: q.prompt, options: q.options, points: 1, category: q.category, level: q.level, hints: q.hints || [] });
   const teacherQuestion = q => ({ ...q, correct_answer: q.correctAnswer, review_status: review(q), set_id: q.set_id });
   const progressKey = (id, lessonId) => `${id}:${lessonId}`;
   const lessonList = (state, data, user) => lessonsFor(state, data).map(l => {
@@ -105,14 +106,20 @@
         const q = bank.find(q => q.id === body.questionId && q.reviewStatus !== 'REJECTED');
         if (!q) return fail('Không tìm thấy câu đang mở.', 404);
         const result = engine.answer(q, entry, body);
-        Object.assign(entry, result.updated); save(state); return result.response;
+        const starsEarned = STARS.practice(entry.starsAwarded, result.response.correct, null);
+        Object.assign(entry, result.updated);
+        if (starsEarned) { entry.starsAwarded = true; user.totalStars += starsEarned; }
+        save(state); return { ...result.response, starsEarned, totalStars: user.totalStars };
       }
       if (path === 'practice/complete') {
         const entry = history.find(a => a.guided === 'PENDING');
         const q = bank.find(q => q.id === body.questionId && q.reviewStatus !== 'REJECTED');
         if (!q) return fail('Không tìm thấy câu đang mở.', 404);
         const result = engine.complete(q, entry, body, data.coachRules);
-        Object.assign(entry, result.updated); save(state); return result.response;
+        const starsEarned = STARS.practice(entry.starsAwarded, false, result.response.guided);
+        Object.assign(entry, result.updated);
+        if (starsEarned) { entry.starsAwarded = true; user.totalStars += starsEarned; }
+        save(state); return { ...result.response, starsEarned, totalStars: user.totalStars };
       }
     }
     if (path === 'submissions' && method === 'POST') {
@@ -121,16 +128,18 @@
       const maxAttempts = set.kind === 'exam' ? 1 : 3;
       const used = state.attempts.filter(a => a.userId === user.id && a.refId === body.setId).length;
       if (used >= maxAttempts) return fail(`Em đã làm đủ ${maxAttempts} lượt cho bộ bài này.`, 409);
-      const questions = questionsFor(state, body.setId, data).filter(visible).map(q => ({ ...q, points: q.points || 5, correct_answer: q.correctAnswer, solution: q.solution }));
+      const questions = questionsFor(state, body.setId, data).filter(visible).map(q => ({ ...q, points: 1, correct_answer: q.correctAnswer, solution: q.solution }));
       if (!questions.length) return fail('Bộ bài chưa có câu hỏi để làm.', 404);
       const attemptNo = used + 1;
       const graded = GRADING.gradeSubmission(questions, body.answers || {}, { kind: set.kind, lastAttempt: attemptNo === maxAttempts, feedbackRules: data.feedbackRules });
       const key = progressKey(user.id, set.lessonId);
       const prior = state.progress[key] || { bestScore: 0, completed: false };
-      const starsEarned = Math.round(Math.max(0, graded.scorePercent - prior.bestScore) / 100 * (set.starReward ?? (set.kind === 'exam' ? 100 : 40)));
+      const awarded = state.attempts.filter(a => a.userId === user.id && a.refId === body.setId).reduce((n, a) => n + (a.starsEarned || 0), 0);
+      const starsEarned = STARS.submission(graded.correctCount, graded.scorePercent, prior.bestScore,
+        set.starReward ?? (set.kind === 'exam' ? 100 : 40), awarded);
       state.progress[key] = { bestScore: Math.max(prior.bestScore, graded.scorePercent), completed: prior.completed || graded.scorePercent >= 50 };
       user.totalStars += starsEarned;
-      state.attempts.push({ userId: user.id, refId: body.setId, kind: set.kind, scorePercent: graded.scorePercent, answers: body.answers || {}, day: new Date().toISOString().slice(0, 10) });
+      state.attempts.push({ userId: user.id, refId: body.setId, kind: set.kind, scorePercent: graded.scorePercent, starsEarned, answers: body.answers || {}, day: new Date().toISOString().slice(0, 10) });
       save(state);
       root.MathAnalytics?.track('submission', { setId: body.setId, lessonId: set.lessonId, kind: set.kind,
         attemptNo, scorePercent: graded.scorePercent, correctCount: graded.correctCount, totalCount: graded.totalCount,

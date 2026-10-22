@@ -9,6 +9,7 @@ const bcrypt = require('bcryptjs');
 const db = require('./db');
 const { aiSafe, feedbackRules } = require('../data/content/grade3.json');
 const { gradeSubmission, isCorrect } = require('../public/assets/js/core/grading');
+const stars = require('../public/assets/js/core/stars');
 const { setAuthCookie, clearAuthCookie, requireAuth, requireTeacher } = require('./auth');
 
 const router = express.Router();
@@ -57,7 +58,7 @@ router.get('/me/progress', requireAuth, (req, res) => res.json({ lessons: lesson
 router.get('/question-sets/:setId/questions', requireAuth, (req, res) => {
   const rows = db.prepare(`SELECT id,type,prompt,options_json,points,category,level,hints_json FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(req.params.setId);
   if (!rows.length) return res.status(404).json({ error: 'Không tìm thấy bộ câu hỏi.' });
-  res.json({ setId: req.params.setId, questions: rows.map(r => ({ ...r, options: r.options_json ? JSON.parse(r.options_json) : undefined, hints: r.hints_json ? JSON.parse(r.hints_json) : [], options_json: undefined, hints_json: undefined })) });
+  res.json({ setId: req.params.setId, questions: rows.map(r => ({ ...r, points: 1, options: r.options_json ? JSON.parse(r.options_json) : undefined, hints: r.hints_json ? JSON.parse(r.hints_json) : [], options_json: undefined, hints_json: undefined })) });
 });
 
 router.get('/ai-safe', requireAuth, (req, res) => res.json({ aiSafe }));
@@ -84,7 +85,8 @@ router.post('/submissions', requireAuth, (req, res) => {
   // Sao thưởng chỉ tính trên phần % tiến bộ so với điểm cao nhất cũ (chống "cày" sao bằng cách nộp lại)
   const old = db.prepare('SELECT * FROM progress WHERE user_id=? AND lesson_id=?').get(req.user.id, meta.lessonId);
   const oldBest = old ? old.best_score : 0;
-  const starsEarned = Math.round(Math.max(0, percent - oldBest) / 100 * meta.starReward);
+  const awarded = db.prepare('SELECT COALESCE(SUM(stars_earned),0) AS total FROM attempts WHERE user_id=? AND ref_id=?').get(req.user.id, setId).total;
+  const starsEarned = stars.submission(correct, percent, oldBest, meta.starReward, awarded);
 
   const tx = db.transaction(() => {
     db.prepare(`INSERT INTO attempts (user_id,kind,ref_id,score_percent,correct_count,total_count,stars_earned,duration_sec,answers_json)
@@ -230,7 +232,7 @@ router.get('/teacher/question-sets/:id/questions', requireTeacher, (req, res) =>
   res.json({ questions: rows.map(r => ({ ...r, options: r.options_json ? JSON.parse(r.options_json) : undefined })) });
 });
 router.post('/teacher/question-sets/:id/questions', requireTeacher, (req, res) => {
-  const { type = 'multiple-choice', prompt = '', options, correctAnswer = '', points = 5, category = '' } = req.body || {};
+  const { type = 'multiple-choice', prompt = '', options, correctAnswer = '', category = '' } = req.body || {};
   if (!prompt.trim() || !String(correctAnswer).trim()) return res.status(400).json({ error: 'Cần nội dung câu hỏi và đáp án đúng.' });
   if (type === 'multiple-choice' && (!Array.isArray(options) || options.length < 2)) {
     return res.status(400).json({ error: 'Câu trắc nghiệm cần ít nhất 2 lựa chọn.' });
@@ -241,14 +243,14 @@ router.post('/teacher/question-sets/:id/questions', requireTeacher, (req, res) =
   if (!set) return res.status(404).json({ error: 'Không tìm thấy bộ đề.' });
   db.prepare(`INSERT INTO questions (id,set_id,lesson_id,type,prompt,options_json,correct_answer,points,category,sort_order,origin,review_status,reviewed_by,reviewed_at)
     VALUES (?,?,?,?,?,?,?,?,?,?,'teacher','APPROVED',?,datetime('now','localtime'))`)
-    .run(id, req.params.id, set.lesson_id, type, prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), Number(points) || 1, String(category).trim(), maxSort + 1, req.user.id);
+    .run(id, req.params.id, set.lesson_id, type, prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), 1, String(category).trim(), maxSort + 1, req.user.id);
   res.status(201).json({ question: { id } });
 });
 router.put('/teacher/questions/:id', requireTeacher, (req, res) => {
-  const { prompt = '', options, correctAnswer = '', points = 5, category = '' } = req.body || {};
+  const { prompt = '', options, correctAnswer = '', category = '' } = req.body || {};
   if (!prompt.trim() || !String(correctAnswer).trim()) return res.status(400).json({ error: 'Cần nội dung câu hỏi và đáp án đúng.' });
   const info = db.prepare("UPDATE questions SET prompt=?,options_json=?,correct_answer=?,points=?,category=?,review_status='APPROVED',reviewed_by=?,reviewed_at=datetime('now','localtime') WHERE id=?")
-    .run(prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), Number(points) || 1, String(category).trim(), req.user.id, req.params.id);
+    .run(prompt.trim(), options ? JSON.stringify(options) : null, String(correctAnswer).trim(), 1, String(category).trim(), req.user.id, req.params.id);
   if (!info.changes) return res.status(404).json({ error: 'Không tìm thấy câu hỏi.' });
   res.json({ ok: true });
 });
