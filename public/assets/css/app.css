@@ -38,7 +38,9 @@ body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-pa
 .student-menu nav { position:absolute; top:calc(100% + .75rem); right:0; z-index:60; display:flex; flex-direction:column; min-width:260px; padding:.5rem; border:2px solid #bbf7d0; border-radius:1rem; background:#fff; box-shadow:0 8px 20px rgb(15 23 42 / .18); }
 .student-menu nav a { display:flex; align-items:center; padding:.5rem .75rem; border-radius:.75rem; color:#14532d; text-decoration:none; }
 .student-menu nav a:hover { background:#dcfce7; }
-@media(min-width:1280px){.student-menu { display:none; }}
+/* Trang học sinh có nút Menu: mọi kích thước dùng Menu thay thanh điều hướng ngang.
+   Thanh ngang với chữ ≥ 18px không vừa khung 1280px, làm header cao 184–328px trên máy tính. */
+header:has(.student-menu) nav.xl\:flex, header:has(.student-menu) .bg-secondary-fixed { display:none !important; }
 body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-page="exercise"]) header > div > div { min-width:0; }
 body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-page="exercise"]) header > div > div:first-child > div { min-width:0; }
 body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-page="exercise"]) header span { overflow-wrap:anywhere; }

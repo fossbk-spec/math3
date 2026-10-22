@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "reviewStatus": "DRAFT",
+  "read": [
+    "Mình cùng đọc lại đề thật chậm nhé. Em chú ý các số và từ được tô đậm.",
+    "Em đọc từng câu một nhé. Những chỗ tô đậm đang cho mình dữ kiện gì?",
+    "Mình xem kỹ đề thêm lần nữa nhé. Em thử tìm điều đề đang hỏi.",
+    "Em nhìn các số và từ quan trọng trong đề nhé. Chúng liên hệ với nhau thế nào?"
+  ],
+  "keywords": ["mỗi", "chia đều", "gấp", "giảm", "tất cả", "còn lại", "bằng nhau", "nhóm", "hàng", "phần", "thêm", "bớt", "nhiều hơn", "ít hơn"],
+  "byTag": {
+    "cong-thay-nhan": ["{a} × {b} nghĩa là {b} nhóm, mỗi nhóm {a}. Em thử đếm hai nhóm đầu nhé.", "Em thử viết phép cộng gồm {b} số {a}, rồi nhìn lại phép nhân nhé."],
+    "tich-lien-ke": ["{answer} là kết quả em vừa tính. Em thử đếm lại đủ {b} nhóm, mỗi nhóm {a} nhé.", "Em có thể tách {b} nhóm thành hai phần nhỏ để kiểm tra phép nhân {a} × {b}."],
+    "nham-thuong": ["Khi chia {a} thành các nhóm {b}, mỗi nhóm có bao nhiêu? Em thử nhân ngược lại.", "Em thử tìm số còn thiếu trong {b} × ? = {a} nhé."],
+    "nhan-thay-chia": ["Đề đang chia {a} thành các phần {b}. Em thử vẽ các phần bằng nhau nhé.", "Em hãy kiểm tra bằng phép nhân ngược: {b} × ? = {a}."],
+    "sai-hang": ["Em nhìn lại hàng đơn vị và hàng chục trong phép tính với {a} và {b} nhé.", "Em thử viết từng chữ số vào đúng hàng rồi tính lại nhé."]
+  },
+  "done": "Em đã tự hoàn thành lời giải!"
+}

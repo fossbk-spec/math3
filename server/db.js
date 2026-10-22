@@ -119,6 +119,7 @@ db.exec(`CREATE TABLE IF NOT EXISTS practice_attempts (
   reason TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 )`);
+addColumns('practice_attempts', { steps_json: "TEXT NOT NULL DEFAULT '[]'", error_tags_json: "TEXT NOT NULL DEFAULT '[]'", guided: 'TEXT', guided_tries: 'INTEGER NOT NULL DEFAULT 0' });
 
 db.exec(`CREATE TABLE IF NOT EXISTS login_attempts (key TEXT PRIMARY KEY, count INTEGER NOT NULL, reset_at INTEGER NOT NULL)`);
 

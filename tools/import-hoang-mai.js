@@ -9,11 +9,14 @@
  */
 const fs = require('fs');
 const path = require('path');
+const verifyH1 = require('./verify-h1');
 
 const SRC = path.resolve(process.argv[2] || path.join(__dirname, '..', '..', 'hoang-mai-math'));
 const OUT = path.join(__dirname, '..', 'data', 'content', 'grade3.json');
 const read = p => JSON.parse(fs.readFileSync(path.join(SRC, p), 'utf8'));
 const LETTERS = ['A', 'B', 'C', 'D'];
+const exportDir = path.join(SRC, 'exports', 'math3');
+const manifest = verifyH1(exportDir);
 
 const curriculum = read('content/grade3/curriculum.json');
 const aiSafe = read('content/grade3/ai-safe.json');
@@ -35,9 +38,11 @@ const skipped = {};
 const skip = (why) => { skipped[why] = (skipped[why] || 0) + 1; return null; };
 
 /** Đổi 1 câu (phiếu hoặc bank) sang dạng câu hỏi của math3. */
-function convert({ id, stem, answerType, options, answer, level, source, hints, solution, origin, skillId, cognitiveLevel }) {
+function convert({ id, stem, answerType, options, answer, level, source, hints, solution, origin, skillId, cognitiveLevel, verification, illustration, templateId, seed, templateVersion }) {
   const base = { id, prompt: stem, level: level || 'co-ban', source, origin, skillId, cognitiveLevel, reviewStatus: 'DRAFT',
-    solution: solution && solution.length ? solution : null, hints: hints && hints.length ? hints : null };
+    solution: solution && solution.length ? solution : null, hints: hints && hints.length ? hints : null,
+    ...(verification && { verification }), ...(illustration && { illustration }), ...(templateId && { templateId }),
+    ...(seed != null && { seed }), ...(templateVersion && { templateVersion }) };
   if (answerType === 'choice') {
     if (!Array.isArray(options) || options.length < 2 || options.length > 4) return skip('choice-khong-2-4-lua-chon');
     const clean = options.map(o => String(o).replace(/^[A-D]\.\s*/, ''));
@@ -95,6 +100,25 @@ for (const b of read('content/bank/grade3.json')) {
 }
 if (prerequisiteCount !== 12) throw new Error('Thiếu 12 câu bank ôn tiền đề');
 
+// Gói H1 được xác thực ở đầu tool; giữ nguyên lời giải và nhân chứng tính toán.
+const exported = JSON.parse(fs.readFileSync(path.join(exportDir, 'lesson-questions.json'), 'utf8'));
+if (exported.length !== manifest.questionCount) throw new Error('Số câu gói H1 không khớp manifest');
+let imported = 0, omitted = 0, verified = 0;
+for (const b of exported) {
+  if (['truefalse', 'multi'].includes(b.answerType)) { omitted++; continue; }
+  const lessonNum = b.lessonNumber;
+  if (!active.has(lessonNum)) { omitted++; continue; }
+  const q = convert({ id: `coach-${b.templateId.replace(/[^a-z0-9]+/gi, '-')}-${b.seed}-${b.cognitiveLevel}`,
+    stem: b.stem, answerType: b.answerType, options: b.options, answer: b.correctAnswer,
+    level: b.level, source: `H1: ${b.templateId} (seed ${b.seed})`, hints: b.hints, solution: b.solution,
+    origin: b.origin, skillId: b.skillId, cognitiveLevel: b.cognitiveLevel,
+    verification: b.verification, illustration: b.illustration, templateId: b.templateId, seed: b.seed, templateVersion: b.templateVersion });
+  if (!q) { omitted++; continue; }
+  practiceQuestions.push({ ...q, lessonId: `bai-${lessonNum}` });
+  imported++;
+  if (q.verification) verified++;
+}
+
 // 3) Đề kiểm tra chủ đề 2: 20 câu trắc nghiệm 4 lựa chọn, rải đều bài 9–15 (exam.html chỉ hiển thị dạng này)
 const pool = Object.values(sets).flatMap(s => s.questions.map(q => ({ ...q, lessonId: s.lessonId })))
   .filter(q => q.type === 'multiple-choice' && q.options.length === 4 && q.level === 'co-ban');
@@ -119,12 +143,17 @@ for (const q of allQuestions) {
   if (!skillIds.has(q.skillId) || ![1, 2, 3].includes(q.cognitiveLevel)) throw new Error(`Sai kỹ năng/mức: ${q.id}`);
   ids.add(q.id);
 }
-const practicePool = [...Object.values(sets).filter(s => s.kind === 'exercise').flatMap(s => s.questions), ...practiceQuestions]
+const practicePool = [...practiceQuestions.filter(q => q.templateId), ...Object.values(sets).filter(s => s.kind === 'exercise').flatMap(s => s.questions), ...practiceQuestions.filter(q => !q.templateId)]
   .filter(q => skillIds.has(q.skillId)).map(q => q.id);
 const feedbackRules = read('content/grade3/feedback-rules.json');
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, JSON.stringify({ source: 'fossbk-spec/hoang-mai-math', lessons, questionSets: sets, skills, practiceQuestions, practicePool, feedbackRules, aiSafe }, null, 2) + '\n', 'utf8');
+const vendor = path.join(__dirname, '..', 'public', 'assets', 'js', 'vendor', 'hm-coach.js');
+fs.mkdirSync(path.dirname(vendor), { recursive: true });
+fs.writeFileSync(vendor, `/* Nguồn: hoang-mai-math H1, version ${manifest.version}, commit ${manifest.commit}. */\n` + fs.readFileSync(path.join(exportDir, 'hm-coach.js'), 'utf8'));
+fs.copyFileSync(path.join(exportDir, 'goi-mo-rules.json'), path.join(path.dirname(OUT), 'goi-mo-rules.json'));
+fs.writeFileSync(OUT, JSON.stringify({ source: 'fossbk-spec/hoang-mai-math', lessons, questionSets: sets, skills, practiceQuestions, practicePool, feedbackRules, coachRules: JSON.parse(fs.readFileSync(path.join(exportDir, 'goi-mo-rules.json'), 'utf8')), aiSafe }, null, 2) + '\n', 'utf8');
+console.log(`Gói H1: nhập ${imported}, bỏ ${omitted}, có verification ${verified}.`);
 console.log(`Đã ghi ${path.relative(process.cwd(), OUT)}: ${lessons.length} bài, ${Object.keys(sets).length} bộ, ${ids.size} câu.`);
 for (const [id, s] of Object.entries(sets)) console.log(`  ${id.padEnd(22)} ${String(s.questions.length).padStart(3)} câu`);
 console.log('Bỏ qua:', skipped);

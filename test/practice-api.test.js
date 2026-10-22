@@ -29,6 +29,7 @@ test('server practice: migration DB, duyệt câu, hợp đồng demo, không l�
     assert.equal((await call('practice/next', student)).data.question, null);
     assert.equal((await call('practice/next', student, { lessonId: 'missing-lesson' })).status, 409);
     await call('teacher/question-sets/bai-9-co-ban/approve-all', teacher);
+    db.prepare("UPDATE questions SET review_status='APPROVED' WHERE id LIKE 'coach-%'").run();
     const first = (await call('practice/next', student, { lessonId: 'bai-9' })).data;
     assert.ok(first.question);
     assert.equal(first.question.correctAnswer, undefined); assert.equal(first.question.correct_answer, undefined);
@@ -43,8 +44,13 @@ test('server practice: migration DB, duyệt câu, hợp đồng demo, không l�
       const body = { questionId: q.id, answer: '__wrong__', attemptNo, hintsUsed: 0 };
       const response = await call('practice/answer', student, body);
       assert.equal(response.status, 200); assert.equal(response.data.correct, false);
-      assert.equal(response.data.solution !== undefined, attemptNo === 3);
+      assert.equal(response.data.solution !== undefined, attemptNo === 3 && !q.solution?.length);
       assert.deepEqual(response.data, await demo('practice/answer', 'POST', body));
+    }
+    if (q.type === 'input' && q.solution?.length) {
+      assert.equal((await call('practice/next', student)).data.guided, 'PENDING');
+      const completed = await call('practice/complete', student, { questionId: q.id, answer: q.correctAnswer });
+      assert.deepEqual(completed.data, await demo('practice/complete', 'POST', { questionId: q.id, answer: q.correctAnswer }));
     }
     const row = db.prepare('SELECT * FROM practice_attempts WHERE question_id=?').get(q.id);
     assert.equal(row.attempt_no, 3); assert.equal(row.completed, 1); assert.equal(row.is_correct, 0);
