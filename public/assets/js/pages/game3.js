@@ -58,11 +58,11 @@ function flipSampleCard(buttonElement, mathText) {
   buttonElement.classList.add('bg-tertiary-fixed', 'text-on-tertiary-fixed', 'shadow-[0_6px_0_0_#f7be23]', 'ring-4', 'ring-tertiary-fixed-dim/60');
   buttonElement.innerHTML = `
     <div class="w-full flex items-center justify-between">
-      <span class="w-5 h-5 rounded-full bg-on-tertiary-fixed/20 text-[10px] font-bold flex items-center justify-center font-headline-sm">?</span>
+      <span class="w-7 h-7 rounded-full bg-on-tertiary-fixed/20 text-lg font-bold flex items-center justify-center font-headline-sm">?</span>
       <span class="material-symbols-outlined text-[18px] text-tertiary">search</span>
     </div>
-    <span class="font-headline-lg text-headline-sm sm:text-headline-lg text-tertiary font-black">${mathText}</span>
-    <span class="font-label-sm text-[11px] text-on-tertiary-fixed-variant font-bold bg-white/40 px-2 py-0.5 rounded-full">Vừa lật</span>`;
+    <span class="font-headline-lg text-[30px] sm:text-headline-lg text-tertiary font-black">${mathText}</span>
+    <span class="font-label-sm text-lg text-on-tertiary-fixed-variant font-bold bg-white/40 px-2 py-0.5 rounded-full">Vừa lật</span>`;
   flipped.push({ btn: buttonElement, value: cardValue(mathText), original });
 
   if (flipped.length === 2) {
@@ -98,7 +98,7 @@ function useTool(toolType) {
     const toolBtn = document.getElementById('toolMagnifier');
     if (toolBtn) {
       toolBtn.classList.add('opacity-50', 'pointer-events-none');
-      toolBtn.innerHTML = `<span class="material-symbols-outlined text-[20px]">search_insights</span><span>Đã Soi Thẻ</span><span class="px-1.5 py-0.5 rounded-full bg-white/70 text-tertiary font-bold text-[11px]">0</span>`;
+      toolBtn.innerHTML = `<span class="material-symbols-outlined text-[20px]">search_insights</span><span>Đã Soi Thẻ</span><span class="px-1.5 py-0.5 rounded-full bg-white/70 text-tertiary font-bold text-lg">0</span>`;
     }
   } else if (toolType === 'shuffle') {
     const matrix = document.getElementById('cardMatrix');

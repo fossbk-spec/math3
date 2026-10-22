@@ -9,9 +9,9 @@
       root.replaceChildren();
       aiSafe.situations.forEach((situation, index) => {
         const card = document.createElement('section');
-        card.className = 'rounded-3xl bg-surface-container-lowest p-6 shadow-sm';
+        card.className = 'clay-card p-6';
         const title = document.createElement('h2');
-        title.className = 'font-headline-md text-xl';
+        title.className = 'font-headline-md text-2xl';
         title.textContent = `Tình huống ${index + 1}: ${situation.prompt}`;
         const buttons = document.createElement('div');
         buttons.className = 'mt-4 flex flex-wrap gap-3';
@@ -21,7 +21,7 @@
         Object.keys(situation.feedback).forEach(key => {
           const button = document.createElement('button');
           button.type = 'button';
-          button.className = 'min-h-12 px-5 py-3 rounded-2xl bg-primary text-on-primary text-lg font-bold';
+          button.className = 'clay-btn';
           button.textContent = choices[key] || key;
           button.addEventListener('click', () => {
             if (window.MATH_DEMO === true) window.MathAnalytics?.track('ai_safe_choice', { situationId: situation.id || String(index + 1), choice: key, best: key === situation.best });

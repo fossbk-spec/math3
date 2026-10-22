@@ -12,7 +12,7 @@ document.addEventListener('mathapp:user-ready', async () => {
       return;
     }
     const wrap = document.createElement('div');
-    wrap.className = 'overflow-x-auto rounded-3xl bg-surface-container-lowest shadow-sm';
+    wrap.className = 'overflow-x-auto clay-card';
     const table = document.createElement('table');
     table.className = 'w-full min-w-[580px] font-body-md text-lg';
     const head = document.createElement('thead');

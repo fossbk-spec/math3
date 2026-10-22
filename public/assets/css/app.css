@@ -63,3 +63,31 @@ body[data-page="exam"] .matrix-btn { min-width:48px; }
 body[data-page="exam"] aside .grid-cols-5 { gap:.25rem; }
 @media(max-width:1150px){body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-page="exercise"]) header .bg-secondary-fixed { display:none; }}
 @media(max-width:800px){body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-page="exercise"]) header > div { gap:.5rem; }body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-page="exercise"]) header > div > div:last-child { gap:.5rem; }body:is([data-page="index"],[data-page="lesson"],[data-page="practice"],[data-page="exercise"]) header > div > div:first-child span:first-child { font-size:18px; }}
+
+/* U2: tiếp nối khung U1 trên các trang trò chơi và trang phụ. */
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="ai-safe"],[data-page="introduce"]) { font-family:"Nunito Sans",sans-serif; font-size:18px; line-height:1.5; }
+:where(body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="ai-safe"],[data-page="introduce"])) :where(p,a,button,label,input,textarea,select,span:not(.material-symbols-outlined)) { font-size:max(18px,1em); }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="ai-safe"],[data-page="introduce"]) :is(h1,h2,h3,h4) { font-family:Nunito,sans-serif; font-weight:800; text-wrap:balance; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="ai-safe"],[data-page="introduce"]) :is(button,a) { touch-action:manipulation; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="ai-safe"],[data-page="introduce"]) main a,
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="ai-safe"],[data-page="introduce"]) header a { min-height:48px; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="introduce"]) header > div { min-height:80px; height:auto; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="introduce"]) header img[alt="Logo Trường Tiểu học Hoàng Mai"] { width:48px; height:48px; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="introduce"]) header nav a { display:inline-flex; align-items:center; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="introduce"]) header span { overflow-wrap:anywhere; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="ai-safe"],[data-page="introduce"]) :is(.clay-card,section,article,aside) { overflow-wrap:anywhere; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"]) #game-result-panel { font-size:18px; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"]) .student-menu summary { background:#f0fdf4; color:#14532d; box-shadow:none; }
+body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"]) #game-result-panel .clay-card { border-color:#fbbf24; box-shadow:0 6px 0 #f59e0b,0 12px 24px rgb(15 23 42 / .16); }
+body[data-page="game"] #quick-quiz-results { border-color:#fbbf24; box-shadow:0 6px 0 #f59e0b,0 12px 24px rgb(15 23 42 / .08); }
+body[data-page="game"] #quick-quiz-results h2::before { content:"★ "; color:#b45309; }
+body[data-page="game"] #quiz-finish { min-height:48px; }
+body[data-page="game"] #quick-quiz-settings { background:#fff; color:#0f172a; }
+body[data-page="game"] #quick-quiz-settings select { border-color:#475569; color:#0f172a; }
+body:is([data-page="game3"],[data-page="game4"]) main { min-width:0; }
+body:is([data-page="game3"],[data-page="game4"]) main .grid > * { min-width:0; }
+body[data-page="ai-safe"] #ai-safe-situations { min-width:0; }
+body[data-page="ai-safe"] #ai-safe-situations .clay-card { overflow-wrap:anywhere; }
+body[data-page="thong-ke"] { font-family:"Nunito Sans",sans-serif; }
+body[data-page="thong-ke"] :is(h1,h2,h3) { font-family:Nunito,sans-serif; }
+@media(max-width:1150px){body:is([data-page="game"],[data-page="game2"],[data-page="game3"],[data-page="game4"],[data-page="leaderboard"],[data-page="schedule"],[data-page="introduce"]) header .bg-secondary-fixed { display:none; }}
