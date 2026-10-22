@@ -93,7 +93,7 @@
       const history = state.practiceAttempts.filter(a => a.userId === user.id);
       if (path === 'practice/next') {
         const result = engine.next(data, bank, history, lessonList(state, data, user), body.lessonId);
-        if (result.question && !history.some(a => !a.completed)) state.practiceAttempts.push({
+        if (result.question && !history.some(a => !a.completed || a.guided === 'PENDING')) state.practiceAttempts.push({
           userId: user.id, questionId: result.question.id, skillId: result.question.skillId,
           cognitiveLevel: result.question.cognitiveLevel, attemptNo: 0, hintsUsed: 0, isCorrect: false, completed: false, reason: result.reason,
         });
@@ -105,6 +105,13 @@
         const q = bank.find(q => q.id === body.questionId && q.reviewStatus !== 'REJECTED');
         if (!q) return fail('Không tìm thấy câu đang mở.', 404);
         const result = engine.answer(q, entry, body);
+        Object.assign(entry, result.updated); save(state); return result.response;
+      }
+      if (path === 'practice/complete') {
+        const entry = history.find(a => a.guided === 'PENDING');
+        const q = bank.find(q => q.id === body.questionId && q.reviewStatus !== 'REJECTED');
+        if (!q) return fail('Không tìm thấy câu đang mở.', 404);
+        const result = engine.complete(q, entry, body, data.coachRules);
         Object.assign(entry, result.updated); save(state); return result.response;
       }
     }

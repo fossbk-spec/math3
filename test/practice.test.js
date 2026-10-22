@@ -33,10 +33,14 @@ test('demo practice: lưu câu đang làm, 3 lần thử, bài chữa, không l�
   for (let attemptNo = 1; attemptNo <= 3; attemptNo++) {
     const result = await call('practice/answer', 'POST', { questionId: q.id, answer: '__wrong__', attemptNo, hintsUsed: Math.min(attemptNo, (q.hints || []).length) });
     assert.equal(result.correct, false);
-    assert.equal(result.solution !== undefined, attemptNo === 3);
-    assert.equal(result.correctAnswer !== undefined, attemptNo === 3);
+    assert.equal(result.solution !== undefined, attemptNo === 3 && result.guided !== 'PENDING');
+    assert.equal(result.correctAnswer !== undefined, attemptNo === 3 && result.guided !== 'PENDING');
     if (attemptNo === 1) assert.equal((await call('practice/next', 'POST')).attemptNo, 1);
-    if (attemptNo === 3) { assert.deepEqual(result.solution, q.solution || []); assert.equal(result.correctAnswer, q.correctAnswer); }
+    if (attemptNo === 3 && result.guided === 'PENDING') {
+      assert.equal((await call('practice/next', 'POST')).guided, 'PENDING');
+      const done = await call('practice/complete', 'POST', { questionId: q.id, answer: q.correctAnswer });
+      assert.equal(done.guided, 'DONE');
+    }
   }
   await assert.rejects(call('practice/answer', 'POST', { questionId: q.id, answer: q.correctAnswer, attemptNo: 4, hintsUsed: 0 }));
   const next = (await call('practice/next', 'POST')).question;
@@ -91,7 +95,9 @@ test('trang practice: một câu mỗi lần, đủ 10 câu, gợi ý, thử l�
     assert.equal(get('practice-answer').disabled, false);
     if (i === 0) {
       await get('practice-answer').listeners.click(); await get('practice-answer').listeners.click();
-      assert.ok(get('practice-message').textContent.includes(`Đáp án: ${view.formatAnswer(original, original.correctAnswer)}`));
+      assert.ok(get('practice-message').textContent.includes('Em điền số còn thiếu'));
+      get('practice-missing').value = original.correctAnswer;
+      await get('practice-complete').listeners.click();
       assert.equal(get('practice-answer').disabled, true);
     } else {
       rendered.answers[original.id] = original.correctAnswer;

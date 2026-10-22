@@ -13,7 +13,7 @@
 <link href="assets/css/tailwind.build.css" rel="stylesheet"/>
 <link href="assets/css/app.css" rel="stylesheet"/>
 <style>
-.practice-shell{font:18px/1.6 'Nunito Sans',sans-serif;max-width:960px;margin:auto;padding:24px 16px}
+.practice-shell{font:18px/1.6 'Nunito Sans',sans-serif;max-width:1280px;margin:auto;padding:24px 20px}
 .practice-shell section{padding:24px;margin:20px 0}
 .practice-shell h1,.practice-shell h2,.practice-shell h3{font-family:Nunito,sans-serif;font-weight:700}
 .practice-shell h1{font-size:30px}.practice-shell h2,.practice-shell h3{font-size:24px}
@@ -21,6 +21,12 @@
 .practice-shell select{max-width:100%;min-height:48px;padding:10px 18px;background:white;border:1px solid #638467;border-radius:16px}
 .practice-shell input{max-width:100%}
 .practice-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.practice-actions button,#practice-read,#practice-complete{min-height:48px;min-width:48px}
+.practice-player-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);gap:20px;align-items:start}
+.practice-coach{background:#fffaf0;border:2px solid #d4a64e;border-radius:24px;padding:20px;min-width:0}
+.practice-coach strong{font-weight:800;color:#653b10}.practice-coach ol{padding-left:26px;white-space:pre-line}
+.practice-coach input{min-height:48px;padding:8px 12px;border:2px solid #638467;border-radius:14px;width:180px;background:white}
+@media(max-width:900px){.practice-player-grid{grid-template-columns:1fr}.practice-shell{padding:16px 12px}}
 .practice-actions button:enabled,#practice-start:enabled,#practice-again:enabled{opacity:1;cursor:pointer}
 .practice-actions button:disabled,#practice-start:disabled,#practice-again:disabled{opacity:.5;cursor:not-allowed}
 #practice-question :is(p,button,input){font-size:18px}#practice-question button{min-height:48px}
@@ -39,8 +45,9 @@ body[data-page="practice"] [hidden]{display:none!important}
 <button class="clay-btn" id="practice-start" disabled>Bắt đầu lượt 10 câu</button></section>
 <section id="practice-player" class="clay-card" hidden>
 <p id="practice-progress"></p><p id="practice-reason"></p>
-<div id="practice-question"></div><ol id="practice-hints"></ol>
-<div class="practice-actions"><button class="clay-btn" id="practice-hint">Mở gợi ý tiếp theo</button><button class="clay-btn" id="practice-answer">Kiểm tra câu trả lời</button><button class="clay-btn" id="practice-next" hidden>Câu tiếp theo</button></div>
+<div class="practice-player-grid"><div><div id="practice-question"></div><ol id="practice-hints"></ol>
+<div class="practice-actions"><button class="clay-btn" id="practice-read" type="button">🔊 Đọc đề</button><button class="clay-btn" id="practice-hint">Mở gợi ý tiếp theo</button><button class="clay-btn" id="practice-answer">Kiểm tra câu trả lời</button><button class="clay-btn" id="practice-next" hidden>Câu tiếp theo</button></div></div>
+<aside class="practice-coach" id="practice-coach" aria-live="polite" hidden><h2>Bạn Cú gợi ý</h2><div id="practice-coach-body"></div><div id="practice-completion" hidden><label for="practice-missing">Em điền số còn thiếu</label><br/><input id="practice-missing" inputmode="decimal" autocomplete="off"/><button class="clay-btn" id="practice-complete" type="button">Kiểm tra</button></div></aside></div>
 </section>
 <p id="practice-message" role="status" aria-live="polite"></p>
 <section id="practice-result" class="clay-card" hidden><h2>Kết quả luyện tập</h2><p id="practice-summary"></p><h2>Bài chữa các câu cần xem lại</h2><div id="practice-corrections"></div><button class="clay-btn" id="practice-again">Luyện lượt mới</button></section>
@@ -48,6 +55,7 @@ body[data-page="practice"] [hidden]{display:none!important}
 </main>
 <footer class="w-full bg-surface-container-lowest shadow-[0_-4px_20px_rgba(0,0,0,0.03)] py-space-lg" data-shared-footer=""><div class="w-full px-gutter-mobile lg:px-margin max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-10 h-10 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center font-headline-md"><span class="material-symbols-outlined">school</span></div><div><p class="font-headline-sm text-label-lg text-primary leading-tight">Trường Tiểu học Hoàng Mai - Hà Nội</p><p class="font-body-sm text-lg text-on-surface-variant">Cổng học tập Toán thông minh dành cho học sinh Lớp 3</p></div></div><div class="flex flex-wrap items-center justify-center gap-space-md text-on-surface-variant font-label-md text-lg"><span class="flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[20px]">support_agent</span> Phòng Tin học &amp; Thiết bị số</span><span class="flex items-center gap-1"><span class="material-symbols-outlined text-primary text-[20px]">call</span> Hotline: (024) 3861 2xxx</span></div><p class="font-body-sm text-lg text-on-surface-variant text-center">© 2025 Trường Tiểu học Hoàng Mai. Giữ toàn quyền phát triển nội dung.</p></div></footer>
 <script src="assets/js/core/grading.js"></script>
+<script src="assets/js/vendor/hm-coach.js"></script>
 <script src="assets/js/core/api.js"></script>
 <script src="assets/js/components/sidebar.js"></script>
 <script src="assets/js/components/navbar.js"></script>

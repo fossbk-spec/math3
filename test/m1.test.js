@@ -21,9 +21,9 @@ test('M1: mọi câu có kỹ năng/mức hợp lệ, pool đầy đủ và khô
   assert.deepEqual([...skills].sort(), ['g3.number.find-component', 'g3.number.fraction-unit', 'g3.number.tables', 'g3.number.tables-6-9']);
   assert.equal(new Set(data.practicePool).size, data.practicePool.length);
   assert.ok(data.practicePool.every(id => ids.has(id)));
-  assert.deepEqual(data.practicePool, [...Object.values(data.questionSets).filter(s => s.kind === 'exercise').flatMap(s => s.questions), ...data.practiceQuestions].map(q => q.id));
-  assert.equal(data.practiceQuestions.length, 12);
-  assert.ok(data.practiceQuestions.every(q => q.skillId === 'g3.number.tables'));
+  assert.deepEqual(new Set(data.practicePool), new Set([...Object.values(data.questionSets).filter(s => s.kind === 'exercise').flatMap(s => s.questions), ...data.practiceQuestions].map(q => q.id)));
+  assert.equal(data.practiceQuestions.length, 252);
+  assert.ok(data.practiceQuestions.filter(q => !q.templateId).every(q => q.skillId === 'g3.number.tables'));
   assert.ok(data.practiceQuestions.every(q => !Object.values(data.questionSets).some(s => s.questions.some(item => item.id === q.id))));
 });
 
@@ -45,7 +45,8 @@ test('M1: metadata, câu ôn tiền đề và feedback khớp nguồn', { skip: 
     }
   }
   assert.deepEqual(data.feedbackRules, source('content/grade3/feedback-rules.json'));
-  for (const q of data.practiceQuestions) assert.ok(bank.some(b => b.skillId === q.skillId && b.stem === q.prompt && b.cognitiveLevel === q.cognitiveLevel));
+  const exported = source('exports/math3/lesson-questions.json');
+  for (const q of data.practiceQuestions) assert.ok([...bank, ...exported].some(b => b.skillId === q.skillId && b.stem === q.prompt && b.cognitiveLevel === q.cognitiveLevel));
   const expectedSkills = source('content/grade3/skills.json').filter(s => data.skills.some(item => item.id === s.id))
     .map(({ id, title, prerequisites }) => ({ id, title, prerequisites: prerequisites.filter(id => data.skills.some(s => s.id === id)) }));
   assert.deepEqual(data.skills, expectedSkills);

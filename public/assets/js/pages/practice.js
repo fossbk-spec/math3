@@ -7,6 +7,27 @@
   const message = text => { el('message').textContent = text; };
   const friendlyReason = reason => String(reason || '').split(' Đây là điều chỉnh')[0].split('. ').at(-1);
   const solutionText = solution => Array.isArray(solution) ? solution.join('\n') : typeof solution === 'string' ? solution : JSON.stringify(solution);
+  function showCoach(coach) {
+    const panel = el('coach'), body = el('coach-body');
+    panel.hidden = !coach; body.replaceChildren(); el('completion').hidden = true;
+    if (!coach) return;
+    const heading = document.createElement('p'); heading.textContent = `Bước ${coach.step}/3`;
+    body.append(heading);
+    if (coach.step === 1) {
+      const prompt = document.createElement('p');
+      (coach.segments || []).forEach(segment => {
+        const node = document.createElement(segment.mark ? 'strong' : 'span'); node.textContent = segment.text; prompt.append(node);
+      });
+      body.append(prompt);
+      const hint = document.createElement('p'); hint.textContent = coach.message; body.append(hint);
+    } else if (coach.step === 2) {
+      const hint = document.createElement('strong'); hint.textContent = coach.prompt; body.append(hint);
+    } else {
+      const list = document.createElement('ol');
+      (coach.masked || []).forEach(line => { const item = document.createElement('li'); item.textContent = line; list.append(item); });
+      body.append(list); el('completion').hidden = false; el('missing').value = '';
+    }
+  }
   function finish() {
     el('player').hidden = true;
     el('result').hidden = false;
@@ -45,9 +66,10 @@
       el('reason').textContent = friendlyReason(response.reason);
       window.MathQuestionView.render(el('question'), [{ ...question, hints: [] }], answers, () => {}, { hideLabel: true });
       el('hints').replaceChildren();
+      showCoach(response.coach);
       (question.hints || []).slice(0, hintsUsed).forEach(addHint);
       el('hint').disabled = hintsUsed >= question.hints.length;
-      el('answer').disabled = false; el('next').hidden = true;
+      el('answer').disabled = response.guided === 'PENDING'; el('next').hidden = true;
       el('player').hidden = false;
       message('Em đọc đề rồi chọn hoặc điền câu trả lời nhé.');
     } catch (e) { message(e.message); el('next').hidden = false; }
@@ -70,14 +92,41 @@
       window.MathAnalytics?.track('practice_answer', { skillId: question.skillId, level: question.cognitiveLevel, correct: result.correct, attemptNo, hintsUsed });
       if (!result.correct) question.hadError = true;
       el('progress').textContent = `Câu ${results.length + 1}/10 • Đã thử ${attemptNo}/3 lần`;
+      showCoach(result.coach);
       if (result.correct || attemptNo === 3) {
-        results.push({ ...result, question, hadError: question.hadError });
+        if (result.guided !== 'PENDING') results.push({ ...result, question, hadError: question.hadError });
         el('question').querySelectorAll('button,input').forEach(control => { control.disabled = true; });
-        message(`${result.correct ? '✓ Đúng rồi!' : '✗ Chưa đúng. Mình cùng xem bài chữa nhé.'}\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
-        el('next').textContent = results.length === 10 ? 'Xem kết quả lượt luyện' : 'Câu tiếp theo'; el('next').hidden = false;
+        message(result.guided === 'PENDING' ? 'Em điền số còn thiếu trong lời giải nhé.' : `${result.correct ? '✓ Đúng rồi!' : '✗ Chưa đúng. Mình cùng xem bài chữa nhé.'}\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
+        el('next').textContent = results.length === 10 ? 'Xem kết quả lượt luyện' : 'Câu tiếp theo'; el('next').hidden = result.guided === 'PENDING';
       } else { message(`✗ Chưa đúng, em thử lại nhé. Còn ${3 - attemptNo} lần thử.`); el('answer').disabled = false; }
     } catch (e) { message(e.message); el('answer').disabled = false; }
     finally { busy = false; el('hint').disabled = el('answer').disabled || hintsUsed >= question.hints.length; }
+  });
+  el('complete').addEventListener('click', async () => {
+    if (busy) return;
+    const answer = el('missing').value.trim();
+    if (!answer) { message('Em điền số còn thiếu nhé.'); return; }
+    busy = true; el('complete').disabled = true;
+    try {
+      const result = await api.post('/api/practice/complete', { questionId: question.id, answer });
+      if (result.guided === 'PENDING') { message('Chưa đúng, em thử điền lại nhé.'); return; }
+      el('completion').hidden = true;
+      results.push({ ...result, correct: false, question, hadError: true, correctAnswer: result.correctAnswer, solution: result.solution });
+      message(result.guided === 'DONE' ? result.message : `Mình cùng xem bài chữa nhé.\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
+      el('next').textContent = results.length === 10 ? 'Xem kết quả lượt luyện' : 'Câu tiếp theo'; el('next').hidden = false;
+    } catch (e) { message(e.message); }
+    finally { busy = false; el('complete').disabled = false; }
+  });
+  el('read').addEventListener('click', () => {
+    if (!question) return;
+    const speech = window.speechSynthesis;
+    const voices = speech?.getVoices?.() || [];
+    if (!speech || !voices.some(v => v.lang?.toLowerCase().startsWith('vi'))) { message('Máy chưa có giọng tiếng Việt. Em đọc đề và phần Bạn Cú gợi ý trên màn hình nhé.'); return; }
+    speech.cancel();
+    const words = [question.prompt, el('coach').hidden ? '' : el('coach-body').textContent].filter(Boolean).join('. ');
+    const utterance = new SpeechSynthesisUtterance(words); utterance.lang = 'vi-VN'; utterance.rate = 0.9;
+    utterance.voice = voices.find(v => v.lang?.toLowerCase().startsWith('vi'));
+    speech.speak(utterance);
   });
   el('start').addEventListener('click', async () => { results = []; el('setup').hidden = true; el('result').hidden = true; await next(); });
   el('next').addEventListener('click', next);
