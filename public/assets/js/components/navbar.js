@@ -19,7 +19,7 @@ window.MathApp.components.Navbar = {
         link.style.cssText = 'display:inline-flex;align-items:center;min-height:48px;padding:8px 16px;font-size:18px';
         nav.append(link);
       }
-      const headerRow = ['index', 'lesson', 'practice', 'exercise'].includes(document.body.dataset.page)
+      const headerRow = ['index', 'lesson', 'practice', 'exercise', 'game', 'game2', 'game3', 'game4', 'leaderboard', 'introduce'].includes(document.body.dataset.page)
         ? document.querySelector('header > div') : null;
       if (headerRow && !headerRow.querySelector('.student-menu')) {
         const menu = document.createElement('details');
