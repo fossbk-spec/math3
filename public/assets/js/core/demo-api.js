@@ -8,9 +8,19 @@
   const users = [
     { id: 1, username: 'giaovien01', fullName: 'Cô giáo Demo', role: 'teacher', className: '3A', studentCode: 'GV-01', totalStars: 0 },
     { id: 2, username: 'hocsinh01', fullName: 'Bạn Cú', role: 'student', className: '3A', studentCode: 'HM-3A-08', totalStars: 0 },
+    { id: 3, username: 'hocsinh', fullName: 'Bạn Dùng Thử', role: 'student', className: 'DEMO', studentCode: '', totalStars: 0 },
   ];
   const fresh = () => ({ currentId: null, users: users.map(u => ({ ...u })), lessons: {}, sets: {}, questions: {}, attempts: [], progress: {}, gameScores: [], practiceAttempts: [] });
-  const read = () => { try { return { ...fresh(), ...JSON.parse(localStorage.getItem(KEY)) }; } catch { return fresh(); } };
+  const read = () => {
+    try {
+      const state = { ...fresh(), ...JSON.parse(localStorage.getItem(KEY)) };
+      if (!state.users.some(u => u.username === 'hocsinh')) {
+        const id = Math.max(...state.users.map(u => typeof u.id === 'number' ? u.id : 0)) + 1;
+        state.users.push({ ...users.find(u => u.username === 'hocsinh'), id });
+      }
+      return state;
+    } catch { return fresh(); }
+  };
   const save = state => localStorage.setItem(KEY, JSON.stringify(state));
   const fail = (message, status = 400) => { const error = new Error(message); error.status = status; throw error; };
   const copy = value => JSON.parse(JSON.stringify(value));
@@ -70,8 +80,8 @@ ${password}`), 'PBKDF2', false, ['deriveBits']);
       if (role === 'teacher' && (username !== 'giaovien01' || !(await teacherPasswordOk(String(body.password || ''))))) {
         return fail('Tên đăng nhập hoặc mật khẩu giáo viên chưa đúng.', 401);
       }
-      let user = state.users.find(u => typeof u.id === 'number' && u.role === role && (u.username === username || (!username && users.some(sample => sample.id === u.id))));
-      if (user && role === 'student' && username && users.some(sample => sample.id === user.id) && body.password !== '123456') user = null;
+      let user = state.users.find(u => typeof u.id === 'number' && u.role === role && (u.username === username || (!username && users.some(sample => sample.username === u.username))));
+      if (user && role === 'student' && username && users.some(sample => sample.username === user.username) && body.password !== '123456') user = null;
       if (!user && username && role === 'student' && root.MathClassroom) {
         const response = await fetch('data/class-3a2.json');
         if (response.ok) {

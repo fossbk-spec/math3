@@ -31,6 +31,18 @@ test('API T1 với DB mới', async () => {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
     assert.equal(ready, true, output);
+    for (const username of ['hocsinh', 'hocsinh01', 'giaovien01']) {
+      for (const password of ['wrong', '', '123456 ']) {
+        assert.equal((await request('/auth/login', null, 'POST', { username, password })).status, 401);
+      }
+    }
+    const trial = await request('/auth/login', null, 'POST', { username: 'hocsinh', password: '123456', role: 'student' });
+    assert.equal(trial.status, 200);
+    assert.equal(trial.data.user.username, 'hocsinh');
+    assert.equal(trial.data.user.fullName, 'Bạn Dùng Thử');
+    assert.equal(trial.data.user.role, 'student');
+    assert.equal(trial.data.user.className, 'DEMO');
+    assert.equal((await request('/auth/me', trial.data.token)).data.user.className, 'DEMO');
     const student = (await request('/auth/login', null, 'POST', { username: 'hocsinh01', password: '123456' })).data.token;
     const teacher = (await request('/auth/login', null, 'POST', { username: 'giaovien01', password: '123456' })).data.token;
     assert.ok(student && teacher);

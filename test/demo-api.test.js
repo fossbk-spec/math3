@@ -5,6 +5,22 @@ const fs = require('node:fs');
 const vm = require('node:vm');
 const path = require('node:path');
 
+test('demo mới: hocsinh dùng mật khẩu chính xác, tách khỏi tài khoản mẫu cũ', async () => {
+  const call = require('./helpers/demo')();
+  const trial = (await call('auth/login', 'POST', { username: 'hocsinh', password: '123456' })).user;
+  assert.equal(trial.id, 3);
+  assert.equal(trial.fullName, 'Bạn Dùng Thử');
+  assert.equal(trial.role, 'student');
+  assert.equal(trial.className, 'DEMO');
+  await call('auth/logout', 'POST');
+  for (const username of ['hocsinh', 'hocsinh01']) {
+    for (const password of ['wrong', '', '123456 ']) {
+      await assert.rejects(call('auth/login', 'POST', { username, password }), e => e.status === 401);
+    }
+  }
+  assert.equal((await call('auth/login', 'POST', { username: 'hocsinh01', password: '123456' })).user.id, 2);
+});
+
 test('demo API: học sinh làm 3 lượt, bài chữa cuối, giáo viên duyệt câu', async () => {
   const data = require('../data/content/grade3.json');
   const memory = new Map();

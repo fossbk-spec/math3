@@ -71,6 +71,15 @@
       "className": "3A",
       "studentCode": "HM-3A-25",
       "totalStars": 0
+    },
+    {
+      "username": "hocsinh",
+      "password": "123456",
+      "fullName": "Bạn Dùng Thử",
+      "role": "student",
+      "className": "DEMO",
+      "studentCode": "",
+      "totalStars": 0
     }
   ],
   "questionSets": {}

@@ -8,6 +8,10 @@ if (window.MATH_DEMO === true) {
   panel.className = 'space-y-3 my-5';
   panel.innerHTML = '<button type="button" data-demo-role="student" class="w-full min-h-14 p-3 rounded-2xl bg-primary text-on-primary text-lg font-bold">Vào với vai Học sinh (Bạn Cú)</button><button type="button" id="demo-reset" class="w-full min-h-12 p-3 rounded-2xl bg-surface-container text-on-surface text-lg">Xoá dữ liệu demo</button>';
   form.before(panel);
+  const hint = document.createElement('p');
+  hint.style.fontSize = '18px';
+  hint.textContent = 'Tài khoản dùng thử: hocsinh / 123456';
+  panel.prepend(hint);
   form.style.fontSize = '18px';
   form.querySelectorAll('label,input,select,button').forEach(el => { el.style.fontSize = '18px'; if (el.matches('input,select,button')) el.style.minHeight = '48px'; });
   document.querySelector('#toastMessage p').style.fontSize = '18px';
