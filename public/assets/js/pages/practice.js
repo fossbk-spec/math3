@@ -96,9 +96,6 @@
       el('progress').textContent = `Câu ${results.length + 1}/10 • Đã thử ${attemptNo}/3 lần`;
       el('reason').textContent = friendlyReason(response.reason);
       window.MathQuestionView.render(el('question'), [{ ...question, hints: [] }], answers, () => {}, { hideLabel: true });
-      // Hình minh hoạ cho bài có lời văn (dữ kiện trực quan), nếu câu có.
-      const picture = window.MathIllustration?.render(question.illustration);
-      if (picture) el('question').append(picture);
       el('hints').replaceChildren();
       showCoach(response.coach);
       (question.hints || []).slice(0, hintsUsed).forEach(addHint);

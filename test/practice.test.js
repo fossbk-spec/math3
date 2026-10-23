@@ -122,6 +122,9 @@ test('trang practice: một câu mỗi lần, đủ 10 câu, gợi ý, thử l�
   const firstOriginal = practice.pool(data).find(q => q.prompt === first.children[0].textContent);
   assert.match(first.children[1].textContent, /Em đã tự|Em xem kỹ/);
   assert.ok(first.children[2].textContent.includes(`Đáp án: ${view.formatAnswer(firstOriginal, firstOriginal.correctAnswer)}`));
+  const correctionText = get('practice-corrections').children.flatMap(article => article.children.map(child => child.textContent)).join(' ');
+  assert.doesNotMatch(correctionText, /__wrong__/);
+  assert.ok(get('practice-corrections').children.slice(1).every(article => article.children[1].textContent.includes('lần thứ 2')));
   // Ca riêng với pool câu có gợi ý, vẫn dùng nguyên câu/đáp án nhập từ nguồn.
   call = demoClient({ ...data, practicePool: practice.pool(data).filter(q => q.hints?.length).map(q => q.id) });
   await call('auth/login', 'POST', { role: 'student' });

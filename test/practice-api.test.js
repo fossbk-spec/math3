@@ -29,6 +29,13 @@ test('server practice: migration DB, duyệt câu, hợp đồng demo, không l�
     assert.equal((await call('practice/next', student)).data.question, null);
     assert.equal((await call('practice/next', student, { lessonId: 'missing-lesson' })).status, 409);
     await call('teacher/question-sets/bai-9-co-ban/approve-all', teacher);
+    const illustratedSetId = Object.keys(data.questionSets).find(id => data.questionSets[id].questions.some(q => q.illustration));
+    await call(`teacher/question-sets/${illustratedSetId}/approve-all`, teacher);
+    const picturedResponse = await fetch(`${base}question-sets/${illustratedSetId}/questions`, { headers: { Authorization: `Bearer ${student}` } });
+    assert.equal(picturedResponse.status, 200);
+    const pictured = (await picturedResponse.json()).questions.find(q => q.illustration);
+    assert.deepEqual(pictured.illustration, data.questionSets[illustratedSetId].questions.find(q => q.id === pictured.id).illustration);
+    assert.equal(db.prepare('SELECT illustration_json FROM questions WHERE id=?').get(pictured.id).illustration_json, JSON.stringify(pictured.illustration));
     db.prepare("UPDATE questions SET review_status='APPROVED' WHERE id LIKE 'coach-%'").run();
     const first = (await call('practice/next', student, { lessonId: 'bai-9' })).data;
     assert.ok(first.question);

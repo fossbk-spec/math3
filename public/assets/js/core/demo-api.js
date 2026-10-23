@@ -25,7 +25,8 @@
   };
   const review = q => q.review_status || 'DRAFT';
   const visible = q => review(q) !== 'REJECTED';
-  const studentQuestion = q => ({ id: q.id, type: q.type, prompt: q.prompt, options: q.options, points: 1, category: q.category, level: q.level, hints: q.hints || [] });
+  const studentQuestion = q => ({ id: q.id, type: q.type, prompt: q.prompt, options: q.options, points: 1, category: q.category, level: q.level, hints: q.hints || [],
+    ...(q.illustration ? { illustration: q.illustration } : {}) });
   const teacherQuestion = q => ({ ...q, correct_answer: q.correctAnswer, review_status: review(q), set_id: q.set_id });
   const progressKey = (id, lessonId) => `${id}:${lessonId}`;
   const lessonList = (state, data, user) => lessonsFor(state, data).map(l => {

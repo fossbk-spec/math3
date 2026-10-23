@@ -30,6 +30,8 @@
     }).join('');
 
     container.querySelectorAll('article').forEach((article, index) => {
+      const picture = typeof window !== 'undefined' ? window.MathIllustration?.render(questions[index].illustration) : null;
+      if (picture) article.querySelector('h3').after(picture);
       const hints = questions[index].hints;
       if (!Array.isArray(hints) || !hints.length) return;
       const button = document.createElement('button');
