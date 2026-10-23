@@ -1,12 +1,12 @@
 /* Logic trang Đăng nhập — giao diện giữ nguyên bản gốc, xử lý đăng nhập nối API thật.
  * Tài khoản do GIÁO VIÊN cấp (xem trang Góc Giáo Viên). Tài khoản mẫu để test:
- * Học sinh: hocsinh01 / 123456  •  Giáo viên: giaovien01 / 123456 */
+ * Học sinh mẫu: hocsinh01 / 123456  •  Giáo viên: giaovien01 / mật khẩu do chủ nhiệm giữ (chỉ lưu mã băm). */
 let selectedRole = 'student';
 if (window.MATH_DEMO === true) {
   const form = document.getElementById('authForm');
   const panel = document.createElement('div');
   panel.className = 'space-y-3 my-5';
-  panel.innerHTML = '<button type="button" data-demo-role="student" class="w-full min-h-14 p-3 rounded-2xl bg-primary text-on-primary text-lg font-bold">Vào với vai Học sinh (Bạn Cú)</button><button type="button" data-demo-role="teacher" class="w-full min-h-14 p-3 rounded-2xl bg-secondary text-on-secondary text-lg font-bold">Vào với vai Giáo viên</button><button type="button" id="demo-reset" class="w-full min-h-12 p-3 rounded-2xl bg-surface-container text-on-surface text-lg">Xoá dữ liệu demo</button>';
+  panel.innerHTML = '<button type="button" data-demo-role="student" class="w-full min-h-14 p-3 rounded-2xl bg-primary text-on-primary text-lg font-bold">Vào với vai Học sinh (Bạn Cú)</button><button type="button" id="demo-reset" class="w-full min-h-12 p-3 rounded-2xl bg-surface-container text-on-surface text-lg">Xoá dữ liệu demo</button>';
   form.before(panel);
   form.style.fontSize = '18px';
   form.querySelectorAll('label,input,select,button').forEach(el => { el.style.fontSize = '18px'; if (el.matches('input,select,button')) el.style.minHeight = '48px'; });

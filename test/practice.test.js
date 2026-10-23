@@ -50,7 +50,7 @@ test('demo practice: lưu câu đang làm, 3 lần thử, bài chữa, không l�
   assert.equal(right.correct, true); assert.deepEqual(right.solution, original.solution || []);
   await call('auth/logout', 'POST');
   await assert.rejects(call('practice/next', 'POST'), e => e.status === 401);
-  await call('auth/login', 'POST', { role: 'teacher' });
+  await call('auth/login', 'POST', require('./helpers/teacher').login);
   await call('teacher/students', 'POST', { username: 'alias-test', fullName: 'Bạn Thỏ' });
   await call('auth/login', 'POST', { username: 'alias-test', role: 'student' });
   assert.equal((await call('practice/next', 'POST')).question.id, first.question.id);
