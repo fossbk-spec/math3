@@ -60,13 +60,23 @@
     const correct = results.filter(r => r.correct).length;
     const firstTry = results.filter(r => r.correct && !r.hadError).length;
     const feedback = window.MathGrading.feedbackFor(results.length ? correct / results.length * 100 : 0, rules);
-    el('summary').textContent = `${correct}/${results.length} câu đúng trong 3 lần thử; ${firstTry} câu đúng ngay lần đầu. ${feedback.label}. ${feedback.message}`;
+    // Nhận xét cuối lượt theo ngưỡng giáo viên chốt (cùng luật với hoang-mai-math): mức đặt lên đầu cho dễ thấy.
+    const level = document.createElement('strong'); level.textContent = feedback.label;
+    const detail = document.createElement('span'); detail.textContent = ` · ${correct}/${results.length} câu đúng trong 3 lần thử; ${firstTry} câu đúng ngay lần đầu. ${feedback.message}`;
+    el('summary').replaceChildren(level, detail);
     el('corrections').replaceChildren();
+    // Bài chữa: không liệt kê các lần sai của em, chỉ ghi nhận em đã tự sửa hay tự hoàn thành.
     results.filter(r => r.hadError || !r.correct).forEach(r => {
       const article = document.createElement('article');
       const prompt = document.createElement('h3'); prompt.textContent = r.question.prompt;
+      const status = document.createElement('p');
+      status.textContent = r.correct && r.solvedOn ? `Em đã tự sửa đúng ở lần thứ ${r.solvedOn}. Giỏi lắm!`
+        : r.guided === 'DONE' ? 'Em đã tự hoàn thành lời giải.' : 'Em xem kỹ cách giải dưới đây nhé.';
       const solution = document.createElement('p'); solution.textContent = `Đáp án: ${window.MathQuestionView.formatAnswer(r.question, r.correctAnswer)}\n${solutionText(r.solution)}`;
-      article.append(prompt, solution); el('corrections').append(article);
+      article.append(prompt, status, solution);
+      const picture = window.MathIllustration?.render(r.question.illustration);
+      if (picture) article.append(picture);
+      el('corrections').append(article);
     });
     if (!el('corrections').childElementCount) el('corrections').textContent = 'Em đã làm đúng các câu trong lượt này.';
   }
@@ -116,7 +126,7 @@
       el('progress').textContent = `Câu ${results.length + 1}/10 • Đã thử ${attemptNo}/3 lần`;
       showCoach(result.coach);
       if (result.correct || attemptNo === 3) {
-        if (result.guided !== 'PENDING') results.push({ ...result, question, hadError: question.hadError });
+        if (result.guided !== 'PENDING') results.push({ ...result, question, hadError: question.hadError, solvedOn: result.correct ? attemptNo : null });
         el('question').querySelectorAll('button,input').forEach(control => { control.disabled = true; });
         message(result.guided === 'PENDING' ? (result.coach?.mode === 'rechoose' ? 'Em chọn lại đáp án nhé.' : 'Em điền số còn thiếu trong lời giải nhé.') : `${result.correct ? '✓ Đúng rồi!' : '✗ Chưa đúng. Mình cùng xem bài chữa nhé.'}\nĐáp án: ${window.MathQuestionView.formatAnswer(question, result.correctAnswer)}\n${solutionText(result.solution)}`);
         el('next').textContent = results.length === 10 ? 'Xem kết quả lượt luyện' : 'Câu tiếp theo'; el('next').hidden = result.guided === 'PENDING';
@@ -150,7 +160,10 @@
     const voices = speech?.getVoices?.() || [];
     if (!speech || !voices.some(v => v.lang?.toLowerCase().startsWith('vi'))) { message('Máy chưa có giọng tiếng Việt. Em đọc đề và phần Bạn Cú gợi ý trên màn hình nhé.'); return; }
     speech.cancel();
-    const words = [question.prompt, el('coach').hidden ? '' : el('coach-body').textContent].filter(Boolean).join('. ');
+    // Đọc đề, các gợi ý em đã mở, phần Bạn Cú gợi ý và lời nhận xét/khen hiện tại.
+    const said = el('message').textContent;
+    const words = [question.prompt, el('hints').textContent, el('coach').hidden ? '' : el('coach-body').textContent,
+      /Đang (kiểm tra|chọn)/.test(said) ? '' : said].filter(Boolean).join('. ');
     const utterance = new SpeechSynthesisUtterance(words); utterance.lang = 'vi-VN'; utterance.rate = 0.9;
     utterance.voice = voices.find(v => v.lang?.toLowerCase().startsWith('vi'));
     speech.speak(utterance);

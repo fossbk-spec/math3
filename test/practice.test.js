@@ -70,7 +70,7 @@ test('trang practice: một câu mỗi lần, đủ 10 câu, gợi ý, thử l�
   const nodes = new Map();
   const node = () => ({ hidden: false, disabled: false, value: '', textContent: '', children: [], listeners: {},
     addEventListener(type, fn) { this.listeners[type] = fn; }, querySelector() { return { hidden: false }; }, append(...children) { this.children.push(...children); },
-    replaceChildren() { this.children = []; }, get childElementCount() { return this.children.length; }, querySelectorAll() { return []; } });
+    replaceChildren(...children) { this.children = children; }, get childElementCount() { return this.children.length; }, querySelectorAll() { return []; } });
   const get = id => { if (!nodes.has(id)) nodes.set(id, node()); return nodes.get(id); };
   const document = { getElementById: get, createElement: node, addEventListener(type, fn) { this[type] = fn; } };
   let rendered, selected = 0;
@@ -111,12 +111,20 @@ test('trang practice: một câu mỗi lần, đủ 10 câu, gợi ý, thử l�
     await get('practice-next').listeners.click();
   }
   assert.equal(selected, 10); assert.equal(get('practice-result').hidden, false);
-  assert.match(get('practice-summary').textContent, /9\/10/);
-  assert.ok(get('practice-summary').textContent.includes(data.feedbackRules.summary[0].message));
+  // Nhận xét cuối lượt: mức đứng đầu, sau đó là số câu và lời nhận xét.
+  const summary = get('practice-summary');
+  const summaryText = summary.children.map(child => child.textContent).join('');
+  assert.equal(summary.children[0].textContent, data.feedbackRules.summary[0].label);
+  assert.match(summaryText, /9\/10/);
+  assert.ok(summaryText.includes(data.feedbackRules.summary[0].message));
   assert.equal(get('practice-corrections').childElementCount, 10);
   const first = get('practice-corrections').children[0];
   const firstOriginal = practice.pool(data).find(q => q.prompt === first.children[0].textContent);
-  assert.ok(first.children[1].textContent.includes(`Đáp án: ${view.formatAnswer(firstOriginal, firstOriginal.correctAnswer)}`));
+  assert.match(first.children[1].textContent, /Em đã tự|Em xem kỹ/);
+  assert.ok(first.children[2].textContent.includes(`Đáp án: ${view.formatAnswer(firstOriginal, firstOriginal.correctAnswer)}`));
+  const correctionText = get('practice-corrections').children.flatMap(article => article.children.map(child => child.textContent)).join(' ');
+  assert.doesNotMatch(correctionText, /__wrong__/);
+  assert.ok(get('practice-corrections').children.slice(1).every(article => article.children[1].textContent.includes('lần thứ 2')));
   // Ca riêng với pool câu có gợi ý, vẫn dùng nguyên câu/đáp án nhập từ nguồn.
   call = demoClient({ ...data, practicePool: practice.pool(data).filter(q => q.hints?.length).map(q => q.id) });
   await call('auth/login', 'POST', { role: 'student' });

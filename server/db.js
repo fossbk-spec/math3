@@ -101,7 +101,7 @@ function addColumns(table, cols) {
 }
 addColumns('questions', {
   level: "TEXT DEFAULT 'co-ban'", origin: "TEXT DEFAULT 'teacher'", source: "TEXT DEFAULT ''",
-  hints_json: 'TEXT', solution_json: 'TEXT',
+  hints_json: 'TEXT', solution_json: 'TEXT', illustration_json: 'TEXT',
   review_status: "TEXT NOT NULL DEFAULT 'DRAFT'", reviewed_by: 'INTEGER', reviewed_at: 'TEXT',
 });
 addColumns('question_sets', { level: "TEXT DEFAULT 'co-ban'" });
@@ -134,8 +134,9 @@ function seedContent() {
   const insSet = db.prepare(`INSERT OR IGNORE INTO question_sets (id,title,kind,lesson_id,star_reward,duration_minutes,level)
     VALUES (?,?,?,?,?,?,?)`);
   const insQ = db.prepare(`INSERT OR IGNORE INTO questions (id,set_id,lesson_id,type,prompt,options_json,correct_answer,points,category,sort_order,
-      level,origin,source,hints_json,solution_json,review_status)
-    VALUES (@id,@setId,@lessonId,@type,@prompt,@optionsJson,@correctAnswer,@points,@category,@sortOrder,@level,@origin,@source,@hintsJson,@solutionJson,'DRAFT')`);
+      level,origin,source,hints_json,solution_json,illustration_json,review_status)
+    VALUES (@id,@setId,@lessonId,@type,@prompt,@optionsJson,@correctAnswer,@points,@category,@sortOrder,@level,@origin,@source,@hintsJson,@solutionJson,@illustrationJson,'DRAFT')`);
+  const fillIllustration = db.prepare('UPDATE questions SET illustration_json=? WHERE id=? AND prompt=? AND illustration_json IS NULL');
   const TYPE_LABEL = { 'multiple-choice': 'Trắc nghiệm', input: 'Điền số', compare: 'Điền dấu so sánh', paint: 'Tô màu theo kết quả' };
   db.transaction(() => {
     content.lessons.forEach(l => insLesson.run({ ...l, page: l.page || null }));
@@ -143,13 +144,17 @@ function seedContent() {
     for (const [setId, set] of Object.entries(all)) {
       insSet.run(setId, set.title || setId, set.kind || 'exercise', set.lessonId || null,
         set.kind === 'exam' ? 100 : 40, set.durationMinutes || 0, set.level || 'co-ban');
-      set.questions.forEach((q, i) => insQ.run({
-        id: q.id, setId, lessonId: set.lessonId || null, type: q.type, prompt: q.prompt,
-        optionsJson: q.options ? JSON.stringify(q.options) : null, correctAnswer: q.correctAnswer,
-        points: q.points || 1, category: q.category || TYPE_LABEL[q.type] || q.type, sortOrder: i + 1,
-        level: q.level || set.level || 'co-ban', origin: q.origin || 'teacher', source: q.source || '',
-        hintsJson: q.hints ? JSON.stringify(q.hints) : null, solutionJson: q.solution ? JSON.stringify(q.solution) : null,
-      }));
+      set.questions.forEach((q, i) => {
+        insQ.run({
+          id: q.id, setId, lessonId: set.lessonId || null, type: q.type, prompt: q.prompt,
+          optionsJson: q.options ? JSON.stringify(q.options) : null, correctAnswer: q.correctAnswer,
+          points: q.points || 1, category: q.category || TYPE_LABEL[q.type] || q.type, sortOrder: i + 1,
+          level: q.level || set.level || 'co-ban', origin: q.origin || 'teacher', source: q.source || '',
+          hintsJson: q.hints ? JSON.stringify(q.hints) : null, solutionJson: q.solution ? JSON.stringify(q.solution) : null,
+          illustrationJson: q.illustration ? JSON.stringify(q.illustration) : null,
+        });
+        if (q.illustration) fillIllustration.run(JSON.stringify(q.illustration), q.id, q.prompt);
+      });
     }
     (content.practiceQuestions || []).forEach((q, i) => insQ.run({
       id: q.id, setId: '__practice__', lessonId: null, type: q.type, prompt: q.prompt,
@@ -157,6 +162,7 @@ function seedContent() {
       points: q.points || 1, category: q.category || '', sortOrder: i + 1, level: q.level || 'co-ban',
       origin: q.origin || 'template', source: q.source || '',
       hintsJson: JSON.stringify(q.hints || []), solutionJson: JSON.stringify(q.solution || []),
+      illustrationJson: q.illustration ? JSON.stringify(q.illustration) : null,
     }));
   })();
 }

@@ -25,6 +25,9 @@ test('demo API: học sinh làm 3 lượt, bài chữa cuối, giáo viên duy�
   const questions = (await call(`question-sets/${setId}/questions`)).questions;
   assert.ok(questions.some(q => q.hints.length));
   assert.equal(Object.hasOwn(questions[0], 'correctAnswer'), false);
+  const illustratedSetId = Object.keys(data.questionSets).find(id => data.questionSets[id].questions.some(q => q.illustration));
+  const pictured = (await call(`question-sets/${illustratedSetId}/questions`)).questions.find(q => q.illustration);
+  assert.deepEqual(pictured.illustration, data.questionSets[illustratedSetId].questions.find(q => q.id === pictured.id).illustration);
   assert.equal((await call('ai-safe')).aiSafe.situations.length, 6);
   for (let n = 1; n <= 3; n++) {
     const answers = n === 2 ? Object.fromEntries(data.questionSets[setId].questions.map(q => [q.id, q.correctAnswer])) : {};

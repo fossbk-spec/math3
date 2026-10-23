@@ -56,9 +56,11 @@ router.get('/me/progress', requireAuth, (req, res) => res.json({ lessons: lesson
 
 /* ---------------- Câu hỏi (không kèm đáp án) ---------------- */
 router.get('/question-sets/:setId/questions', requireAuth, (req, res) => {
-  const rows = db.prepare(`SELECT id,type,prompt,options_json,points,category,level,hints_json FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(req.params.setId);
+  const rows = db.prepare(`SELECT id,type,prompt,options_json,points,category,level,hints_json,illustration_json FROM questions WHERE set_id=? AND ${visibleClause} ORDER BY sort_order`).all(req.params.setId);
   if (!rows.length) return res.status(404).json({ error: 'Không tìm thấy bộ câu hỏi.' });
-  res.json({ setId: req.params.setId, questions: rows.map(r => ({ ...r, points: 1, options: r.options_json ? JSON.parse(r.options_json) : undefined, hints: r.hints_json ? JSON.parse(r.hints_json) : [], options_json: undefined, hints_json: undefined })) });
+  res.json({ setId: req.params.setId, questions: rows.map(({ options_json, hints_json, illustration_json, ...r }) => ({ ...r, points: 1,
+    options: options_json ? JSON.parse(options_json) : undefined, hints: hints_json ? JSON.parse(hints_json) : [],
+    ...(illustration_json ? { illustration: JSON.parse(illustration_json) } : {}) })) });
 });
 
 router.get('/ai-safe', requireAuth, (req, res) => res.json({ aiSafe }));

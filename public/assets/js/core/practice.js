@@ -84,6 +84,7 @@
       ...(guided === 'REVEALED' ? { correctAnswer: question.correctAnswer, solution: question.solution || [] } : {}) } };
   }
   const studentQuestion = q => q && ({ id: q.id, type: q.type, prompt: q.prompt, options: q.options || undefined,
-    hints: q.hints || [], points: q.points || 1, skillId: q.skillId, cognitiveLevel: q.cognitiveLevel });
+    hints: q.hints || [], points: q.points || 1, skillId: q.skillId, cognitiveLevel: q.cognitiveLevel,
+    ...(q.illustration ? { illustration: q.illustration } : {}) });
   return { pool, next, answer, complete, studentQuestion };
 });
