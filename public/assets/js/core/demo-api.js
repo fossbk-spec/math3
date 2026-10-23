@@ -46,6 +46,17 @@
   });
   const metric = values => values.length ? Math.round(values.reduce((n, x) => n + x, 0) / values.length * 10) / 10 : 0;
 
+  // Mật khẩu giáo viên: chỉ lưu mã băm PBKDF2 (repo và trang công khai), so trên máy.
+  const TEACHER_KDF = root.MATH_TEACHER_KDF || { iterations: 200000, salt: 'hs9jtP42+OxH5WCUC27pUA==', hash: 'Hi5wQBNgiAf+7/JZmzlZxVzwehyyhK8Z9n+s8WAcuRM=' };
+  async function teacherPasswordOk(password) {
+    const subtle = (root.crypto || globalThis.crypto).subtle;
+    const material = await subtle.importKey('raw', new TextEncoder().encode(`giaovien01
+${password}`), 'PBKDF2', false, ['deriveBits']);
+    const salt = Uint8Array.from(atob(TEACHER_KDF.salt), c => c.charCodeAt(0));
+    const bits = new Uint8Array(await subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', iterations: TEACHER_KDF.iterations, salt }, material, 256));
+    return btoa(String.fromCharCode(...bits)) === TEACHER_KDF.hash;
+  }
+
   async function request(url, options = {}) {
     const path = new URL(url, 'https://demo.local/').pathname.replace(/^\/api\/?/, '');
     const method = options.method || 'GET';
@@ -53,10 +64,14 @@
     const state = read();
     const data = await content();
     if (path === 'auth/login' && method === 'POST') {
-      const role = body.role || (body.username === 'giaovien01' ? 'teacher' : 'student');
+      // giaovien01 luôn là giáo viên, kể cả khi cô quên chọn tab Giáo viên.
+      const role = String(body.username || '').trim().toLowerCase() === 'giaovien01' ? 'teacher' : (body.role || 'student');
       const username = String(body.username || '').trim().toLowerCase();
+      if (role === 'teacher' && (username !== 'giaovien01' || !(await teacherPasswordOk(String(body.password || ''))))) {
+        return fail('Tên đăng nhập hoặc mật khẩu giáo viên chưa đúng.', 401);
+      }
       let user = state.users.find(u => typeof u.id === 'number' && u.role === role && (u.username === username || (!username && users.some(sample => sample.id === u.id))));
-      if (user && username && users.some(sample => sample.id === user.id) && body.password !== '123456') user = null;
+      if (user && role === 'student' && username && users.some(sample => sample.id === user.id) && body.password !== '123456') user = null;
       if (!user && username && role === 'student' && root.MathClassroom) {
         const response = await fetch('data/class-3a2.json');
         if (response.ok) {

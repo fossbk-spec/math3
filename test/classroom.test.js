@@ -61,11 +61,11 @@ test('Công cụ tạo file mã hoá; demo đăng nhập; thống kê gửi mã,
       deriveKey: (...args) => { derives++; return webcrypto.subtle.deriveKey(...args); },
       decrypt: (...args) => webcrypto.subtle.decrypt(...args),
     }, randomUUID: () => 'fake-device' };
-    const root = { MathClassroom: classroom, crypto, localStorage, MATH_ANALYTICS_URL: 'https://example.test', Blob,
+    const root = { MathClassroom: classroom, crypto: { ...crypto, subtle: { ...crypto.subtle, deriveBits: (...args) => webcrypto.subtle.deriveBits(...args) } }, MATH_TEACHER_KDF: require('./helpers/teacher').KDF, localStorage, MATH_ANALYTICS_URL: 'https://example.test', Blob,
       navigator: { sendBeacon: (url, body) => { sent.push(body); return true; } } };
     root.MathAnalytics = makeAnalytics(root);
     let available = true;
-    const context = { window: root, URL, localStorage, fetch: async url => {
+    const context = { window: root, TextEncoder, atob, btoa, URL, localStorage, fetch: async url => {
       if (url === 'data/class-3a2.json') return { ok: available, status: available ? 200 : 404, json: async () => data };
       assert.equal(url, 'data/grade3.json'); return { ok: true, json: async () => require('../data/content/grade3.json') };
     } };
@@ -87,7 +87,9 @@ test('Công cụ tạo file mã hoá; demo đăng nhập; thống kê gửi mã,
     const capitalized = creds.password[0].toUpperCase() + creds.password.slice(1);
     if (capitalized !== creds.password) { assert.equal((await call('auth/login', { ...creds, password: capitalized })).user.id, '3A2-07'); await call('auth/logout', {}); }
     await assert.rejects(call('auth/me', {}, 'GET'), e => e.status === 401);
-    await call('auth/login', { role: 'teacher' });
+    await assert.rejects(call('auth/login', { role: 'teacher' }), e => e.status === 401);
+    await assert.rejects(call('auth/login', { username: 'giaovien01', password: '123456', role: 'teacher' }), e => e.status === 401);
+    await call('auth/login', require('./helpers/teacher').login);
     const students = (await call('teacher/students', {}, 'GET')).students;
     const student = students.find(s => s.id === '3A2-07');
     assert.equal(student.full_name, student.id); assert.equal(student.username, '');
@@ -95,7 +97,7 @@ test('Công cụ tạo file mã hoá; demo đăng nhập; thống kê gửi mã,
     await assert.rejects(call('auth/login', creds), e => e.status === 401);
     assert.equal((await call('auth/login', { username: 'hocsinh01', password: '123456' })).user.fullName, 'Bạn Cú');
     await assert.rejects(call('auth/login', { username: 'hocsinh01', password: 'wrong' }), e => e.status === 401);
-    assert.equal((await call('auth/login', { username: 'giaovien01', password: '123456' })).user.role, 'teacher');
+    assert.equal((await call('auth/login', { username: 'giaovien01', password: require('./helpers/teacher').PASSWORD })).user.role, 'teacher');
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 

@@ -9,9 +9,9 @@ test('demo API: học sinh làm 3 lượt, bài chữa cuối, giáo viên duy�
   const data = require('../data/content/grade3.json');
   const memory = new Map();
   const localStorage = { getItem: key => memory.get(key) ?? null, setItem: (key, value) => memory.set(key, value), removeItem: key => memory.delete(key) };
-  const context = { window: { MathPractice: require('../public/assets/js/core/practice.js'), MathGrading: require('../public/assets/js/core/grading.js'), MathStars: require('../public/assets/js/core/stars.js') }, localStorage,
+  const context = { window: { MATH_TEACHER_KDF: require('./helpers/teacher').KDF, crypto: globalThis.crypto, MathPractice: require('../public/assets/js/core/practice.js'), MathGrading: require('../public/assets/js/core/grading.js'), MathStars: require('../public/assets/js/core/stars.js') }, localStorage,
     fetch: async url => { assert.equal(url, 'data/grade3.json'); return { ok: true, json: async () => data }; },
-    URL, Date, Math, Object, JSON };
+    TextEncoder, atob, btoa, URL, Date, Math, Object, JSON };
   context.window.localStorage = localStorage;
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../public/assets/js/core/demo-api.js'), 'utf8'), context);
   const call = (url, method = 'GET', body = {}) => context.window.MathDemoAPI.request(`/api/${url}`, { method, body: JSON.stringify(body) });
@@ -40,7 +40,7 @@ test('demo API: học sinh làm 3 lượt, bài chữa cuối, giáo viên duy�
   }
   await assert.rejects(call('submissions', 'POST', { setId, answers: {} }), error => error.status === 409);
   await call('auth/logout', 'POST');
-  await call('auth/login', 'POST', { role: 'teacher' });
+  await call('auth/login', 'POST', require('./helpers/teacher').login);
   const before = (await call(`teacher/question-sets/${setId}/questions`)).questions;
   assert.equal(before[0].review_status, 'DRAFT');
   await call(`teacher/questions/${before[0].id}/review`, 'POST', { status: 'APPROVED' });
