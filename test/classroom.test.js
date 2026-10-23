@@ -98,6 +98,36 @@ test('Công cụ tạo file mã hoá; demo đăng nhập; thống kê gửi mã,
     assert.equal((await call('auth/login', { username: 'hocsinh01', password: '123456' })).user.fullName, 'Bạn Cú');
     await assert.rejects(call('auth/login', { username: 'hocsinh01', password: 'wrong' }), e => e.status === 401);
     assert.equal((await call('auth/login', { username: 'giaovien01', password: require('./helpers/teacher').PASSWORD })).user.role, 'teacher');
+
+    // Bộ nhớ demo cũ: id 3 đã thuộc học sinh do giáo viên tạo; giữ nguyên tiến độ.
+    const saved = JSON.parse(memory.get('math3_demo_v1'));
+    saved.users = saved.users.filter(u => u.username !== 'hocsinh');
+    saved.users.push({ id: 3, username: 'student-created', fullName: 'Bạn Thỏ', role: 'student', className: '3A', totalStars: 7 });
+    memory.set('math3_demo_v1', JSON.stringify(saved));
+    const trial = (await call('auth/login', { username: 'hocsinh', password: '123456' })).user;
+    assert.equal(typeof trial.id, 'number');
+    assert.notEqual(trial.id, 3);
+    assert.equal(trial.username, 'hocsinh');
+    assert.equal(trial.fullName, 'Bạn Dùng Thử');
+    assert.equal(trial.role, 'student');
+    assert.equal(trial.className, 'DEMO');
+    const migrated = JSON.parse(memory.get('math3_demo_v1'));
+    assert.deepEqual(migrated.progress, saved.progress);
+    assert.equal(migrated.users.find(u => u.id === 3).totalStars, 7);
+    root.MathAnalytics.track('page_view', { page: 'index.html' });
+    assert.equal(root.MathAnalytics.queue().at(-1).classCode, 'DEMO');
+    root.MathAnalytics.flush();
+    const trialEvents = JSON.parse(await sent.at(-1).text()).events;
+    assert.equal(trialEvents.at(-1).classCode, 'DEMO');
+    await call('auth/logout', {});
+    for (const password of ['wrong', '', '123456 ']) {
+      await assert.rejects(call('auth/login', { username: 'hocsinh', password }), e => e.status === 401);
+    }
+    await assert.rejects(call('auth/me', {}, 'GET'), e => e.status === 401);
+    // Cả lớp 3A2 và giáo viên vẫn đăng nhập được sau khi dùng tài khoản thử.
+    available = true;
+    assert.equal((await call('auth/login', creds)).user.id, '3A2-07');
+    assert.equal((await call('auth/login', require('./helpers/teacher').login)).user.role, 'teacher');
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
